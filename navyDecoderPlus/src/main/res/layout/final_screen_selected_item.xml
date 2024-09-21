@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical"
+  android:padding="5dp">
+
+  <TextView
+    android:id="@+id/decodeCategoryTextView"
+    style="@style/MainDescription.ResultScreen" />
+
+  <TextView
+    style="@style/MainDecodeDescription"
+    android:text="@string/codeBeingDecoded" />
+
+  <TextView
+    android:id="@+id/itemDecodedTextView"
+    style="@style/ResultDescription" />
+
+  <TextView
+    style="@style/MainDecodeDescription"
+    android:text="@string/codeMeaning" />
+
+  <TextView
+    android:id="@+id/decodedDescriptionTextView"
+    style="@style/ResultDescription" />
+
+  <TextView
+    style="@style/MainDecodeDescription"
+    android:text="@string/sourceDescription" />
+
+  <TextView
+    android:id="@+id/sourceDescriptionTextView"
+    style="@style/ResultDescription" />
+</LinearLayout>

@@ -1,0 +1,170 @@
+.echo on
+.mode column
+.headers on
+.nullvalue NULL
+
+
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0600","REDCOM MA NORFOLK, VA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0601","NRC FT DIX, NJ","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0604","NRC BANGOR, ME","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0606","NRC SYRACUSE, NY","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0609","NRC WHITE RIVER JC, VT","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0610","NRC SCHENECTADY, NY","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0611","NRC WASHINGTON, DC","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0612","NRC CHARLOTTE, NC","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0613","NRC BUFFALO, NY","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0624","NRC GREENSBORO, NC","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0628","NRC LONG ISLAND, NY","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0630","NRC MANCHESTER, NH","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0633","NRC NEW YORK CITY, NY","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0643","NRC NEWPORT, RI","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0645","NRC RICHMOND, VA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0646","NRC ROANOKE, VA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0647","NRC PLAINVILLE, CT","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0659","NRC RALEIGH, NC","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0663","NRC NEW LONDON, CT","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0666","NRC EARLE, NJ","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0667","NRC BALTIMORE, MD","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0676","NRC NEW CASTLE, DE","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0682","NRC ROCHESTER, NY","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0686","NRC NORFOLK, VA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0696","NRC QUINCY, MA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2302","SEAL TEAM 18, VA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2502","MERCHANT MARINE, VA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2525","CNRFC, VA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2200","REDCOM NW EVERETT, WA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2206","NRC BILLINGS, MT","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2207","NRC BOISE, ID","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2211","NRC CHEYENNE, WY","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2212","NRC SPRINGFIELD, OR","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2213","NRC EVERETT, WA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2214","NRC DES MOINES, IA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2215","NRC MINNEAPOLIS, MN","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2216","NRC FARGO, ND","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2217","NRC OMAHA, NE","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2218","NRC SIOUX FALLS, SD","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2225","NRC PORTLAND, OR","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2232","NRC SPOKANE, WA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2252","NRC KITSAP, WA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2253","NRC HELENA, MT","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2289","NRC WHIDBEY ISLAND, WA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2299","NRC ANCHORAGE, AK","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0800","REDCOM SE JACKSONVILLE, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0804","NRC AUGUSTA, GA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0809","NRC BIRMINGHAM, AL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0811","NRC CHARLESTON, SC","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0813","NRC COLUMBIA, SC","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0814","NRC COLUMBUS, GA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0827","NRC GREENVILLE, SC","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0840","NRC PUERTO RICO, PR","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0847","NRC MIAMI, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0855","NRC ORLANDO, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0858","NRC PENSACOLA, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0861","NRC WEST PALM BEACH, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0862","NRC CHATTANOOGA, TN","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0863","NRC KNOXVILLE, TN","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0864","NRC MEMPHIS, TN","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0865","NRC NASHVILLE, TN","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0867","NRC ATLANTA, GA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0870","NRC TAMPA, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0874","NRC JACKSONVILLE, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0897","NRC TALLAHASSEE, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1300","REDCOM MA GREAT LAKES, IL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1301","NRC DETROIT, MI","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1302","NRC AKRON, OH","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1303","NRC CINCINNATI, OH","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1304","NRC COLUMBUS, OH","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1307","NRC AVOCA, PA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1309","NRC ERIE, PA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1310","NRC HARRISBURG, PA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1311","NRC PITTSBURGH, PA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1312","NRC ELEANORE, WV","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1321","NRC LOUISVILLE, KY","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1326","NRC GREAT LAKES, IL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1329","NRC ROCK ISLAND, IL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1336","NRC GREENBAY, WI","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1351","NRC MADISON, WI","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1357","NRC INDIANAPOLIS, IN","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1359","NRC BATTLE CREEK, MI","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1367","NRC PEORIA, IL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1377","NRC SAGINAW, MI","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1800","REDCOM SE FT WORTH, TX","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1801","NRC LITTLE ROCK, AR","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1802","NRC WICHITA, KS","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1803","NRC NEW ORLEANS, LA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1804","NRC SHREVEPORT, LA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1805","NRC ST LOUIS, MO","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1806","NRC KANSAS CITY, MO","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1807","NRC SPRINGFIELD, MO","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1808","NRC GULFPORT, MS","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1809","NRC MERIDIAN, MS","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1810","NRC TULSA, OK","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1811","NRC OKLAHOMA CITY, OK","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1812","NRC AMARILLO, TX","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1813","NRC AUSTIN, TX","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1814","NRC CORPUS CHRISTI, TX","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1815","NRC EL PASO, TX","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1816","NRC FT WORTH, TX","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1817","NRC HARLINGEN, TX","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1818","NRC HOUSTON, TX","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1819","NRC SAN ANTONIO, TX","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("4000","NRPDC, LA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1900","REDCOM SW SAN DIEGO, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1901","NRC LEMOORE, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1902","NRC PEARL HARBOR, HI","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1903","NRC GUAM, GU","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1904","NRC ALBUQUERQUE, NM","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1914","NRC CARSON, CO","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1917","NRC LAS VEGAS, NV","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1920","NRC DENVER, CO","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1929","NRC PHOENIX, AZ","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1939","NRC MORENO VALLEY, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1941","NRC LOS ANGELES, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1942","NRC SAN DIEGO, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1946","NRC VENTURA COUNTY, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1950","NRC TUCSON, AZ","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1951","NRC ALAMEDA, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1961","NRC FALLON, NV","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1963","NRC SACRAMENTO, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1965","NRC SALT LAKE CITY, UT","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1976","NRC SAN JOSE, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("1994","NRC NORTH ISLAND, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2300","NSWG 11, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2301","SEAL TEAM 17, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6400","FLSW, TX","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6401","VR-1, DC","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6404","VR-51, HI","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6406","VR-53, MD","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6407","VR-54, LA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6408","VR-55, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6409","VR-56, VA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6410","VR-57, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6411","VR-58, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6412","VR-59, TX","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6413","VR-61, WA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6414","VR-62, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6415","VR-64, NJ","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6500","TSW, TX","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6503","VFC-12, VA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6504","VFC-13, NV","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6506","VFA-204, LA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6507","VAQ-209, WA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6508","VFC-111, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6800","MSW, CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6801","HSM 60, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6804","HSC-85. CA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0684","HM-14, VA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0686","HM-15, VA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2287","VP-69, WA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6802","VP-62, FL","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6666","NAF WASHINGTON, DC","RESFOR (30 November 2022)");
+
+
+
+
+
+
+
+
+
+

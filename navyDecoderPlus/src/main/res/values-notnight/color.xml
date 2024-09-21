@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <!-- Colors explained
+  https://stackoverflow.com/questions/18288402/how-to-set-custom-actionbar-color-style/32324163#32324163
+  -->
+
+  <color name="appBackground">#f5f5f5</color>
+  <color name="mainDescription_Background">#B8B6B6</color>
+  <color name="searchScreenTextView_Background">#e2e2e2</color>
+  <color name="mainDecodeDescription_TextColor">#3C3C3C</color>
+  <color name="searchScreenTextView_TextColor">#0446ef</color>
+
+  <color name="resultDescription_Background">#E9E7E7</color>
+  <color name="resultDescription_TextColor">#000000</color>
+
+
+  <!--   your app branding color for the app bar -->
+  <color name="colorPrimary">#0446ef</color>
+  <!--   darker variant for the status bar and contextual app bars -->
+  <color name="colorPrimaryDark">#303F9F</color>
+
+  <!--   theme UI controls like checkboxes and text fields -->
+  <!--   20191230: Changing this has no effect -->
+  <color name="colorAccent">#FFFFFF</color>
+
+  <color name="applicationTextColor">#0446ef</color>
+
+  <!-- Rater dialog -->
+  <color name="raterTextColor">#101010</color>
+  <color name="raterBackgroundColor">#FFFFFF</color>
+
+</resources>

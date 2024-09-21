@@ -1,0 +1,70 @@
+.echo on
+.mode column
+.headers on
+.nullvalue NULL
+
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RXX","Precedes R##. HQ use only for planning purposes.","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RYY","Precedes R##. HQ use only for planning purposes.","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("R##","Identified for recall/mobilization","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RC1","NRA verbally contacted Reservist identified for recall/mobilization.","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RC2","Mobilizing Reservist completed medical screening","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RC2.5","Mobilizing Reservist completed all admin, medical, dental, and training requirement","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RC3","Mobilizing Reservist reported for activation as directed","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("ROC","Mobilization/recall orders cancelled prior to execution","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RU1","NRA unable to verbally contact Reservist identified for mobilization/recall","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RU2","NRA unable to verbally contact Reservist identified for mobilization/recall after 30 days","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RUA","NRA verbally contacted Reservist identified for mobilization/recall, but Reservist did not report as ordered.","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RDD","Member declared a deserter","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RM1","Gained to active duty - system generated","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RVC","Serving on 12301D (volunteer) orders or other voluntary recall/mobilization orders","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RM2","Reported to ultimate duty station","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RM3","Remaining on active duty","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RM4","Reassigned to another command","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RM5","Administrative hold","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RM6","Judicial hold","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RM7","Med Hold, Med Delay, Med Eval","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RM8","Discharged from active duty","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RM9","Temporary Disability Retired List (TDRL)","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RMD","Retired from active duty","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RML","Released to ECRC/PSD for out-processing","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RMP","Reported to ECRC/PSD for out-processing","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RD1","Released from active duty","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RD2","Reported back to NRA","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RDA","Dwell time has expired","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("D7G","1-3 day delay granted by NRA CO","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("D3P","4-30 day delay pending (applied for)","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("D3G","4-30 day granted by CNRF N35","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("D6P","31-60 day delay pending (applied for)","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("D6G","31-60 day delay granted by PERS-9","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("HPP","Personal hardship exemption pending","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("HPG","Personal hardship exemption granted","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("HCP","Community hardship exemption pending","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("HCG","Community hardship exemption granted","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("DMC","Non-deployable mother, child less than 12 months old","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("DMT","Temporary medical deferment, awaiting adjudication","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EMP","Pregnant","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EMN","Not physically qualified for mobilization. (MRR package submitted and/or CNRFC N35 directed use)","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EMD","Deceased","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("DTH","High school student, under 20 years old","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("DTX","Not completed basic/equivalent training","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("DTR","Attending validated religious leader training.","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("DTC","Designator/rate conversion training","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("DTM","Attending authorized medical/dental school","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("JDP","Judicial proceedings pending (entered by Ech IV/V)","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("DJP","Judicial proceedings pending (entered by CNRF)","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EJC","Confinement by civil authorities","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EJM","Confinement by military authorities","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EJP","On probation may not leave court jurisdiction","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EAK","ADSEP-Key Employee","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EAE","ADSEP-erroneous/defective/fraudulent enlistment","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EAD","ADSEP-drug/alcohol abuse","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EAP","ADSEP-unsatisfactory participation in the Ready Reserve","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EAC","ADSEP-conscientious objector","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EAS","ADSEP-sole surviving son/daughter","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EAM","ADSEP-misconduct","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EAR","Processing for retirement","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EAO","Not extending obligated service (EOS)","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("EAT","Enlisted in active component","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("NAO","Expired DDE-fully available for activation","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("NAI","Available for INCONUS activation only","RESFOR N1C2 (23 JAN 2023)");
+

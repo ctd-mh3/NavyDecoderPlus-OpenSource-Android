@@ -1,0 +1,80 @@
+buildscript {
+}
+
+apply plugin: 'com.android.application'
+
+repositories {
+}
+
+
+android {
+    compileSdk 34
+
+    // https://developer.android.com/studio/build/shrink-code#keep-code
+    // 20210130: Currently I do not build Android App Bundles, so the below is not used
+    android.buildTypes.release.ndk.debugSymbolLevel = 'FULL'
+
+    // TO-DO: Do this after each release
+    // If your project builds an APK, use the build.gradle build setting shown earlier to generate
+    // the native debug symbols file separately. Manually upload the native debug symbols file to
+    // the Google Play Console. As part of the build process, the Android Gradle plugin outputs
+    // this file in the following project location:
+    //app/build/outputs/native-debug-symbols/variant-name/native-debug-symbols.zip
+
+    defaultConfig {
+        applicationId "com.crashtestdummylimited.navydecoderplus"
+        minSdkVersion 26
+        targetSdkVersion 34
+    }
+
+    buildTypes {
+        release {
+            // Enables code shrinking, obfuscation, and optimization for only
+            // your project's release build type.
+            minifyEnabled true
+
+            // Enables resource shrinking, which is performed by the
+            // Android Gradle plugin.
+            shrinkResources true
+
+            // Includes the default ProGuard rules files that are packaged with
+            // the Android Gradle plugin. To learn more, go to the section about
+            // R8 configuration files.
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
+            // Pre 20210130 line
+            //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    namespace 'com.crashtestdummylimited.navydecoderplus'
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation "androidx.preference:preference:1.2.1"
+    //compile 'com.android.support:support-v4:25'
+    //compile 'com.github.hotchemi:android-rate:{latest.version}'
+    //compile project(':libraries:AppRate-Library')
+}
+
+// REQUIRED: Google's new Maven repo is required for the latest
+// support library that is compatible with Android 8.0
+repositories {
+    google()
+
+    // If you're using a version of Gradle lower than 4.1, you must instead use:
+    // maven {
+    //     url 'https://maven.google.com'
+    // }
+}
+
+// To fix issue per https://stackoverflow.com/questions/75274720/a-failure-occurred-while-executing-appcheckdebugduplicateclasses/75315276#75315276
+configurations.implementation {
+    exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib-jdk8'
+}
