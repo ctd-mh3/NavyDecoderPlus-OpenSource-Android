@@ -287,9 +287,8 @@ public class DecodeDatabase {
     //   23 = App v1.36 database (Updates RUICs & NRAs, Disestablished of 6810 designator (NAVADMIN 128/22))
     //   24 = App v1.37 database (Updates per NAVPERS documents)
     //   25 = App v1.38 database (Corrected SSP for 1950)
-    //   26 = App v1.40 database (Added AQD.  Updated designators and NOBCs.)
-    //   Missed updating for v1.41
-    //   27 = App v1.42 database (Updated MAS and IMS codes.)
+    //   26 = App v1.40 database (Added AQD. Updated designators and NOBCs.)
+    //   27 = App v1.41 database (Updated MAS and IMS codes.)
     private static final int DB_VERSION = 27;
 
     private final Context mContext;
