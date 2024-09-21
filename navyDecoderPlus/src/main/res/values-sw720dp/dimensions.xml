@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <dimen name="applicationTheme_textSize">22sp</dimen>
+
+  <dimen name="mainDescription_textSize">40sp</dimen>
+  <dimen name="mainDescription_paddingTop">20dp</dimen>
+  <dimen name="mainDescription_paddingBottom">20dp</dimen>
+
+  <dimen name="mainScreenItemsToSelect_textSize">40sp</dimen>
+
+  <dimen name="searchScreenTextView_textSize">25sp</dimen>
+
+  <dimen name="mainDecodeDescription_textSize">35sp</dimen>
+  <dimen name="mainDecodeDescription_paddingTop">20dp</dimen>
+  <dimen name="mainDecodeDescription_marginLeft">10dp</dimen>
+
+  <dimen name="resultDescription_textSize">25sp</dimen>
+  <dimen name="resultDescription_paddingLeft">20dp</dimen>
+  <dimen name="resultDescription_paddingTop">15dp</dimen>
+  <dimen name="resultDescription_paddingBottom">15dp</dimen>
+
+  <dimen name="rfasDecodeSpinner_textSize">55sp</dimen>
+  <dimen name="rfasDecodeSpinner_layoutMargin">10dp</dimen>
+  <dimen name="rfasDecodeSpinner_padding">20dp</dimen>
+
+  <dimen name="RateDialogHeader_textSize">40sp</dimen>
+
+</resources>

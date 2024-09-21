@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent">
+
+  <TextView
+    android:id="@+id/topLevelDescription"
+    style="@style/MainDescription"
+    android:text="@string/topLevelDescription" />
+  <!--
+    <TextView
+      android:id="@+id/mainDecodeDescription"
+      style="@style/HeaderDescription"
+      android:layout_below="@id/topLevelDescription"
+      android:text="@string/mainDecodeDescription"/>
+  -->
+  <ListView
+    android:id="@+id/mainItemToDecodeListView"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_below="@id/topLevelDescription"
+    android:drawSelectorOnTop="false" />
+</RelativeLayout>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/NavyDecoderPlus-OpenSource.iml" filepath="$PROJECT_DIR$/.idea/modules/NavyDecoderPlus-OpenSource.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/navyDecoderPlus/NavyDecoderPlus-OpenSource.navyDecoderPlus.iml" filepath="$PROJECT_DIR$/.idea/modules/navyDecoderPlus/NavyDecoderPlus-OpenSource.navyDecoderPlus.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/navyDecoderPlus/NavyDecoderPlus-OpenSource.navyDecoderPlus.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/navyDecoderPlus/NavyDecoderPlus-OpenSource.navyDecoderPlus.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/navyDecoderPlus/NavyDecoderPlus-OpenSource.navyDecoderPlus.main.iml" filepath="$PROJECT_DIR$/.idea/modules/navyDecoderPlus/NavyDecoderPlus-OpenSource.navyDecoderPlus.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/navyDecoderPlus/NavyDecoderPlus-OpenSource.navyDecoderPlus.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/navyDecoderPlus/NavyDecoderPlus-OpenSource.navyDecoderPlus.unitTest.iml" />
+    </modules>
+  </component>
+</project>

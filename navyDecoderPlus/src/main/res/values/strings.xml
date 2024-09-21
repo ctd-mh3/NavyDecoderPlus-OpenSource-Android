@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">Navy Decoder Plus</string>
+
+
+  <!-- Menu Information -->
+  <string name="menuAbout">About</string>
+  <string name="menuEmailAuthor">Email Author</string>
+  <string name="openSource">Open Source</string>
+  <string name="authorEmailAddress">support@crashtestdummylimited.com</string>
+  <string name="authorEmailSubject">Navy Decoder Plus-Google Play</string>
+  <string name="chooserTitle">Email with</string>
+
+  <!-- About Dialog Information -->
+  <string name="aboutTitle">About Navy Decoder Plus</string>
+  <string name="aboutApplicationPurpose">Application for decoding various US Navy information.</string>
+  <string name="aboutDeveloper">Developed by Crash Test Dummy (support@crashtestdummylimited.com).</string>
+  <string name="aboutComments">If you like this App, please leave a comment in the Google Play store.  If there are issues, please email me.  Pass me suggestions to make the app better.  Thanks!</string>
+  <string name="aboutDisclaimer">This application is not officially endorsed or sponsored by the US Navy or Department of Defense.</string>
+  <string name="aboutVersion">Version:"</string>
+  <string name="ok">OK"</string>
+
+  <!-- Open Source Dialog Information -->
+  <string name="opensourceTitle">Open Source Info</string>
+  <string name="opensourceNoticeLine1">This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.</string>
+  <string name="opensourceNoticeLine2">This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.</string>
+  <string name="opensourceNoticeLine3">A copy of the GNU General Public License is available at https://www.gnu.org/licenses.</string>
+
+  <!-- No email app installed -->
+  <string name="emailErrorTitle">Email Error</string>
+  <string name="emailErrorMessage">Your device has no email application installed.</string>
+
+  <!-- Review Request Information -->
+  <string name="rateTitle">Rate Navy Decoder Plus</string>
+  <string name="rateRequest">If you enjoy using this app, please take a moment to rate it. Your support is appreciated!</string>
+  <string name="rateRateButton">Rate This App</string>
+  <string name="rateLaterButton">Remind Me Later</string>
+  <string name="rateNoThanksButton">No, Thanks</string>
+
+  <!-- Change Log Dialog Information -->
+  <string name="changelog_title">Changelog:</string>
+
+  <!-- Main Screen -->
+  <string name="topLevelDescription">Reference for US Navy Admin Codes</string>
+
+  <!-- Final Screen -->
+  <string name="codeBeingDecoded">Code:</string>
+  <string name="codeMeaning">Meaning:</string>
+
+  <!-- RFAS Information -->
+  <string name="rfasEnlistedTopLevelDescription">Enlisted Reserve Functional Area and Sex (RFAS)</string>
+  <string name="rfasOfficerTopLevelDescription">Officer Reserve Functional Area and Sex (RFAS)</string>
+  <string name="rfasFirstCharacterPrompt">Select 1st Character Of RFAS Code</string>
+  <string name="rfasSecondAndThirdCharactersPrompt">Select 2nd and 3rd Characters Of RFAS Code</string>
+  <string name="rfasFourthCharactersPrompt">Select 4th Character Of RFAS Code</string>
+  <string name="decodeDescription">Code Meaning:</string>
+  <string name="sourceDescription">Source of Data:</string>
+
+
+  <!--  Level 0 Menu List 
+        NOTE - changes to this list need to be reflected in NavyDecodePlus.onCreate()-->
+  <string name="categoryAqdCodes">Additional Qualification Designation Codes</string>
+  <string name="categoryEnlistedRatingCodes">Enlisted Rating Codes</string>
+  <string name="categoryImsCodes">IMS Codes</string>
+  <string name="categoryMasCodes">MAS Codes</string>
+  <string name="categoryNecCodes">Navy Enlisted Classification Codes</string>
+  <string name="categoryNavyReserveActivitiesCodes">Navy Reserve Activity Codes</string>
+  <string name="categoryNobcCodes">NOBC Codes</string>
+  <string name="categoryOfficerBilletCodes">Officer Billet Codes</string>
+  <string name="categoryOfficerDesignatorCodes">Officer Designator Codes</string>
+  <string name="categoryOfficerPaygradeCodes">Officer Paygrade Codes</string>
+  <string name="categoryRbscBilletCodes">RBSC Billet Codes</string>
+  <string name="categoryReserveUnitIdentificationCodes">Reserve Unit Identification Codes</string>
+  <string name="categoryRfasEnlistedCodes">RFAS-Enlisted Codes</string>
+  <string name="categoryRfasOfficerCodes">RFAS-Officer Codes</string>
+  <string name="categorySubspecialityCodes">Subspeciality Codes</string>
+  <string name="categoryReserveProgramCodes">Reserve Program Codes</string>
+
+
+  <string name="hintAqdCodes">Search for AQD</string>
+  <string name="hintEnlistedRatingCodes">Search for Enlisted Rating</string>
+  <string name="hintImsCodes">Search for IMS Code</string>
+  <string name="hintMasCodes">Search for MAS Code</string>
+  <string name="hintNecCodes">Search for NEC Code</string>
+  <string name="hintNavyReserveActivitiesCodes">Search for NRA Code</string>
+  <string name="hintNobcCodes">Search for NOBC Code</string>
+  <string name="hintOfficerBilletCodes">Search for Billet Code</string>
+  <string name="hintOfficerDesignatorCodes">Search for Designator Code</string>
+  <string name="hintOfficerPaygradeCodes">Search for Paygrade Code</string>
+  <string name="hintRbscBilletCodes">Search for RBSC</string>
+  <string name="hintReserveUnitIdentificationCodes">Search for RUIC</string>
+  <string name="hintSubspecialityCodes">Search for SSP Code</string>
+  <string name="hintReserveProgramCodes">Search for RPC</string>
+
+
+  <!-- 
+   <string-array name="level0_list_array">
+        <item>AQD Codes</item>
+        <item>NECs</item>
+        <item>OSD Codes</item>
+    </string-array>
+-->
+
+  <!-- The hint text that appears in the search box. -->
+  <string name="search_hint">Search the decoder</string>
+
+  <!-- Search failure message. -->
+  <string name="no_results">No results found for \"%s\"</string>
+
+  <!-- The description that will show up in the search settings for this source.  -->
+  <string name="settings_description">Definitions of words</string>
+</resources>

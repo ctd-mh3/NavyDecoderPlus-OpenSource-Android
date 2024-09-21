@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+  <dimen name="applicationTheme_textSize">15sp</dimen>
+
+  <dimen name="mainDescription_textSize">19sp</dimen>
+  <dimen name="mainDescription_paddingTop">10dp</dimen>
+  <dimen name="mainDescription_paddingBottom">10dp</dimen>
+
+  <!-- These are need to be about 80dp if windowTranslucentNavigation is set to true for the app.
+       When that value is set to True, it appears to move all the layouts up, which must be
+         counteracted by adding this top margin.
+  -->
+  <dimen name="mainDescription_layoutMarginTop">00dp</dimen>
+  <dimen name="mainDescriptionResultScreen_layoutMarginTop">00dp</dimen>
+
+  <dimen name="mainScreenItemsToSelect_textSize">15sp</dimen>
+
+  <dimen name="searchScreenTextView_textSize">12sp</dimen>
+
+  <dimen name="mainDecodeDescription_textSize">15sp</dimen>
+  <dimen name="mainDecodeDescription_paddingTop">10dp</dimen>
+  <dimen name="mainDecodeDescription_marginLeft">10dp</dimen>
+
+  <dimen name="resultDescription_paddingLeft">15sp</dimen>
+  <dimen name="resultDescription_paddingTop">15sp</dimen>
+  <dimen name="resultDescription_paddingBottom">15sp</dimen>
+  <dimen name="resultDescription_textSize">15sp</dimen>
+
+  <dimen name="rfasDecodeSpinner_paddingAboveSpinners">20dp</dimen>
+  <dimen name="rfasDecodeSpinner_textSize">15sp</dimen>
+  <dimen name="rfasDecodeSpinner_layoutMargin">5dp</dimen>
+  <dimen name="rfasDecodeSpinner_padding">10dp</dimen>
+
+  <dimen name="RateDialogHeader_textSize">20sp</dimen>
+  <dimen name="RateDialogButton_marginTop">10sp</dimen>
+
+</resources>

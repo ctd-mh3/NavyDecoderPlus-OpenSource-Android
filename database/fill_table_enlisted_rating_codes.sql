@@ -1,0 +1,111 @@
+.echo on
+.mode column
+.headers on
+.nullvalue NULL
+
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AN","Airman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CN","Constructionman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("FN","Fireman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("HN","Hospitalman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("SN","Seaman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AB","Aviation Boatswain's Mate","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("ABE","Aviation Boatswain's Mate (Launching and Recovery Equipment)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("ABF","Aviation Boatswain's Mate(Fuels)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("ABH","Aviation Boatswain's Mate(Aircraft Handling)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AC","Air Traffic Controller","NAVPERS 18068F (JAN 2024)");			
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AD","Aviation Machinist's Mate","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AE","Aviation Electrician's Mate","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AG","Aerographer's Mate","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AM","Aviation Structural Mechanic","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AME","Aviation Structural Mechanic (Safety Equipment)","NAVPERS 18068F (JAN 2024)");			
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AO","Aviation Ordnanceman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AS","Aviation Support Equipment Technician","NAVPERS 18068F (JAN 2024)");			
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AT","Aviation Electronics Technician","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AW","Naval Aircrewmen","NAVPERS 18068F (JAN 2024)");				
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AWF","Naval Aircrewmen (Mechanical)","NAVPERS 18068F (JAN 2024)");	
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AWO","Naval Aircrewmen (Operator)","NAVPERS 18068F (JAN 2024)");	
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AWR","Naval Aircrewmen (Tactical Helicoptor)","NAVPERS 18068F (JAN 2024)");	
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AWS","Naval Aircrewmen (Helicoptor)","NAVPERS 18068F (JAN 2024)");	
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AWV","Naval Aircrewmen (Avionics)","NAVPERS 18068F (JAN 2024)");	
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("AZ","Aviation Maintenance Administrationman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("BM","Boatswain's Mate","NAVPERS 18068F (JAN 2024)");			
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("BU","Builder","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CBCM","Seabee Master Chief","NAVADMN 054/21");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CE","Construction Electrician","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CM","Construction Mechanic","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CMC","Command Master Chief","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CMDCM","Command Master Chief Petty Officer","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CMDCS","Command Senior Chief","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("FLTCM","Fleet Master Chief Petty Officer","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("FORCM","Force Master Chief Petty Officer","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("MCPON","Master Chief Petty Officer of the Navy","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CS","Culinary Specialist","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CSS","Culinary Specialist (Submarine)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CT","Cryptologic Technician","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CTI","Cryptologic Technician (Interpretive)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CTM","Cryptologic Technician (Maintenance)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CTR","Cryptologic Technician (Collection)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CTT","Cryptologic Technician (Technical)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("CWT","Cyber Warfare Technician","NAVADMIN 147/23");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("DC","Damage Controlman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("EA","Engineering Aide","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("EM","Electrician's Mate","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("EMN","Electrician's Mate (Nuclear Power)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("EN","Engineman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("EO","Equipment Operator","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("EOD","Explosive Ordnance Disposal","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("ET","Electronics Technician","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("ETN","Electronics Technician (Nuclear)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("ETV","Electronics Technician (Submarine-Navigation)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("FC","Fire Controlman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("FCA","Fire Controlman (AEGIS)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("FT","Fire Control Technician","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("GM","Gunner's Mate","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("GS","Gas Turbine System Technician","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("GSE","Gas Turbine System Technician (Electrical)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("GSM","Gas Turbine System Technician (Mechanical)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("GSCS","Gas Turbine System Technician-Senior Chief","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("GSCM","Gas Turbine System Technician-Master Chief","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("HM","Hospital Corpsman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("HT","Hull Maintenance Technician","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("IC","Interior Communications Electrician","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("IS","Intelligence Specialist","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("IT","Information Systems Technician","NAVPERS 18068F (JAN 2024)");			
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("ITS","Information Systems Technician Submarines","NAVADMIN 043/11");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("LN","Legalman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("LS","Logistics Specialists","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("LSS","Logistics Specialists Submarine","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("MA","Master-at-Arms","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("MC","Mass Communication Specialist","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("MM","Machinist's Mate","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("MMA","Machinist's Mate (Non-Nuclear, Submarine Auxiliary)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("MMN","Machinist's Mate (Nuclear Power)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("MN","Mineman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("MR","Machinery Repairman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("MT","Missile Technician","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("MU","Musician","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("NC","Navy Counselor","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("NCC","Navy Counselor (Counselor)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("NCR","Navy Counselor (Recruiter)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("ND","Navy Diver","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("OS","Operations Specialist","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("PR","Aircrew Survival Equipmentman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("PS","Personnel Specialist","NAVPERS 18068F (JAN 2024)");			
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("QM","Quartermaster","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("RP","Religious Programs Specialist","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("RS","Retail Services Specialist","NAVADMIN 226/19");			
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("SB","Special Warfare Boat Operator ","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("SO","Special Warfare Operators","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("ST","Sonar Technician","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("STG","Sonar Technician (Surface)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("STS","Sonar Technician (Submarine)","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("SW","Steelworker","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("TM","Torpedomans Mate","NAVADMIN 225/19");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("UT","Utilitiesman","NAVPERS 18068F (JAN 2024)");
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("YN","Yeoman","NAVPERS 18068F (JAN 2024)");			
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ("YNS","Yeoman (Submarine)","NAVPERS 18068F (JAN 2024)");			
+
+
+
+			
+

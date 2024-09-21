@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Layout for screen to allow user to search (SearchableDecoderActivity).
+ -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:orientation="vertical">
+
+  <TextView
+    android:id="@+id/searchScreenTextView"
+    style="@style/SearchScreenTextView"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" />
+
+  <ListView
+    android:id="@+id/searchScreenListView"
+    android:layout_width="fill_parent"
+    android:layout_height="0dp"
+    android:layout_weight="1" />
+</LinearLayout>
+
+
