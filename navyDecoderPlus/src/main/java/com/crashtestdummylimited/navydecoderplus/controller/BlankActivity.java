@@ -19,25 +19,33 @@
 package com.crashtestdummylimited.navydecoderplus.controller;
 
 import com.crashtestdummylimited.navydecoderplus.R;
+import com.crashtestdummylimited.navydecoderplus.databinding.BlankScreenBinding;
 
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Objects;
 
+
+
 // TODO: Look into doing it in this manner
 //       http://mavistechchannel.wordpress.com/2011/08/13/blur-background-android-search-dialog/
 public class BlankActivity extends AppCompatActivity {
 
+  private BlankScreenBinding mBinding;
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setTheme(R.style.AppTheme);
-    setContentView(R.layout.blank_screen);
+
+    mBinding = BlankScreenBinding.inflate(getLayoutInflater());
+    View view = mBinding.getRoot();
+    setContentView(view);
 
     // This activity is only used to cover up the main screen when the user has selected an item
     //   that invokes the search functionality. When the user attempts to navigate back to the 
