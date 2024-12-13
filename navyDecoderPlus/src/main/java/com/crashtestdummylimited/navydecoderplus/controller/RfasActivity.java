@@ -19,8 +19,8 @@
 package com.crashtestdummylimited.navydecoderplus.controller;
 
 import com.crashtestdummylimited.navydecoderplus.R;
-import com.crashtestdummylimited.navydecoderplus.R.id;
 import com.crashtestdummylimited.navydecoderplus.R.string;
+import com.crashtestdummylimited.navydecoderplus.databinding.RfasScreenBinding;
 import com.crashtestdummylimited.navydecoderplus.model.RFASEnlistedCodes;
 import com.crashtestdummylimited.navydecoderplus.model.RFASOfficerCodes;
 import com.crashtestdummylimited.navydecoderplus.model.RFASReferenceData;
@@ -45,6 +45,7 @@ import java.util.Objects;
 
 public class RfasActivity extends AppCompatActivity {
 
+  private RfasScreenBinding mBinding;
   private RFASReferenceData rfasReferenceData;
 
   //*************************************************************************
@@ -68,8 +69,7 @@ public class RfasActivity extends AppCompatActivity {
   //  End Menu Support Code
   //*************************************************************************
 
-  private void setupSpinnerFromArray(int spinnerId, String[] stringArray, OnItemSelectedListener listener) {
-    Spinner spinner = findViewById(spinnerId);
+  private void setupSpinnerFromArray(Spinner spinner, String[] stringArray, OnItemSelectedListener listener) {
 
     ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, stringArray);
 
@@ -88,30 +88,29 @@ public class RfasActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setTheme(R.style.AppTheme);
 
-
-    setContentView(R.layout.rfas_screen);
+    mBinding = RfasScreenBinding.inflate(getLayoutInflater());
+    View view = mBinding.getRoot();
+    setContentView(view);
 
     // Grab info from bundle to tell if enlisted or officer RFAS
     Intent mIntent = getIntent();
     String mRfasType = mIntent.getStringExtra("RFAS_TYPE");
 
-    final TextView mTopLevelDescriptionTextView = findViewById(id.rfasTopLevelDescription);
-
     // Setup all the spinners
     switch (Objects.requireNonNull(mRfasType)) {
       case "Enlisted":
         rfasReferenceData = new RFASEnlistedCodes();
-        mTopLevelDescriptionTextView.setText(this.getString(string.rfasEnlistedTopLevelDescription));
-        setupSpinnerFromArray(id.rfasFirstCharacter, rfasReferenceData.getFirstCharacterKeys(), new RFASDecoderItemSelectedListener());
-        setupSpinnerFromArray(id.rfasSecondAndThirdCharacter, rfasReferenceData.getSecondAndThirdCharacterKeys(), new RFASDecoderItemSelectedListener());
-        setupSpinnerFromArray(id.rfasFourthCharacter, rfasReferenceData.getFourthCharacterKeys(), new RFASDecoderItemSelectedListener());
+        mBinding.rfasTopLevelDescription.setText(this.getString(string.rfasEnlistedTopLevelDescription));
+        setupSpinnerFromArray(mBinding.rfasFirstCharacter, rfasReferenceData.getFirstCharacterKeys(), new RFASDecoderItemSelectedListener());
+        setupSpinnerFromArray(mBinding.rfasSecondAndThirdCharacter, rfasReferenceData.getSecondAndThirdCharacterKeys(), new RFASDecoderItemSelectedListener());
+        setupSpinnerFromArray(mBinding.rfasFourthCharacter, rfasReferenceData.getFourthCharacterKeys(), new RFASDecoderItemSelectedListener());
         break;
       case "Officer":
         rfasReferenceData = new RFASOfficerCodes();
-        mTopLevelDescriptionTextView.setText(this.getString(string.rfasOfficerTopLevelDescription));
-        setupSpinnerFromArray(id.rfasFirstCharacter, rfasReferenceData.getFirstCharacterKeys(), new RFASDecoderItemSelectedListener());
-        setupSpinnerFromArray(id.rfasSecondAndThirdCharacter, rfasReferenceData.getSecondAndThirdCharacterKeys(), new RFASDecoderItemSelectedListener());
-        setupSpinnerFromArray(id.rfasFourthCharacter, rfasReferenceData.getFourthCharacterKeys(), new RFASDecoderItemSelectedListener());
+        mBinding.rfasTopLevelDescription.setText(this.getString(string.rfasOfficerTopLevelDescription));
+        setupSpinnerFromArray(mBinding.rfasFirstCharacter, rfasReferenceData.getFirstCharacterKeys(), new RFASDecoderItemSelectedListener());
+        setupSpinnerFromArray(mBinding.rfasSecondAndThirdCharacter, rfasReferenceData.getSecondAndThirdCharacterKeys(), new RFASDecoderItemSelectedListener());
+        setupSpinnerFromArray(mBinding.rfasFourthCharacter, rfasReferenceData.getFourthCharacterKeys(), new RFASDecoderItemSelectedListener());
         break;
       default:
         // TODO- Throw Exception
@@ -123,31 +122,22 @@ public class RfasActivity extends AppCompatActivity {
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-      Spinner tempSpinner = findViewById(R.id.rfasFirstCharacter);
-      String firstCharacterKey = tempSpinner.getItemAtPosition(tempSpinner.getSelectedItemPosition()).toString();
+      String firstCharacterKey = mBinding.rfasFirstCharacter.getItemAtPosition(mBinding.rfasFirstCharacter.getSelectedItemPosition()).toString();
       String firstCharacterValue = rfasReferenceData.getFirstCharacterValue(firstCharacterKey);
 
-
-      tempSpinner = findViewById(R.id.rfasSecondAndThirdCharacter);
-      String secondAndThirdCharacterKey = tempSpinner.getItemAtPosition(tempSpinner.getSelectedItemPosition()).toString();
+      String secondAndThirdCharacterKey = mBinding.rfasSecondAndThirdCharacter.getItemAtPosition(mBinding.rfasSecondAndThirdCharacter.getSelectedItemPosition()).toString();
       String secondAndThirdCharacterValue = rfasReferenceData.getSecondAndThirdCharacterValue(secondAndThirdCharacterKey);
 
-      tempSpinner = findViewById(R.id.rfasFourthCharacter);
-      String fourthCharacterKey = tempSpinner.getItemAtPosition(tempSpinner.getSelectedItemPosition()).toString();
+      String fourthCharacterKey = mBinding.rfasFourthCharacter.getItemAtPosition(mBinding.rfasFourthCharacter.getSelectedItemPosition()).toString();
       String fourthCharacterValue = rfasReferenceData.getFourthCharacterValue(fourthCharacterKey);
 
 
       String resultString = firstCharacterValue + "\n" + secondAndThirdCharacterValue + "\n" + fourthCharacterValue;
-
-      final TextView decodeTextView = findViewById(R.id.rfasDecodeDescription);
-
-      decodeTextView.setText(resultString);
+      mBinding.rfasDecodeDescription.setText(resultString);
 
 
       String sourceInfo = rfasReferenceData.getSourceInfo();
-
-      final TextView sourceTextView = findViewById(R.id.rfasSourceDescription);
-      sourceTextView.setText(sourceInfo);
+      mBinding.rfasSourceDescription.setText(sourceInfo);
     }
 
     public void onNothingSelected(AdapterView<?> parent) {

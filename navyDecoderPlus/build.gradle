@@ -27,6 +27,10 @@ android {
         targetSdkVersion 34
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
     buildTypes {
         release {
             // Enables code shrinking, obfuscation, and optimization for only

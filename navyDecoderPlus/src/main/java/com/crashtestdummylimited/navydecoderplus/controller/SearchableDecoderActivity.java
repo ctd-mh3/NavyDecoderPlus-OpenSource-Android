@@ -19,6 +19,7 @@
 package com.crashtestdummylimited.navydecoderplus.controller;
 
 import com.crashtestdummylimited.navydecoderplus.R;
+import com.crashtestdummylimited.navydecoderplus.databinding.SearchScreenBinding;
 
 import android.app.SearchManager;
 import android.content.Intent;
@@ -31,8 +32,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
 /**
  * The main activity for the decoder.
@@ -41,8 +42,7 @@ import android.widget.TextView;
  */
 public class SearchableDecoderActivity extends AppCompatActivity {
 
-  private TextView mTextView;
-  private ListView mListView;
+  private SearchScreenBinding mBinding;
 
   private String mDecodeCategory = "";
 
@@ -65,10 +65,10 @@ public class SearchableDecoderActivity extends AppCompatActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setTheme(R.style.AppTheme);
-    setContentView(R.layout.search_screen);
 
-    mTextView = findViewById(R.id.searchScreenTextView);
-    mListView = findViewById(R.id.searchScreenListView);
+    mBinding = SearchScreenBinding.inflate(getLayoutInflater());
+    View view = mBinding.getRoot();
+    setContentView(view);
 
     Intent mIntent = getIntent();
 
@@ -110,18 +110,18 @@ public class SearchableDecoderActivity extends AppCompatActivity {
 
     if (mCursor == null) {
       // There are no results
-      mTextView.setText(getString(R.string.no_results, query));
+      mBinding.searchScreenTextView.setText(getString(R.string.no_results, query));
     } else {
 
       // Find ListView to populate
-      ListView lvItems = findViewById(R.id.searchScreenListView);
+      ListView lvItems = mBinding.searchScreenListView;
       // Setup cursor adapter using cursor from last step
       SearchResultsCursorAdapter searchAdapter = new SearchResultsCursorAdapter(this, mCursor);
       // Attach cursor adapter to the ListView
       lvItems.setAdapter(searchAdapter);
 
       // Define the on-click listener for the list items
-      mListView.setOnItemClickListener((parent, view, position, id) -> {
+      mBinding.searchScreenListView.setOnItemClickListener((parent, view, position, id) -> {
         // Build the Intent used to open SelectedItemActivity with a specific decodeItem Uri
         Intent mItemIntent = new Intent(getApplicationContext(), SelectedItemActivity.class);
 

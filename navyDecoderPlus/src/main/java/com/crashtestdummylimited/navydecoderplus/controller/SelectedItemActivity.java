@@ -19,6 +19,7 @@
 package com.crashtestdummylimited.navydecoderplus.controller;
 
 import com.crashtestdummylimited.navydecoderplus.R;
+import com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding;
 import com.crashtestdummylimited.navydecoderplus.model.db.DecodeDatabase;
 
 import android.content.Intent;
@@ -31,7 +32,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
 
 import java.util.Objects;
 
@@ -39,6 +40,8 @@ import java.util.Objects;
  * Displays a word and its definition.
  */
 public class SelectedItemActivity extends AppCompatActivity {
+
+  private FinalScreenSelectedItemBinding mBinding;
 
   //*************************************************************************
   //
@@ -65,7 +68,10 @@ public class SelectedItemActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setTheme(R.style.AppTheme);
-    setContentView(R.layout.final_screen_selected_item);
+
+    mBinding = FinalScreenSelectedItemBinding.inflate(getLayoutInflater());
+    View view = mBinding.getRoot();
+    setContentView(view);
 
     Uri mUri = getIntent().getData();
     Cursor mCursor = getContentResolver().query(Objects.requireNonNull(mUri), null, null, null, null);
@@ -73,18 +79,12 @@ public class SelectedItemActivity extends AppCompatActivity {
     if (mCursor == null) {
       finish();
     } else {
-      TextView mDecodeCategoryTextView = findViewById(R.id.decodeCategoryTextView);
-
       Intent mIntent = getIntent();
       String mDecodeCategory = mIntent.getStringExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER);
       MappingHelper mMappingHelper = MappingHelper.getInstance(getApplicationContext());
       // TODO - What happens if no match
       String mSelectionText = mMappingHelper.getSelectionText(mDecodeCategory);
-      mDecodeCategoryTextView.setText(mSelectionText);
-
-      TextView mItemToDecodeTextView = findViewById(R.id.itemDecodedTextView);
-      TextView mDecodedDescriptionTextView = findViewById(R.id.decodedDescriptionTextView);
-      TextView mSourceDescriptionTextView = findViewById(R.id.sourceDescriptionTextView);
+      mBinding.decodeCategoryTextView.setText(mSelectionText);
 
       mCursor.moveToFirst();
 
@@ -92,9 +92,9 @@ public class SelectedItemActivity extends AppCompatActivity {
       int mCodeIndex = mCursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE);
       int mCodeMeaningIndex = mCursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_MEANING);
       int mCodeSourceIndex = mCursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_SOURCE);
-      mItemToDecodeTextView.setText(mCursor.getString(mCodeIndex));
-      mDecodedDescriptionTextView.setText(mCursor.getString(mCodeMeaningIndex));
-      mSourceDescriptionTextView.setText(mCursor.getString(mCodeSourceIndex));
+      mBinding.itemDecodedTextView.setText(mCursor.getString(mCodeIndex));
+      mBinding.decodedDescriptionTextView.setText(mCursor.getString(mCodeMeaningIndex));
+      mBinding.sourceDescriptionTextView.setText(mCursor.getString(mCodeSourceIndex));
 
       mCursor.close();
     }
