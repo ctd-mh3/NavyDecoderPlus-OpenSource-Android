@@ -102,6 +102,9 @@ public class NavyDecoderPlus extends AppCompatActivity {
 
     setContentView(R.layout.main_screen);
 
+    // Set Title Bar Title to official app name
+    getSupportActionBar().setTitle(R.string.app_name);
+
     ListView mListView = findViewById(R.id.mainItemToDecodeListView);
 
     String[] mDecodeOptions = new String[]{
