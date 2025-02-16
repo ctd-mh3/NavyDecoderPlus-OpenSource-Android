@@ -37,13 +37,12 @@ import java.util.Objects;
 //       http://mavistechchannel.wordpress.com/2011/08/13/blur-background-android-search-dialog/
 public class BlankActivity extends AppCompatActivity {
 
-  private BlankScreenBinding mBinding;
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setTheme(R.style.AppTheme);
 
-    mBinding = BlankScreenBinding.inflate(getLayoutInflater());
+    com.crashtestdummylimited.navydecoderplus.databinding.BlankScreenBinding mBinding = BlankScreenBinding.inflate(getLayoutInflater());
     View view = mBinding.getRoot();
     setContentView(view);
 
