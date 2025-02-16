@@ -41,8 +41,6 @@ import java.util.Objects;
  */
 public class SelectedItemActivity extends AppCompatActivity {
 
-  private FinalScreenSelectedItemBinding mBinding;
-
   //*************************************************************************
   //
   //  Overwritten to support menu
@@ -69,7 +67,7 @@ public class SelectedItemActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setTheme(R.style.AppTheme);
 
-    mBinding = FinalScreenSelectedItemBinding.inflate(getLayoutInflater());
+    com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding mBinding = FinalScreenSelectedItemBinding.inflate(getLayoutInflater());
     View view = mBinding.getRoot();
     setContentView(view);
 
