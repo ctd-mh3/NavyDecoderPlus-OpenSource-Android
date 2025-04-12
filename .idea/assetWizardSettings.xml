@@ -80,7 +80,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="$PROJECT_DIR$/reference/Images/web_hires_512.png" />
+                                                <entry key="imagePath" value="$PROJECT_DIR$/reference/Images/Icons/NavyDecoder.png" />
                                               </map>
                                             </option>
                                           </PersistentState>
