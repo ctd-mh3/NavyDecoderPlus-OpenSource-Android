@@ -18,17 +18,28 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
+import com.crashtestdummylimited.navydecoderplus.BuildConfig;
 import com.crashtestdummylimited.navydecoderplus.R;
 import com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding;
 import com.crashtestdummylimited.navydecoderplus.model.db.DecodeDatabase;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.Task;
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +51,15 @@ import java.util.Objects;
  * Displays a word and its definition.
  */
 public class SelectedItemActivity extends AppCompatActivity {
+
+  // For Play Store In-App Review
+  private static final String REVIEW_PREFS = "review_prefs";
+  private static final String KEY_FIRST_LAUNCH_MS = "first_launch_ms";
+  private static final String KEY_LAST_PROMPT_MS  = "last_prompt_ms";
+  private static final long MIN_INSTALL_AGE_MS = 3L * 24L * 60L * 60L * 1000L; // 3 days
+  private static final long COOLDOWN_MS        = 7L * 24L * 60L * 60L * 1000L; // 7 days
+
+  private ReviewManager mReviewManager;
 
   //*************************************************************************
   //
@@ -66,6 +86,10 @@ public class SelectedItemActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setTheme(R.style.AppTheme);
+
+    if (!BuildConfig.DEBUG) {
+      mReviewManager = ReviewManagerFactory.create(this);
+    }
 
     com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding mBinding = FinalScreenSelectedItemBinding.inflate(getLayoutInflater());
     View view = mBinding.getRoot();
@@ -95,6 +119,61 @@ public class SelectedItemActivity extends AppCompatActivity {
       mBinding.sourceDescriptionTextView.setText(mCursor.getString(mCodeSourceIndex));
 
       mCursor.close();
+
+      tryRequestReviewIfAppropriate();
     }
+  }
+
+  public void tryRequestReviewIfAppropriate() {
+    // In debug builds show a plain dialog to confirm the prompt fires at the right
+    // time. FakeReviewManager completes silently without any visible UI, so it is
+    // not useful for manual timing verification.
+    if (BuildConfig.DEBUG) {
+      new Handler(Looper.getMainLooper()).postDelayed(() -> {
+        if (isFinishing()) return;
+        new AlertDialog.Builder(this)
+            .setTitle("[Debug] Review Prompt")
+            .setMessage("In a production build the Play Store review dialog appears here.")
+            .setPositiveButton("OK", null)
+            .show();
+      }, 500);
+      return;
+    }
+
+    SharedPreferences prefs = getSharedPreferences(REVIEW_PREFS, Context.MODE_PRIVATE);
+    long now = System.currentTimeMillis();
+
+    // Record first launch timestamp; don't prompt on the very first run.
+    long firstLaunch = prefs.getLong(KEY_FIRST_LAUNCH_MS, 0L);
+    if (firstLaunch == 0L) {
+      prefs.edit().putLong(KEY_FIRST_LAUNCH_MS, now).apply();
+      return;
+    }
+
+    // Enforce minimum install age before ever prompting.
+    if (now - firstLaunch < MIN_INSTALL_AGE_MS) return;
+
+    // Enforce cooldown between prompts.
+    long lastPrompt = prefs.getLong(KEY_LAST_PROMPT_MS, 0L);
+    if (now - lastPrompt < COOLDOWN_MS) return;
+
+    // Record this attempt before launching to prevent repeated prompts if Play
+    // suppresses the dialog without showing it.
+    prefs.edit().putLong(KEY_LAST_PROMPT_MS, now).apply();
+
+    promptInAppReview();
+  }
+
+  private void promptInAppReview() {
+    Task<ReviewInfo> request = mReviewManager.requestReviewFlow();
+    request.addOnCompleteListener(requestTask -> {
+      if (isFinishing()) return;
+      if (requestTask.isSuccessful()) {
+        ReviewInfo reviewInfo = requestTask.getResult();
+        mReviewManager.launchReviewFlow(this, reviewInfo);
+        // The API does not indicate whether the dialog was shown or a review
+        // was submitted. Continue app flow regardless of the outcome.
+      }
+    });
   }
 }
