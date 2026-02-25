@@ -29,16 +29,18 @@ There are no unit tests in the project currently.
 When Navy source data changes, the embedded SQLite database must be rebuilt and copied into the app assets:
 
 1. Edit the relevant SQL files in `database/`
-2. Run `database/createAndCopyDatabase.sh` (requires `sqlite3` CLI) — this regenerates `navyDecoderDatabase.sqlite3` and copies it to `navyDecoderPlus/src/main/assets/`
+2. `cd database/` then run `./createAndCopyDatabase.sh` (requires `sqlite3` CLI) — **must be run from within the `database/` directory**; this regenerates `navyDecoderDatabase.sqlite3` and copies it to `navyDecoderPlus/src/main/assets/`
 3. Increment `DB_VERSION` in `navyDecoderPlus/src/main/java/com/crashtestdummylimited/navydecoderplus/model/db/DecodeDatabase.java`
 
-The RFAS code tables are **not** populated by `createAndCopyDatabase.sh` — those tables use `fill_table_rfas_codes_dummy.sql` as a placeholder; actual RFAS data is handled differently (see `fill_table_rfas_*.sql` files).
+The RFAS code tables are **not** populated by `createAndCopyDatabase.sh` — those tables use `fill_table_rfas_codes_dummy.sql` as a placeholder because actual RFAS data comes from restricted non-CUI RESFOR files (only accessible to SELRES personnel). See `fill_table_rfas_*.sql` files for the format.
+
+> Note: `createAndCopyDatabase.sh` contains a second `cp` targeting `../NavyDecoderPlus/` (capitalized) which is a stale path and will silently fail — only the first `cp` to `../navyDecoderPlus/` is correct.
 
 ## Architecture
 
 ### Single Gradle Module
 
-The project has one app module: `navyDecoderPlus`. The top-level `build.gradle` is a minimal shell; all real build configuration is in `navyDecoderPlus/build.gradle`.
+The project has one app module: `navyDecoderPlus`. The top-level `build.gradle` is a minimal shell; all real build configuration is in `navyDecoderPlus/build.gradle`. Build uses Java 11 source/target compatibility, ViewBinding is enabled, and release builds apply R8 minification + resource shrinking via ProGuard.
 
 ### Package Structure (`com.crashtestdummylimited.navydecoderplus`)
 
@@ -53,7 +55,7 @@ The project has one app module: `navyDecoderPlus`. The top-level `build.gradle` 
   - `MenuOptions` — Shared options-menu logic reused across Activities.
   - `SearchResultsCursorAdapter` — `CursorAdapter` for the search results `ListView`.
 - **`model/`**:
-  - `db/DecodeDatabase` — Manages the pre-packaged SQLite database. On first run it copies the `.sqlite3` asset file to the app's database directory. On upgrade it deletes and re-copies the database (simple replacement strategy, no data migration).
+  - `db/DecodeDatabase` — Manages the pre-packaged SQLite database. On first run it copies the `.sqlite3` asset file to the app's database directory. On upgrade it deletes and re-copies the database (simple replacement strategy, no data migration). There is a noted TODO to migrate to Android Room DAOs.
   - `RFASEnlistedCodes`, `RFASOfficerCodes`, `RFASReferenceData` — Model classes for the RFAS code multi-step lookup.
   - `ReferenceData` — Generic model for a decoded code/meaning pair.
 - **`ui/`** — `AppRater` (prompts users to rate the app).
