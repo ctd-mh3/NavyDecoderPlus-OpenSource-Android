@@ -30,4 +30,8 @@
   <color name="raterTextColor">#101010</color>
   <color name="raterBackgroundColor">#FFFFFF</color>
 
+  <!-- Menu / about dialogs -->
+  <color name="menuDialogBackgroundColor">#1E2D40</color>
+  <color name="menuDialogTextColor">#FFFFFF</color>
+
 </resources>

@@ -18,8 +18,6 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
-import java.util.Objects;
-
 import com.crashtestdummylimited.navydecoderplus.R;
 import com.crashtestdummylimited.navydecoderplus.util.CommonUtilities;
 
@@ -27,14 +25,9 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
-import android.view.ContextThemeWrapper;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatDialog;
-import androidx.appcompat.widget.AppCompatButton;
 
 public class MenuOptions {
 
@@ -54,12 +47,6 @@ public class MenuOptions {
   public static void onOptionsItemSelected(Activity activity, MenuItem item) {
     int itemId = item.getItemId();// For email http://mobile.tutsplus.com/tutorials/android/android-email-intent/
     if (itemId == R.id.optionsMenuAbout) {
-      final ContextThemeWrapper ctw = new ContextThemeWrapper(activity, R.style.DialogStyle);
-
-      final AppCompatDialog dialog = new AppCompatDialog(ctw);
-
-      dialog.setContentView(R.layout.about_screen);
-
       String message = activity.getString(R.string.aboutApplicationPurpose) +
           "\n\n" +
           activity.getString(R.string.aboutDeveloper) +
@@ -71,35 +58,23 @@ public class MenuOptions {
           activity.getString(R.string.aboutVersion) +
           CommonUtilities.getAppVersionName(activity);
 
-      TextView textView = dialog.findViewById(R.id.aboutInfo);
-
-      Objects.requireNonNull(textView).setText(message);
-
-      AppCompatButton button1 = dialog.findViewById(R.id.dismissAboutDialogButton);
-      Objects.requireNonNull(button1).setOnClickListener(v -> dialog.dismiss());
-
-      dialog.show();
+      new AlertDialog.Builder(activity, R.style.MenuDialogStyle)
+          .setTitle(R.string.aboutTitle)
+          .setMessage(message)
+          .setPositiveButton(R.string.ok, null)
+          .show();
     } else if (itemId == R.id.optionsMenuOpenSource) {
-      final ContextThemeWrapper ctw = new ContextThemeWrapper(activity, R.style.DialogStyle);
-
-      final AppCompatDialog dialog = new AppCompatDialog(ctw);
-
-      dialog.setContentView(R.layout.opensource_screen);
-
       String message = activity.getString(R.string.opensourceNoticeLine1) +
           "\n\n" +
           activity.getString(R.string.opensourceNoticeLine2) +
           "\n\n" +
           activity.getString(R.string.opensourceNoticeLine3);
 
-      TextView textView = dialog.findViewById(R.id.openSourceInfo);
-
-      Objects.requireNonNull(textView).setText(message);
-
-      AppCompatButton button1 = dialog.findViewById(R.id.dismissOpenSourceDialogButton);
-      Objects.requireNonNull(button1).setOnClickListener(v -> dialog.dismiss());
-
-      dialog.show();
+      new AlertDialog.Builder(activity, R.style.MenuDialogStyle)
+          .setTitle(R.string.opensourceTitle)
+          .setMessage(message)
+          .setPositiveButton(R.string.ok, null)
+          .show();
     } else if (itemId == R.id.optionsMenuEmailAuthor) {
       Intent emailIntent = new Intent(Intent.ACTION_SEND);
       emailIntent.setType("message/rfc822");
