@@ -24,6 +24,5 @@
   <dimen name="rfasDecodeSpinner_layoutMargin">10dp</dimen>
   <dimen name="rfasDecodeSpinner_padding">20dp</dimen>
 
-  <dimen name="RateDialogHeader_textSize">40sp</dimen>
 
 </resources>
