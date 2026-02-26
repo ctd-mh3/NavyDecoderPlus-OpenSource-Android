@@ -26,6 +26,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -66,7 +67,7 @@ public final class ChangelogBuilder {
       Log.e(TAG, "Error reading changelog file!", ioe);
     }
 
-    return new AlertDialog.Builder(context)
+    return new AlertDialog.Builder(new ContextThemeWrapper(context, R.style.DialogStyle))
         .setTitle(
             context.getString(R.string.changelog_title) + "\n"
                 + context.getString(R.string.app_name) + " v"
