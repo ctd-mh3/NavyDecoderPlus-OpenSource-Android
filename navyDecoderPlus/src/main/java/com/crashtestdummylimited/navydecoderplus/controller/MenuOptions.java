@@ -22,12 +22,13 @@ import com.crashtestdummylimited.navydecoderplus.R;
 import com.crashtestdummylimited.navydecoderplus.util.CommonUtilities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class MenuOptions {
 
@@ -58,7 +59,7 @@ public class MenuOptions {
           activity.getString(R.string.aboutVersion) +
           CommonUtilities.getAppVersionName(activity);
 
-      new AlertDialog.Builder(activity, R.style.MenuDialogStyle)
+      new MaterialAlertDialogBuilder(activity, R.style.MenuDialogStyle)
           .setTitle(R.string.aboutTitle)
           .setMessage(message)
           .setPositiveButton(R.string.ok, null)
@@ -70,7 +71,7 @@ public class MenuOptions {
           "\n\n" +
           activity.getString(R.string.opensourceNoticeLine3);
 
-      new AlertDialog.Builder(activity, R.style.MenuDialogStyle)
+      new MaterialAlertDialogBuilder(activity, R.style.MenuDialogStyle)
           .setTitle(R.string.opensourceTitle)
           .setMessage(message)
           .setPositiveButton(R.string.ok, null)
@@ -93,7 +94,7 @@ public class MenuOptions {
         activity.startActivity(chooser);
       } catch (ActivityNotFoundException e) {
         // Define what your app should do if no activity can handle the intent.
-        AlertDialog.Builder alertDialog2 = new AlertDialog.Builder(activity);
+        MaterialAlertDialogBuilder alertDialog2 = new MaterialAlertDialogBuilder(activity);
         alertDialog2.setTitle(activity.getString(R.string.emailErrorTitle));
         alertDialog2.setMessage(R.string.emailErrorMessage);
         alertDialog2.setPositiveButton("OK", (dialog, which) -> {
