@@ -17,6 +17,8 @@
     <item name="colorSecondary">@color/colorWhite</item>
     <item name="android:windowTranslucentNavigation">false</item>
     <item name="android:navigationBarColor">@android:color/transparent</item>
+    <!-- Opt out of Android 15+ forced edge-to-edge; app layouts are not designed for it. -->
+    <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
   </style>
 
 

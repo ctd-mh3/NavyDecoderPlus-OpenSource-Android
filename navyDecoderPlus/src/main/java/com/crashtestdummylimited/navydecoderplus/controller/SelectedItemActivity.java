@@ -35,6 +35,9 @@ import android.os.Looper;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.gms.tasks.Task;
 import com.google.android.play.core.review.ReviewInfo;
@@ -85,7 +88,6 @@ public class SelectedItemActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setTheme(R.style.AppTheme);
 
     if (!BuildConfig.DEBUG) {
       mReviewManager = ReviewManagerFactory.create(this);
@@ -94,6 +96,14 @@ public class SelectedItemActivity extends AppCompatActivity {
     com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding mBinding = FinalScreenSelectedItemBinding.inflate(getLayoutInflater());
     View view = mBinding.getRoot();
     setContentView(view);
+
+    ViewCompat.setOnApplyWindowInsetsListener(
+        getWindow().getDecorView().findViewById(android.R.id.content),
+        (v, windowInsets) -> {
+          Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+          v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+          return WindowInsetsCompat.CONSUMED;
+        });
 
     Uri mUri = getIntent().getData();
     Cursor mCursor = getContentResolver().query(Objects.requireNonNull(mUri), null, null, null, null);
