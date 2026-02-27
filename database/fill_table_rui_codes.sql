@@ -1024,7 +1024,7 @@ insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("8928
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("87770","NMCB 22 HOU (NRC HOUSTON TX)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("83564","NR NMRTC CC HOU (NRC HOUSTON TX)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("1007G","NR VTU HOU 1818 (NRC HOUSTON TX)","RESFOR (03 JAN 2024)");
-insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("87642","NR SURGEMAIN PSNS HOU (NRC HOUSTON TX)","RESFOR (03 JAN 2024)");
+insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("87642","NR FORWARD DEPLOYED REGIONAL MAINTENANCE CENTER (NRC HOUSTON TX)","User Reported (22 FEB 2026)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("84106","NR SSRF SQUADRON ELEVEN (NRC HOUSTON TX)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("87658","NR LCS HOU (NRC HOUSTON TX)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("84113","NR SSRF SQUADRON FIFTEEN (NRC HOUSTON TX)","RESFOR (03 JAN 2024)");
