@@ -54,7 +54,6 @@ import androidx.preference.PreferenceManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -127,61 +126,43 @@ public class NavyDecoderPlus extends AppCompatActivity {
 
     mListView.setAdapter(new ArrayAdapter<>(this, R.layout.main_screen_selection_list_item, mDecodeOptions));
     mListView.setOnItemClickListener((parent, view, position, id) -> {
-      // Handle list selections here
-      String mSelectedText = (String) ((TextView) view).getText();
-
-      if (mSelectedText.equals(getString(R.string.categoryRfasEnlistedCodes))) {
+      // RFAS categories use a spinner-based Activity instead of the standard search flow.
+      if (position == 13) {
         Intent mIntent = new Intent(NavyDecoderPlus.this, RfasActivity.class);
-        // TODO- remove this hard coding
         mIntent.putExtra("RFAS_TYPE", "Enlisted");
         startActivity(mIntent);
-      } else if (mSelectedText.equals(getString(R.string.categoryRfasOfficerCodes))) {
+        return;
+      }
+      if (position == 14) {
         Intent mIntent = new Intent(NavyDecoderPlus.this, RfasActivity.class);
         mIntent.putExtra("RFAS_TYPE", "Officer");
         startActivity(mIntent);
-      } else {
-        // TODO- Improve this
-        Intent mIntent;
-
-        if (mSelectedText.equals(getString(R.string.categoryAqdCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityAqdCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categoryEnlistedRatingCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityEnlistedRatingCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categoryImsCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityImsCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categoryMasCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityMasCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categoryNecCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityNecCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categoryNavyReserveActivitiesCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityNraCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categoryReserveUnitIdentificationCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityRuiCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categoryNobcCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityNobcCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categoryOfficerBilletCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityOfficerBilletCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categoryOfficerDesignatorCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityOfficerDesignatorCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categoryOfficerPaygradeCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityOfficerPaygradeCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categoryRbscBilletCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityRbscBilletCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categorySubspecialityCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivitySspCodes.class);
-        } else if (mSelectedText.equals(getString(R.string.categoryReserveProgramCodes))) {
-          mIntent = new Intent(NavyDecoderPlus.this, BlankActivityRpCodes.class);
-        } else {
-          throw new IllegalArgumentException("Invalid value passed to onItemClick().");
-        }
-
-
-        MappingHelper mMappingHelper = MappingHelper.getInstance(getApplicationContext());
-
-        // TODO - What happens if no match
-        mIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, mMappingHelper.getCategoryIdentify(mSelectedText));
-        startActivity(mIntent);
+        return;
       }
+
+      Class<?> activityClass;
+      switch (position) {
+        case 0:  activityClass = BlankActivityAqdCodes.class; break;
+        case 1:  activityClass = BlankActivityEnlistedRatingCodes.class; break;
+        case 2:  activityClass = BlankActivityImsCodes.class; break;
+        case 3:  activityClass = BlankActivityMasCodes.class; break;
+        case 4:  activityClass = BlankActivityNecCodes.class; break;
+        case 5:  activityClass = BlankActivityNraCodes.class; break;
+        case 6:  activityClass = BlankActivityNobcCodes.class; break;
+        case 7:  activityClass = BlankActivityOfficerBilletCodes.class; break;
+        case 8:  activityClass = BlankActivityOfficerDesignatorCodes.class; break;
+        case 9:  activityClass = BlankActivityOfficerPaygradeCodes.class; break;
+        case 10: activityClass = BlankActivityRbscBilletCodes.class; break;
+        case 11: activityClass = BlankActivityRuiCodes.class; break;
+        case 12: activityClass = BlankActivityRpCodes.class; break;
+        case 15: activityClass = BlankActivitySspCodes.class; break;
+        default: throw new IllegalArgumentException("Invalid position: " + position);
+      }
+
+      MappingHelper mMappingHelper = MappingHelper.getInstance(getApplicationContext());
+      Intent mIntent = new Intent(NavyDecoderPlus.this, activityClass);
+      mIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, mMappingHelper.getCategoryIdentify(mDecodeOptions[position]));
+      startActivity(mIntent);
     });
 
     // For debugging
