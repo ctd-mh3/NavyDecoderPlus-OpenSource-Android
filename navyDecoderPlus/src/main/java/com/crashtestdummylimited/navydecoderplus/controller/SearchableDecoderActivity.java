@@ -29,6 +29,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import android.view.Menu;
 import android.view.MenuItem;
@@ -64,11 +67,18 @@ public class SearchableDecoderActivity extends AppCompatActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setTheme(R.style.AppTheme);
 
     mBinding = SearchScreenBinding.inflate(getLayoutInflater());
     View view = mBinding.getRoot();
     setContentView(view);
+
+    ViewCompat.setOnApplyWindowInsetsListener(
+        getWindow().getDecorView().findViewById(android.R.id.content),
+        (v, windowInsets) -> {
+          Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+          v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+          return WindowInsetsCompat.CONSUMED;
+        });
 
     Intent mIntent = getIntent();
 

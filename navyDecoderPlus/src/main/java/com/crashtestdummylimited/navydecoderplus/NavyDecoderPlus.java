@@ -49,6 +49,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import androidx.preference.PreferenceManager;
 
 import android.widget.ArrayAdapter;
@@ -96,9 +99,15 @@ public class NavyDecoderPlus extends AppCompatActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    setTheme(R.style.AppTheme);
-
     setContentView(R.layout.main_screen);
+
+    ViewCompat.setOnApplyWindowInsetsListener(
+        getWindow().getDecorView().findViewById(android.R.id.content),
+        (v, windowInsets) -> {
+          Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+          v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
+          return WindowInsetsCompat.CONSUMED;
+        });
 
     // Set Title Bar Title to official app name
     getSupportActionBar().setTitle(R.string.app_name);
