@@ -8,13 +8,13 @@
   //
   // ************************************************************************
   -->
-  <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+  <style name="AppTheme" parent="Theme.Material3.DayNight">
     <item name="android:typeface">normal</item>
     <item name="android:textStyle">normal</item>
     <item name="android:textSize">@dimen/applicationTheme_textSize</item>
     <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-    <item name="colorAccent">@color/colorAccent</item>
+    <item name="colorOnPrimary">@color/colorWhite</item>
+    <item name="colorSecondary">@color/colorWhite</item>
     <item name="android:windowTranslucentNavigation">false</item>
     <item name="android:navigationBarColor">@android:color/transparent</item>
   </style>
@@ -96,15 +96,15 @@
   </style>
 
   <!-- Style for About / Open Source dialogs. Background and text are navy-themed. -->
-  <style name="MenuDialogStyle" parent="Theme.AppCompat.DayNight.Dialog.Alert">
+  <style name="MenuDialogStyle" parent="ThemeOverlay.Material3.MaterialAlertDialog">
     <item name="android:textColorPrimary">@color/menuDialogTextColor</item>
     <item name="android:textColor">@color/menuDialogTextColor</item>
     <item name="android:background">@color/menuDialogBackgroundColor</item>
-    <item name="colorAccent">@color/menuDialogTextColor</item>
+    <item name="colorPrimary">@color/menuDialogTextColor</item>
   </style>
 
   <!-- Not using a theme with Actionbar and xml places a title looking TextView -->
-  <style name="DialogStyle" parent="Theme.AppCompat.DayNight.NoActionBar">
+  <style name="DialogStyle" parent="Theme.Material3.DayNight.NoActionBar">
     <!-- Used for the title and text -->
     <item name="android:textColorPrimary">@color/raterTextColor</item>
     <!-- Used for the background -->

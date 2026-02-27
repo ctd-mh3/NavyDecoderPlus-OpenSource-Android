@@ -14,10 +14,8 @@
 
   <!--   your app branding color for the app bar -->
   <color name="colorPrimary">#0446ef</color>
-  <!--   darker variant for the status bar and contextual app bars -->
-  <color name="colorPrimaryDark">#303F9F</color>
 
-  <color name="colorAccent">#FFFFFF</color>
+  <color name="colorWhite">#FFFFFF</color>
 
   <color name="applicationTextColor">#0446ef</color>
 
