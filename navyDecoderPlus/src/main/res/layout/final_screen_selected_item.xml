@@ -1,35 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:layout_height="match_parent"
-  android:orientation="vertical"
-  android:padding="5dp">
+  android:layout_height="match_parent">
 
-  <TextView
-    android:id="@+id/decodeCategoryTextView"
-    style="@style/MainDescription.ResultScreen" />
+  <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="5dp">
 
-  <TextView
-    style="@style/MainDecodeDescription"
-    android:text="@string/codeBeingDecoded" />
+    <TextView
+      android:id="@+id/decodeCategoryTextView"
+      style="@style/MainDescription.ResultScreen" />
 
-  <TextView
-    android:id="@+id/itemDecodedTextView"
-    style="@style/ResultDescription" />
+    <TextView
+      style="@style/MainDecodeDescription"
+      android:text="@string/codeBeingDecoded" />
 
-  <TextView
-    style="@style/MainDecodeDescription"
-    android:text="@string/codeMeaning" />
+    <TextView
+      android:id="@+id/itemDecodedTextView"
+      style="@style/ResultDescription" />
 
-  <TextView
-    android:id="@+id/decodedDescriptionTextView"
-    style="@style/ResultDescription" />
+    <TextView
+      style="@style/MainDecodeDescription"
+      android:text="@string/codeMeaning" />
 
-  <TextView
-    style="@style/MainDecodeDescription"
-    android:text="@string/sourceDescription" />
+    <TextView
+      android:id="@+id/decodedDescriptionTextView"
+      style="@style/ResultDescription" />
 
-  <TextView
-    android:id="@+id/sourceDescriptionTextView"
-    style="@style/ResultDescription" />
-</LinearLayout>
+    <TextView
+      style="@style/MainDecodeDescription"
+      android:text="@string/sourceDescription" />
+
+    <TextView
+      android:id="@+id/sourceDescriptionTextView"
+      style="@style/ResultDescription" />
+  </LinearLayout>
+</ScrollView>
