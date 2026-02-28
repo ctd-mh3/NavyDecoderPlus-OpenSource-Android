@@ -10,6 +10,20 @@
     android:text="@string/topLevelDescription"/>
 
   <TextView
+    android:id="@+id/openSourceDataNotice"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="4dp"
+    android:text="@string/openSourceDataNotice"
+    android:textColor="@color/mainDecodeDescription_TextColor"
+    android:textSize="@dimen/selectCategoryInstruction_textSize"
+    android:textStyle="bold|italic"
+    android:gravity="center"/>
+
+  <TextView
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="16dp"
