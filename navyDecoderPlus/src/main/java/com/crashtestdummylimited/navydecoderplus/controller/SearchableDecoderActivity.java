@@ -80,6 +80,8 @@ public class SearchableDecoderActivity extends AppCompatActivity {
           return WindowInsetsCompat.CONSUMED;
         });
 
+    mBinding.searchScreenListView.setEmptyView(mBinding.searchScreenEmptyView);
+
     Intent mIntent = getIntent();
 
     // Save the information on what is being decoded
@@ -87,7 +89,6 @@ public class SearchableDecoderActivity extends AppCompatActivity {
     if (mAppData != null) {
       mDecodeCategory = mAppData.getString(MappingHelper.CATEGORY_KEY_IDENTIFIER);
     }
-
 
     if (Intent.ACTION_VIEW.equals(mIntent.getAction())) {
 
@@ -112,37 +113,31 @@ public class SearchableDecoderActivity extends AppCompatActivity {
    * @param query The search query
    */
   private void showResults(String query) {
-
-    Cursor mCursor;
+    mBinding.searchScreenEmptyView.setText(getString(R.string.no_results, query));
 
     Uri mUriWithPath = Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mDecodeCategory);
-    mCursor = getContentResolver().query(mUriWithPath, null, null, new String[]{query}, null);
+    Cursor mCursor = getContentResolver().query(mUriWithPath, null, null, new String[]{query}, null);
 
     if (mCursor == null) {
-      // There are no results
-      mBinding.searchScreenTextView.setText(getString(R.string.no_results, query));
-    } else {
-
-      // Find ListView to populate
-      ListView lvItems = mBinding.searchScreenListView;
-      // Setup cursor adapter using cursor from last step
-      SearchResultsCursorAdapter searchAdapter = new SearchResultsCursorAdapter(this, mCursor);
-      // Attach cursor adapter to the ListView
-      lvItems.setAdapter(searchAdapter);
-
-      // Define the on-click listener for the list items
-      mBinding.searchScreenListView.setOnItemClickListener((parent, view, position, id) -> {
-        // Build the Intent used to open SelectedItemActivity with a specific decodeItem Uri
-        Intent mItemIntent = new Intent(getApplicationContext(), SelectedItemActivity.class);
-
-        Uri mUriWithPath1 = Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mDecodeCategory);
-
-        mUriWithPath1 = Uri.withAppendedPath(mUriWithPath1, String.valueOf(id));
-        mItemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, mDecodeCategory);
-        mItemIntent.setData(mUriWithPath1);
-        startActivity(mItemIntent);
-      });
-      mCursor.close();
+      // Provider error: setEmptyView() only auto-fires once an adapter is attached,
+      // so reveal the empty view manually for this edge case.
+      mBinding.searchScreenEmptyView.setVisibility(View.VISIBLE);
+      return;
     }
+
+    ListView lvItems = mBinding.searchScreenListView;
+    lvItems.setAdapter(new SearchResultsCursorAdapter(this, mCursor));
+
+    lvItems.setOnItemClickListener((parent, view, position, id) -> {
+      Intent mItemIntent = new Intent(getApplicationContext(), SelectedItemActivity.class);
+      Uri itemUri = Uri.withAppendedPath(
+          Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mDecodeCategory),
+          String.valueOf(id));
+      mItemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, mDecodeCategory);
+      mItemIntent.setData(itemUri);
+      startActivity(mItemIntent);
+    });
+
+    mCursor.close();
   }
 }
