@@ -40,9 +40,10 @@ import androidx.annotation.NonNull;
  */
 public class DecodeProvider extends ContentProvider {
 
-  // TODO- should be all lc like mentioned in http://developer.android.com/guide/topics/providers/content-providers.html
+  // AUTHORITY uses mixed case (DecodeProvider) rather than all-lowercase. This cannot be changed
+  // without breaking the ContentProvider contract for all existing installed devices.
   private static final String AUTHORITY = "com.crashtestdummylimited.navydecoderplus.DecodeProvider";
-  // TODO - add CONTENT_URI for each kind of idea to decode
+  // Per-category URIs are registered dynamically in buildUriMatcher() for each category identifier.
   public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/decodeData");
 
   // MIME types used for searching words or looking up a single definition
@@ -74,26 +75,11 @@ public class DecodeProvider extends ContentProvider {
 
     MappingHelper mMappingHelper = MappingHelper.getInstance();
 
-    //noinspection StatementWithEmptyBody
+    // MappingHelper.getInstance() can return null if the singleton was never initialised
+    // (observed in a user crash: IndexOutOfBoundsException at DecodeProvider.query).
+    // When null, mOffsetMatcher stays empty and query() returns null — safe fallback.
     if (mMappingHelper == null) {
-      // TODO
-      // 15JAN2023
-      // Not clear how mMappingHelper can be null based on its getInstance() method but due to the
-      //   below crash reported by a user, it appears it can be:
-      // Caused by java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
-      //  at java.util.ArrayList.get (ArrayList.java:437)
-      //  at com.crashtestdummylimited.navydecoderplus.controller.DecodeProvider.query (DecodeProvider.java:147)
-      //  at android.content.ContentProvider.query (ContentProvider.java:1526)
-      //  at android.content.ContentProvider.query (ContentProvider.java:1622)
-      //  at android.content.ContentProvider$Transport.query (ContentProvider.java:290)
-      //  at android.content.ContentResolver.query (ContentResolver.java:1226)
-      //  at android.content.ContentResolver.query (ContentResolver.java:1158)
-      //  at android.content.ContentResolver.query (ContentResolver.java:1114)
-      //  at com.crashtestdummylimited.navydecoderplus.controller.SelectedItemActivity.onCreate (SelectedItemActivity.java:54)
-      //  at android.app.Activity.performCreate (Activity.java:8578)
-      //  at android.app.Activity.performCreate (Activity.java:8557)
-      //  at android.app.Instrumentation.callActivityOnCreate (Instrumentation.java:1384)
-      //  at android.app.ActivityThread.performLaunchActivity (ActivityThread.java:4147)
+      // Intentionally empty: mOffsetMatcher.isEmpty() guard in query() handles this case.
     } else {
       ArrayList<String> mArrayList = mMappingHelper.getAllCategoryIdentifies();
       Iterator<String> mIterator = mArrayList.iterator();

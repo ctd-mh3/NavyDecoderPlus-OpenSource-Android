@@ -53,7 +53,8 @@ public final class MappingHelper {
     return mInstance;
   }
 
-  // TODO- is this needed for non-activity classes? if so then this is not a great way to do this
+  // No-arg overload for callers (e.g. DecodeProvider) that don't have a Context at call time.
+  // The singleton must already be initialised via getInstance(Context) before this is called.
   public static MappingHelper getInstance() {
     return mInstance;
   }

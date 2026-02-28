@@ -33,8 +33,6 @@ import java.util.Objects;
 
 
 
-// TODO: Look into doing it in this manner
-//       http://mavistechchannel.wordpress.com/2011/08/13/blur-background-android-search-dialog/
 public class BlankActivity extends AppCompatActivity {
 
   @Override

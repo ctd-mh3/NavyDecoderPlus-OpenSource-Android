@@ -124,8 +124,7 @@ public class RfasActivity extends AppCompatActivity {
         setupSpinnerFromArray(mBinding.rfasFourthCharacter, rfasReferenceData.getFourthCharacterKeys(), new RFASDecoderItemSelectedListener());
         break;
       default:
-        // TODO- Throw Exception
-        break;
+        throw new IllegalArgumentException("Unknown RFAS type: " + mRfasType);
     }
   }
 
