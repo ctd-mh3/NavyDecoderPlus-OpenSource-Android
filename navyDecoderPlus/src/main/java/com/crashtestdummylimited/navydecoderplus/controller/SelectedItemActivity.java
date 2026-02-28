@@ -105,6 +105,8 @@ public class SelectedItemActivity extends AppCompatActivity {
           return WindowInsetsCompat.CONSUMED;
         });
 
+    getSupportActionBar().setTitle(R.string.app_name);
+
     Uri mUri = getIntent().getData();
     Cursor mCursor = getContentResolver().query(Objects.requireNonNull(mUri), null, null, null, null);
 

@@ -80,6 +80,7 @@ public class SearchableDecoderActivity extends AppCompatActivity {
           return WindowInsetsCompat.CONSUMED;
         });
 
+    getSupportActionBar().setTitle(R.string.app_name);
     mBinding.searchScreenListView.setEmptyView(mBinding.searchScreenEmptyView);
 
     Intent mIntent = getIntent();

@@ -27,4 +27,6 @@
   <color name="menuDialogBackgroundColor">#1E2D40</color>
   <color name="menuDialogTextColor">#FFFFFF</color>
 
+  <color name="changeLogBackgroundColor">#0446ef</color>
+  <color name="dialogButtonTextColor">#0446ef</color>
 </resources>

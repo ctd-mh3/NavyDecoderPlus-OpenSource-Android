@@ -39,7 +39,7 @@
   <string name="rateNoThanksButton">No, Thanks</string>
 
   <!-- Change Log Dialog Information -->
-  <string name="changelog_title">Changelog:</string>
+  <string name="changelog_title">Change Log</string>
 
   <!-- Main Screen -->
   <string name="topLevelDescription">Reference for US Navy Admin Codes</string>
