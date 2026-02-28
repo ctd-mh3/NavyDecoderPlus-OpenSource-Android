@@ -105,7 +105,8 @@ public class SelectedItemActivity extends AppCompatActivity {
           return WindowInsetsCompat.CONSUMED;
         });
 
-    getSupportActionBar().setTitle(R.string.app_name);
+    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is defensive only.
+    if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
 
     Uri mUri = getIntent().getData();
     Cursor mCursor = getContentResolver().query(Objects.requireNonNull(mUri), null, null, null, null);

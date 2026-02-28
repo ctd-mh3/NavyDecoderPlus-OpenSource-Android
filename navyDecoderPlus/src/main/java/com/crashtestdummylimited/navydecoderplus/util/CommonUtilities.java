@@ -21,7 +21,6 @@ package com.crashtestdummylimited.navydecoderplus.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 
@@ -52,24 +51,6 @@ public class CommonUtilities {
       Log.w("Unable to get ver name.", e);
     }
     return strVersion;
-  }
-
-  /**
-   * get the name of the actual version.
-   *
-   * @param context the context
-   * @return the name of the actual version
-   */
-  public static String getActualVersionName(final Context context) {
-    // Get the versionCode of the Package, which must be different
-    // (incremented) in each release on the market in the
-    // AndroidManifest.xml
-    try {
-      return context.getPackageManager().getPackageInfo(context.getPackageName(),
-          PackageManager.GET_ACTIVITIES).versionName;
-    } catch (NameNotFoundException e) {
-      return null;
-    }
   }
 
   /**
