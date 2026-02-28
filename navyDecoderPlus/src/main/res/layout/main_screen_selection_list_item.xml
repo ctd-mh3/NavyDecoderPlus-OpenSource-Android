@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="wrap_content"
-  android:gravity="center"
-  android:padding="10dp"
-  android:textSize="@dimen/mainScreenItemsToSelect_textSize"/>
+  android:background="?attr/selectableItemBackground"
+  android:paddingStart="16dp"
+  android:paddingEnd="12dp"
+  android:paddingTop="14dp"
+  android:paddingBottom="14dp">
+
+  <TextView
+    android:id="@android:id/text1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerVertical="true"
+    android:layout_toStartOf="@+id/chevron"
+    android:gravity="start"
+    android:textColor="@color/resultDescription_TextColor"
+    android:textSize="@dimen/mainScreenItemsToSelect_textSize"/>
+
+  <ImageView
+    android:id="@+id/chevron"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentEnd="true"
+    android:layout_centerVertical="true"
+    android:contentDescription="@null"
+    android:src="@drawable/ic_chevron_right"
+    android:tint="@color/mainDecodeDescription_TextColor"/>
+
+</RelativeLayout>

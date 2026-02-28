@@ -29,5 +29,6 @@
   <color name="changeLogTextColor">#E4F0FF</color>
   <color name="changeLogBackgroundColor">#142B4A</color>
   <color name="dialogButtonTextColor">#82BAFF</color>
+  <color name="listItemDivider">#1E3A5C</color>
 
 </resources>
