@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <dimen name="applicationTheme_textSize">20sp</dimen>
+  <dimen name="applicationTheme_textSize">17sp</dimen>
 
-  <dimen name="mainDescription_textSize">20sp</dimen>
+  <dimen name="mainDescription_textSize">22sp</dimen>
   <dimen name="mainDescription_paddingTop">10dp</dimen>
   <dimen name="mainDescription_paddingBottom">10dp</dimen>
 
-  <dimen name="mainScreenItemsToSelect_textSize">20sp</dimen>
+  <dimen name="mainScreenItemsToSelect_textSize">18sp</dimen>
+  <dimen name="selectCategoryInstruction_textSize">19sp</dimen>
 
-  <dimen name="searchScreenTextView_textSize">20sp</dimen>
+  <dimen name="searchScreenTextView_textSize">14sp</dimen>
 
-  <dimen name="mainDecodeDescription_textSize">20sp</dimen>
+  <dimen name="mainDecodeDescription_textSize">18sp</dimen>
   <dimen name="mainDecodeDescription_paddingTop">10dp</dimen>
   <dimen name="mainDecodeDescription_marginLeft">10dp</dimen>
 
-  <dimen name="resultDescription_paddingLeft">15sp</dimen>
-  <dimen name="resultDescription_paddingTop">15sp</dimen>
-  <dimen name="resultDescription_paddingBottom">15sp</dimen>
-  <dimen name="resultDescription_textSize">20sp</dimen>
+  <dimen name="resultDescription_paddingLeft">18dp</dimen>
+  <dimen name="resultDescription_paddingTop">15dp</dimen>
+  <dimen name="resultDescription_paddingBottom">15dp</dimen>
+  <dimen name="resultDescription_textSize">18sp</dimen>
 
-  <dimen name="rfasDecodeSpinner_textSize">20sp</dimen>
+  <dimen name="rfasDecodeSpinner_paddingAboveSpinners">24dp</dimen>
+  <dimen name="rfasDecodeSpinner_textSize">18sp</dimen>
   <dimen name="rfasDecodeSpinner_layoutMargin">5dp</dimen>
   <dimen name="rfasDecodeSpinner_padding">10dp</dimen>
-
 
 </resources>
