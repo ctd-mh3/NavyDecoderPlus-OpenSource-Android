@@ -72,10 +72,11 @@ Each searchable code category follows the same pattern:
 ### UI Conventions
 
 - **Edge-to-edge insets**: All four main activities apply `ViewCompat.setOnApplyWindowInsetsListener` on `android.R.id.content` to handle system bar padding (required for API 36 mandatory edge-to-edge).
-- **Toolbar title**: Set explicitly via `getSupportActionBar().setTitle(R.string.app_name)` in each activity — the application-level `android:label` uses a shorter icon label (`app_name_for_icon`) that would otherwise show as the toolbar title.
+- **Toolbar title**: Set explicitly via `if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name)` in each activity — the application-level `android:label` uses a shorter icon label (`app_name_for_icon`) that would otherwise show as the toolbar title. The null check is defensive only; `AppTheme` extends `Theme.Material3.DayNight` which always provides an ActionBar.
 - **Dialog styling**: All `MaterialAlertDialogBuilder` dialogs use `R.style.MenuDialogStyle`, which sets Material3 color roles (`colorSurfaceContainerHigh`, `colorOnSurface`, `colorOnSurfaceVariant`, `colorPrimary`) — not `android:background`, which does not paint the Material3 dialog card.
 - **Colors**: Navy-themed. Primary blue is `#002855` (Pantone 289 / U.S. Navy official). Separate `values/colors.xml` (light) and `values-night/colors.xml` (dark) — there is no `values-notnight/` directory.
-- **Adaptive icon**: `mipmap-anydpi/ic_launcher.xml` and `ic_launcher_round.xml` reference `drawable/ic_launcher_background.xml` (solid navy `#002855`), `mipmap/ic_launcher_foreground` (radar/ND+ webp), and `drawable/ic_launcher_monochrome.xml` (vector for Android 13+ themed icons).
+- **Adaptive icon**: `mipmap-anydpi/ic_launcher.xml` and `ic_launcher_round.xml` reference three drawables — `drawable/ic_launcher_background.xml` (solid navy `#002855` fill), `drawable/ic_launcher_foreground.xml` (vector: white radar rings + white ND+ lettering + accent-blue echo blip), and `drawable/ic_launcher_monochrome.xml` (single-color vector for Android 13+ themed icons). Legacy raster webps remain in `mipmap-hdpi/` etc. but are unreachable since `minSdk` 26 guarantees the adaptive icon is always used.
+- **RTL**: `android:supportsRtl="false"` is set in the manifest. The app is English-only for U.S. Navy personnel; `Start`/`End` layout attributes are used as best practice but layouts are not designed for RTL mirroring.
 - **Font sizes**: Four breakpoints — `values/` (default phones), `values-sw480dp/`, `values-sw600dp/` (7" tablets), `values-sw720dp/` (10" tablets). Padding dimensions use `dp`; only text sizes use `sp`.
 
 ### Adding a New Code Category
