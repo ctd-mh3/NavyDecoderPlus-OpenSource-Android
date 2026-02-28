@@ -38,6 +38,7 @@
 
   <!-- Main Screen -->
   <string name="topLevelDescription">Reference for US Navy Admin Codes</string>
+  <string name="openSourceDataNotice">This application is open source and fully relies on members of the Navy Reserve to pass updated (non-CUI) data and corrections to the app author (or the project on GitHub).</string>
   <string name="selectCategoryInstruction">Select a code category to search</string>
 
   <!-- Final Screen -->
