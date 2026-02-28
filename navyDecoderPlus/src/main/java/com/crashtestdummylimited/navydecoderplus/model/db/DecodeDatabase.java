@@ -394,9 +394,7 @@ public class DecodeDatabase {
       SQLiteDatabase mCheckDB = null;
 
       try {
-        // TODO- Maybe update this code to use getDatabasePath per http://developer.android.com/reference/android/content/ContextWrapper.html#getDatabasePath(java.lang.String)
-        //       and Larrybud comment on http://www.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/
-
+        // mDataBaseFullPathWithFileName is already set via getDatabasePath() in the constructor.
         mCheckDB = SQLiteDatabase.openDatabase(mDataBaseFullPathWithFileName, null, SQLiteDatabase.OPEN_READONLY);
         Log.d(TAG, "In checkDataBase(), database version is " + mCheckDB.getVersion());
 

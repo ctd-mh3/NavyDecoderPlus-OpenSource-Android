@@ -116,13 +116,12 @@ public class SelectedItemActivity extends AppCompatActivity {
       Intent mIntent = getIntent();
       String mDecodeCategory = mIntent.getStringExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER);
       MappingHelper mMappingHelper = MappingHelper.getInstance(getApplicationContext());
-      // TODO - What happens if no match
+      // getSelectionText() returns "" via getOrDefault when no match — setText("") is safe.
       String mSelectionText = mMappingHelper.getSelectionText(mDecodeCategory);
       mBinding.decodeCategoryTextView.setText(mSelectionText);
 
       mCursor.moveToFirst();
 
-      // TODO         
       int mCodeIndex = mCursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE);
       int mCodeMeaningIndex = mCursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_MEANING);
       int mCodeSourceIndex = mCursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_SOURCE);
