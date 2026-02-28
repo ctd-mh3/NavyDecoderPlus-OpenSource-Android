@@ -22,7 +22,7 @@ Navy Decoder Plus is an Android application (Java, minSdk 26, compileSdk/targetS
 ./gradlew :navyDecoderPlus:check
 ```
 
-There are no unit tests in the project currently.
+**Important:** The CLI `./gradlew` requires JDK 17+. The machine's system JDK may be older; in that case builds must be run from Android Studio, which bundles its own JDK. There are no unit tests in the project.
 
 ## Database Update Workflow
 
@@ -44,22 +44,21 @@ The project has one app module: `navyDecoderPlus`. The top-level `build.gradle` 
 
 ### Package Structure (`com.crashtestdummylimited.navydecoderplus`)
 
-- **`NavyDecoderPlus`** — Main launcher Activity. Displays the list of decode categories and routes to the appropriate Activity for each selection.
+- **`NavyDecoderPlus`** — Main launcher Activity. Displays the list of decode categories and routes to the appropriate Activity for each selection. Uses a 4-arg `ArrayAdapter` constructor with `android.R.id.text1` because the list item root is a `RelativeLayout`, not a bare `TextView`.
 - **`controller/`** — Activities and supporting controllers:
   - `BlankActivity` + `BlankActivity<CodeType>` subclasses — Thin activities that exist solely to trigger Android's Search dialog for a specific code category. Each subclass is paired with a `SearchableDecoderActivity<CodeType>`.
-  - `SearchableDecoderActivity` + subclasses — Handles `ACTION_SEARCH` intents; queries `DecodeProvider` and displays results in a `ListView`.
-  - `SelectedItemActivity` — Displays the full decoded detail for a single item.
+  - `SearchableDecoderActivity` + subclasses — Handles `ACTION_SEARCH` intents; queries `DecodeProvider` and displays results in a `ListView` with `setEmptyView()` for the no-results state.
+  - `SelectedItemActivity` — Displays the full decoded detail for a single item. Also owns Play Store In-App Review logic (3-day install age gate, 7-day cooldown between prompts).
   - `RfasActivity` — Special-cased activity for RFAS codes (enlisted and officer), which use a multi-step spinner UI instead of the standard search flow.
-  - `DecodeProvider` — Android `ContentProvider` that routes URI-based queries to `DecodeDatabase`. Supports search suggestions and direct item lookup.
-  - `MappingHelper` — Singleton that maps human-readable category strings (from `strings.xml`) to internal database key identifiers (e.g., `"enlistedratingcodes"`).
+  - `DecodeProvider` — Android `ContentProvider` that routes URI-based queries to `DecodeDatabase`. Supports search suggestions and direct item lookup. The `AUTHORITY` string contains mixed case and **must not be changed** — it is baked into `AndroidManifest.xml` and all saved intents on existing installed devices.
+  - `MappingHelper` — Singleton that maps human-readable category strings (from `strings.xml`) to internal database key identifiers (e.g., `"enlistedratingcodes"`). Provides both a `getInstance(Context)` initialiser and a no-arg `getInstance()` for callers (like `DecodeProvider`) that lack a `Context`.
   - `MenuOptions` — Shared options-menu logic reused across Activities.
   - `SearchResultsCursorAdapter` — `CursorAdapter` for the search results `ListView`.
 - **`model/`**:
-  - `db/DecodeDatabase` — Manages the pre-packaged SQLite database. On first run it copies the `.sqlite3` asset file to the app's database directory. On upgrade it deletes and re-copies the database (simple replacement strategy, no data migration). There is a noted TODO to migrate to Android Room DAOs.
+  - `db/DecodeDatabase` — Manages the pre-packaged SQLite database. On first run it copies the `.sqlite3` asset file to the app's database directory. On upgrade it deletes and re-copies the database (simple replacement strategy, no data migration). **Room DAOs are not used** — all 14 tables are FTS3 virtual tables (Room only supports FTS4/FTS5), and the ContentProvider + Android Search framework requires `Cursor`-returning queries.
   - `RFASEnlistedCodes`, `RFASOfficerCodes`, `RFASReferenceData` — Model classes for the RFAS code multi-step lookup.
   - `ReferenceData` — Generic model for a decoded code/meaning pair.
-- **`ui/`** — `AppRater` (prompts users to rate the app).
-- **`util/`** — `ChangelogBuilder`, `CommonUtilities`, `DataLoader` (loads raw resource files as strings).
+- **`util/`** — `ChangelogBuilder` (renders the changelog dialog), `CommonUtilities`, `DataLoader` (loads raw resource files as strings using `int` resource IDs like `R.raw.changelog`, not `String` names).
 
 ### Search Flow
 
@@ -69,6 +68,15 @@ Each searchable code category follows the same pattern:
 3. Android routes the search query to `SearchableDecoderActivity<CodeType>` (configured in `AndroidManifest.xml` via `android.app.default_searchable` / `android.app.searchable` metadata)
 4. `SearchableDecoderActivity` queries `DecodeProvider` via `ContentResolver`, displays results, and launches `SelectedItemActivity` on tap
 5. `DecodeProvider` uses `MappingHelper` to resolve the category key to a database table name, then delegates to `DecodeDatabase.getDecodeMatches()` (FTS3 prefix search)
+
+### UI Conventions
+
+- **Edge-to-edge insets**: All four main activities apply `ViewCompat.setOnApplyWindowInsetsListener` on `android.R.id.content` to handle system bar padding (required for API 36 mandatory edge-to-edge).
+- **Toolbar title**: Set explicitly via `getSupportActionBar().setTitle(R.string.app_name)` in each activity — the application-level `android:label` uses a shorter icon label (`app_name_for_icon`) that would otherwise show as the toolbar title.
+- **Dialog styling**: All `MaterialAlertDialogBuilder` dialogs use `R.style.MenuDialogStyle`, which sets Material3 color roles (`colorSurfaceContainerHigh`, `colorOnSurface`, `colorOnSurfaceVariant`, `colorPrimary`) — not `android:background`, which does not paint the Material3 dialog card.
+- **Colors**: Navy-themed. Primary blue is `#002855` (Pantone 289 / U.S. Navy official). Separate `values/colors.xml` (light) and `values-night/colors.xml` (dark) — there is no `values-notnight/` directory.
+- **Adaptive icon**: `mipmap-anydpi/ic_launcher.xml` and `ic_launcher_round.xml` reference `drawable/ic_launcher_background.xml` (solid navy `#002855`), `mipmap/ic_launcher_foreground` (radar/ND+ webp), and `drawable/ic_launcher_monochrome.xml` (vector for Android 13+ themed icons).
+- **Font sizes**: Four breakpoints — `values/` (default phones), `values-sw480dp/`, `values-sw600dp/` (7" tablets), `values-sw720dp/` (10" tablets). Padding dimensions use `dp`; only text sizes use `sp`.
 
 ### Adding a New Code Category
 
