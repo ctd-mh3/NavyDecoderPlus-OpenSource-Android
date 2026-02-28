@@ -93,13 +93,11 @@ public class MenuOptions {
       try {
         activity.startActivity(chooser);
       } catch (ActivityNotFoundException e) {
-        // Define what your app should do if no activity can handle the intent.
-        MaterialAlertDialogBuilder alertDialog2 = new MaterialAlertDialogBuilder(activity);
-        alertDialog2.setTitle(activity.getString(R.string.emailErrorTitle));
-        alertDialog2.setMessage(R.string.emailErrorMessage);
-        alertDialog2.setPositiveButton("OK", (dialog, which) -> {
-        });
-        alertDialog2.show();
+        new MaterialAlertDialogBuilder(activity, R.style.MenuDialogStyle)
+            .setTitle(R.string.emailErrorTitle)
+            .setMessage(R.string.emailErrorMessage)
+            .setPositiveButton(R.string.ok, null)
+            .show();
       }
     }
   }
