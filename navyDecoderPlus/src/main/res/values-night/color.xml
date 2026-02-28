@@ -3,30 +3,31 @@
 
   <!-- Dark mode colors. -->
 
-  <color name="appBackground">#121212</color>
-  <color name="mainDescription_Background">#1A3A6B</color>
-  <color name="searchScreenTextView_Background">#1E1E1E</color>
-  <color name="mainDecodeDescription_TextColor">#DEDEDE</color>
-  <color name="searchScreenTextView_TextColor">#90B8FF</color>
+  <color name="appBackground">#0C1B30</color>
+  <color name="mainDescription_Background">#193C68</color>
+  <color name="searchScreenTextView_Background">#0F2540</color>
+  <color name="mainDecodeDescription_TextColor">#B8D4F2</color>
+  <color name="searchScreenTextView_TextColor">#82BAFF</color>
 
-  <color name="resultDescription_Background">#263040</color>
-  <color name="resultDescription_TextColor">#FFFFFF</color>
+  <color name="resultDescription_Background">#142B4A</color>
+  <color name="resultDescription_TextColor">#E4F0FF</color>
 
-  <!--   your app branding color for the app bar -->
-  <color name="colorPrimary">#5C7CFA</color>
+  <!-- App branding color for the app bar -->
+  <color name="colorPrimary">#5B9BD5</color>
 
   <color name="colorWhite">#FFFFFF</color>
 
-  <color name="applicationTextColor">#90B8FF</color>
+  <color name="applicationTextColor">#82BAFF</color>
 
-  <!-- Rater dialog -->
-  <color name="raterTextColor">#E0E0E0</color>
-  <color name="raterBackgroundColor">#2D2D2D</color>
+  <!-- Changelog dialog -->
+  <color name="raterTextColor">#C8DCEF</color>
+  <color name="raterBackgroundColor">#142B4A</color>
 
   <!-- Menu / about dialogs -->
-  <color name="menuDialogBackgroundColor">#1E2D40</color>
+  <color name="menuDialogBackgroundColor">#1A3A6B</color>
   <color name="menuDialogTextColor">#FFFFFF</color>
+  <color name="changeLogTextColor">#E4F0FF</color>
+  <color name="changeLogBackgroundColor">#142B4A</color>
+  <color name="dialogButtonTextColor">#82BAFF</color>
 
-  <color name="changeLogBackgroundColor">#0446ef</color>
-  <color name="dialogButtonTextColor">#0446ef</color>
 </resources>
