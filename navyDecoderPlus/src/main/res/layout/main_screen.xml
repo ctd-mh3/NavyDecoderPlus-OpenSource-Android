@@ -20,7 +20,7 @@
     android:paddingBottom="6dp"
     android:text="@string/selectCategoryInstruction"
     android:textColor="@color/mainDecodeDescription_TextColor"
-    android:textSize="17sp"
+    android:textSize="@dimen/selectCategoryInstruction_textSize"
     android:textStyle="italic"/>
 
   <ListView
