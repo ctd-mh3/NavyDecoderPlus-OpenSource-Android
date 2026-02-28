@@ -133,7 +133,7 @@ public class NavyDecoderPlus extends AppCompatActivity {
         this.getString(R.string.categorySubspecialityCodes)
     };
 
-    mListView.setAdapter(new ArrayAdapter<>(this, R.layout.main_screen_selection_list_item, mDecodeOptions));
+    mListView.setAdapter(new ArrayAdapter<>(this, R.layout.main_screen_selection_list_item, android.R.id.text1, mDecodeOptions));
     mListView.setOnItemClickListener((parent, view, position, id) -> {
       // RFAS categories use a spinner-based Activity instead of the standard search flow.
       if (position == 13) {

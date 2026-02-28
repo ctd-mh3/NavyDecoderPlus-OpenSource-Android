@@ -43,6 +43,7 @@
 
   <!-- Main Screen -->
   <string name="topLevelDescription">Reference for US Navy Admin Codes</string>
+  <string name="selectCategoryInstruction">Select a code category to search</string>
 
   <!-- Final Screen -->
   <string name="codeBeingDecoded">Code:</string>
