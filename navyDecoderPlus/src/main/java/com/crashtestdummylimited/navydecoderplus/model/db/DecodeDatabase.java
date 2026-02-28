@@ -42,7 +42,9 @@ import java.util.HashMap;
  */
 public class DecodeDatabase {
 
-  // TODO - Move from this old way to access SQLite database to using Android Room DAOs
+  // Room DAOs are not used here. The database is a read-only pre-packaged asset, all 14 tables
+  // are FTS3 virtual tables (Room only supports FTS4/FTS5), and the ContentProvider + Android
+  // Search framework requires Cursor-returning queries — none of which fit Room's model.
   private static final String TAG = "DecodeDatabase";
 
   //The columns we'll include in the decode table
@@ -452,46 +454,8 @@ public class DecodeDatabase {
     }
 
     void openDataBase() throws SQLException {
-
       Log.d(TAG, "DecoderOpenHelper.openDataBase");
-
-      // TODO- Maybe update this code to use getDatabasePath per http://developer.android.com/reference/android/content/ContextWrapper.html#getDatabasePath(java.lang.String)
-      //       and Larrybud comment on http://www.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/
-
-      // Due to apparent issue in an android build this simple attempt to open
-      //   the database in read-only mode causes an sql exception stating
-      //   that we attempted to write to the database
-      //
-      // http://code.google.com/p/android/issues/detail?id=20341
-      //mDataBase = SQLiteDatabase.openDatabase(mPath, null, SQLiteDatabase.OPEN_READONLY);
-
-      //  The below is a work around for this issue
-      try {
-        mDatabase = SQLiteDatabase.openDatabase(mDataBaseFullPathWithFileName, null, SQLiteDatabase.OPEN_READONLY);
-      } catch (SQLiteException e) {
-
-        final String mMessage = e.getMessage();
-
-        if (mMessage == null) {
-          Log.d(TAG, "DecoderOpenHelper.openDataBase exception opening database null");
-          throw e;
-        }
-
-        if (!mMessage.contains("attempt to write a readonly database")) {
-          Log.d(TAG, "DecoderOpenHelper.openDataBase exception opening database");
-          throw e;
-        }
-
-        // We tried to open the database in read-only mode but this failed
-        // because of a bug which manifests on Model:LG-P500 Release:2.3.3 Sdk:10.
-        // The openDatabase method tries to write to the DB it opened readonly.
-        // Hoping it needs to do this only once, try to open the db in readwrite
-        // mode, close it, then try again readonly.
-        mDatabase = SQLiteDatabase.openDatabase(mDataBaseFullPathWithFileName, null, SQLiteDatabase.OPEN_READWRITE);
-        mDatabase.close();
-        mDatabase = SQLiteDatabase.openDatabase(mDataBaseFullPathWithFileName, null, SQLiteDatabase.OPEN_READONLY);
-      }
-
+      mDatabase = SQLiteDatabase.openDatabase(mDataBaseFullPathWithFileName, null, SQLiteDatabase.OPEN_READONLY);
     }
 
     @Override
