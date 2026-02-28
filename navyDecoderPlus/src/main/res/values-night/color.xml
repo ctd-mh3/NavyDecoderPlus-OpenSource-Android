@@ -17,18 +17,13 @@
 
   <color name="colorWhite">#FFFFFF</color>
 
-  <color name="applicationTextColor">#82BAFF</color>
-
   <!-- Changelog dialog -->
-  <color name="raterTextColor">#C8DCEF</color>
-  <color name="raterBackgroundColor">#142B4A</color>
 
   <!-- Menu / about dialogs -->
   <color name="menuDialogBackgroundColor">#1A3A6B</color>
   <color name="menuDialogTextColor">#FFFFFF</color>
   <color name="changeLogTextColor">#E4F0FF</color>
   <color name="changeLogBackgroundColor">#142B4A</color>
-  <color name="dialogButtonTextColor">#82BAFF</color>
   <color name="listItemDivider">#1E3A5C</color>
 
 </resources>

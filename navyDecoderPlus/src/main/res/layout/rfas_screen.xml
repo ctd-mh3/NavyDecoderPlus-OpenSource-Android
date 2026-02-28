@@ -14,7 +14,6 @@
       style="@style/MainDescription" />
 
     <LinearLayout
-      android:id="@+id/rfasSpinnerLayout"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/rfasDecodeSpinner_paddingAboveSpinners"
