@@ -44,7 +44,8 @@ public class BlankActivity extends AppCompatActivity {
     View view = mBinding.getRoot();
     setContentView(view);
 
-    getSupportActionBar().setTitle(R.string.app_name);
+    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is defensive only.
+    if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
 
     // This activity is only used to cover up the main screen when the user has selected an item
     //   that invokes the search functionality. When the user attempts to navigate back to the 

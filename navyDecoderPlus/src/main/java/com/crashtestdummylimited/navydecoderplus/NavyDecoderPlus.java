@@ -105,8 +105,8 @@ public class NavyDecoderPlus extends AppCompatActivity {
           return WindowInsetsCompat.CONSUMED;
         });
 
-    // Set Title Bar Title to official app name
-    getSupportActionBar().setTitle(R.string.app_name);
+    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is defensive only.
+    if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
 
     ListView mListView = findViewById(R.id.mainItemToDecodeListView);
 
