@@ -97,11 +97,15 @@
     <item name="android:layout_height">wrap_content</item>
   </style>
 
-  <!-- Style for About / Open Source dialogs. Background and text are navy-themed. -->
+  <!-- Style for About / Open Source dialogs. Background and text are navy-themed.
+       Material3 AlertDialog paints its card via backgroundTint → colorSurfaceContainerHigh,
+       so that is the correct slot to override for the card background.
+       colorOnSurface drives title text; colorOnSurfaceVariant drives message text;
+       colorPrimary drives the text-button ("OK") label. -->
   <style name="MenuDialogStyle" parent="ThemeOverlay.Material3.MaterialAlertDialog">
-    <item name="android:textColorPrimary">@color/menuDialogTextColor</item>
-    <item name="android:textColor">@color/menuDialogTextColor</item>
-    <item name="android:background">@color/menuDialogBackgroundColor</item>
+    <item name="colorSurfaceContainerHigh">@color/menuDialogBackgroundColor</item>
+    <item name="colorOnSurface">@color/menuDialogTextColor</item>
+    <item name="colorOnSurfaceVariant">@color/menuDialogTextColor</item>
     <item name="colorPrimary">@color/menuDialogTextColor</item>
   </style>
 
@@ -114,4 +118,8 @@
     <item name="android:textColor">@color/raterTextColor</item>
   </style>
 
+  <style name="ChangeDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <item name="android:textColorPrimary">@color/changeLogTextColor</item>
+    <item name="android:background">@color/changeLogBackgroundColor</item>
+  </style>
 </resources>

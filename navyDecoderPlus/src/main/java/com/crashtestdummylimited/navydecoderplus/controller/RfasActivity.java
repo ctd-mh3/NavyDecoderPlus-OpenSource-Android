@@ -101,6 +101,8 @@ public class RfasActivity extends AppCompatActivity {
           return WindowInsetsCompat.CONSUMED;
         });
 
+    getSupportActionBar().setTitle(R.string.app_name);
+
     // Grab info from bundle to tell if enlisted or officer RFAS
     Intent mIntent = getIntent();
     String mRfasType = mIntent.getStringExtra("RFAS_TYPE");

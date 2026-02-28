@@ -213,22 +213,12 @@ public class NavyDecoderPlus extends AppCompatActivity {
   private void showChangelog() {
     final long versionCode = CommonUtilities.getActualVersionCode(this);
     final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-
-    AlertDialog changeLog = ChangelogBuilder.create(this, (dialogInterface, i) -> {
+    ChangelogBuilder.create(this, (dialogInterface, i) -> {
       // Mark this version as read
       sp.edit().putLong(LAST_VERSION_CODE_KEY, versionCode).apply();
 
       dialogInterface.dismiss();
-    });
-
-    changeLog.setOnShowListener(dialog -> {
-
-      Button button = changeLog.getButton(DialogInterface.BUTTON_POSITIVE);
-      button.setTextColor(ContextCompat.getColor(this, R.color.resultDescription_TextColor));
-      button.setBackgroundColor(ContextCompat.getColor(this, R.color.resultDescription_Background));
-    });
-
-    changeLog.show();
+    }).show();
   }
 
 }
