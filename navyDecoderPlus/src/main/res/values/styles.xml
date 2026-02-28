@@ -74,15 +74,6 @@
     <item name="android:padding">@dimen/rfasDecodeSpinner_padding</item>
   </style>
 
-  <style name="DialogButtons">
-    <item name="android:layout_width">match_parent</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:gravity">center_horizontal</item>
-    <item name="android:layout_marginEnd">15dp</item>
-    <item name="android:layout_marginStart">15dp</item>
-    <item name="android:textColor">@color/resultDescription_TextColor</item>
-  </style>
-
 
   <style name="ResultDescription">
     <item name="android:background">@color/resultDescription_Background</item>
@@ -110,13 +101,6 @@
   </style>
 
   <!-- Not using a theme with Actionbar and xml places a title looking TextView -->
-  <style name="DialogStyle" parent="Theme.Material3.DayNight.NoActionBar">
-    <!-- Used for the title and text -->
-    <item name="android:textColorPrimary">@color/raterTextColor</item>
-    <!-- Used for the background -->
-    <item name="android:background">@color/raterBackgroundColor</item>
-    <item name="android:textColor">@color/raterTextColor</item>
-  </style>
 
   <style name="ChangeDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
     <item name="android:textColorPrimary">@color/changeLogTextColor</item>

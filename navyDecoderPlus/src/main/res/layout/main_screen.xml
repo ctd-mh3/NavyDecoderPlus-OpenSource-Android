@@ -6,12 +6,10 @@
   android:orientation="vertical">
 
   <TextView
-    android:id="@+id/topLevelDescription"
     style="@style/MainDescription"
     android:text="@string/topLevelDescription"/>
 
   <TextView
-    android:id="@+id/selectCategoryInstruction"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="16dp"
