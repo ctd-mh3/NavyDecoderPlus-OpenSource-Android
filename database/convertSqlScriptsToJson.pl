@@ -11,7 +11,7 @@
 #push(@INPUT_FILE_NAME_ARRAY, "fill_table_ims_codes.sql");
 my %INPUT_FILE_HASH = ();
 $INPUT_FILE_HASH{'AQD'} = 'fill_table_aqd_codes.sql';
-$INPUT_FILE_HASH{'Enlisted Ratings'} = 'fill_table_enlisted_rating_codes.sql';
+$INPUT_FILE_HASH{'Enlisted Rating'} = 'fill_table_enlisted_rating_codes.sql';
 $INPUT_FILE_HASH{'IMS'} = 'fill_table_ims_codes.sql';
 $INPUT_FILE_HASH{'MAS'} = 'fill_table_mas_codes.sql';
 $INPUT_FILE_HASH{'NEC'} = 'fill_table_nec_codes.sql';
