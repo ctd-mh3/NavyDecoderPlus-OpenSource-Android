@@ -22,7 +22,17 @@ Navy Decoder Plus is an Android application (Java, minSdk 26, compileSdk/targetS
 ./gradlew :navyDecoderPlus:check
 ```
 
+```bash
+# Auto-format Java and XML sources with Spotless
+./gradlew :navyDecoderPlus:spotlessApply
+
+# Check formatting without modifying files
+./gradlew :navyDecoderPlus:spotlessCheck
+```
+
 **Important:** The CLI `./gradlew` requires JDK 17+. The machine's system JDK may be older; in that case builds must be run from Android Studio, which bundles its own JDK. There are no unit tests in the project.
+
+Spotless uses Google Java Format (currently `1.35.0`) for `.java` files and enforces trailing-whitespace cleanup + 4-space indent for `.xml` files. The `allprojects` block in the top-level `build.gradle` also enables `-Xlint:unchecked` and `-Xlint:deprecation` compiler warnings on every build.
 
 ## Database Update Workflow
 
