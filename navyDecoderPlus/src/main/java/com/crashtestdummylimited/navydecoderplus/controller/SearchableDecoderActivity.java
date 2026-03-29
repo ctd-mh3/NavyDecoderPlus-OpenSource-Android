@@ -18,30 +18,26 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
-import com.crashtestdummylimited.navydecoderplus.R;
-import com.crashtestdummylimited.navydecoderplus.databinding.SearchScreenBinding;
-
 import android.app.SearchManager;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
+import com.crashtestdummylimited.navydecoderplus.R;
+import com.crashtestdummylimited.navydecoderplus.databinding.SearchScreenBinding;
 
 /**
- * The main activity for the decoder.
- * Displays search results triggered by the search dialog and handles
- * actions from search suggestions.
+ * The main activity for the decoder. Displays search results triggered by the search dialog and
+ * handles actions from search suggestions.
  */
 public class SearchableDecoderActivity extends AppCompatActivity {
 
@@ -60,9 +56,10 @@ public class SearchableDecoderActivity extends AppCompatActivity {
     MenuOptions.onOptionsItemSelected(this, item);
     return true;
   }
-  //*************************************************************************
+
+  // *************************************************************************
   //  End Menu Support Code
-  //*************************************************************************
+  // *************************************************************************
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -80,7 +77,8 @@ public class SearchableDecoderActivity extends AppCompatActivity {
           return WindowInsetsCompat.CONSUMED;
         });
 
-    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is defensive only.
+    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is
+    // defensive only.
     if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
     mBinding.searchScreenListView.setEmptyView(mBinding.searchScreenEmptyView);
 
@@ -118,7 +116,8 @@ public class SearchableDecoderActivity extends AppCompatActivity {
     mBinding.searchScreenEmptyView.setText(getString(R.string.no_results, query));
 
     Uri mUriWithPath = Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mDecodeCategory);
-    Cursor mCursor = getContentResolver().query(mUriWithPath, null, null, new String[]{query}, null);
+    Cursor mCursor =
+        getContentResolver().query(mUriWithPath, null, null, new String[] {query}, null);
 
     if (mCursor == null) {
       // Provider error: setEmptyView() only auto-fires once an adapter is attached,
@@ -130,15 +129,17 @@ public class SearchableDecoderActivity extends AppCompatActivity {
     ListView lvItems = mBinding.searchScreenListView;
     lvItems.setAdapter(new SearchResultsCursorAdapter(this, mCursor));
 
-    lvItems.setOnItemClickListener((parent, view, position, id) -> {
-      Intent mItemIntent = new Intent(getApplicationContext(), SelectedItemActivity.class);
-      Uri itemUri = Uri.withAppendedPath(
-          Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mDecodeCategory),
-          String.valueOf(id));
-      mItemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, mDecodeCategory);
-      mItemIntent.setData(itemUri);
-      startActivity(mItemIntent);
-    });
+    lvItems.setOnItemClickListener(
+        (parent, view, position, id) -> {
+          Intent mItemIntent = new Intent(getApplicationContext(), SelectedItemActivity.class);
+          Uri itemUri =
+              Uri.withAppendedPath(
+                  Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mDecodeCategory),
+                  String.valueOf(id));
+          mItemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, mDecodeCategory);
+          mItemIntent.setData(itemUri);
+          startActivity(mItemIntent);
+        });
 
     mCursor.close();
   }

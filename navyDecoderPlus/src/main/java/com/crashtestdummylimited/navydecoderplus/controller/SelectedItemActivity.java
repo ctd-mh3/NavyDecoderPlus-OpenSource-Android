@@ -18,11 +18,6 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
-import com.crashtestdummylimited.navydecoderplus.BuildConfig;
-import com.crashtestdummylimited.navydecoderplus.R;
-import com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding;
-import com.crashtestdummylimited.navydecoderplus.model.db.DecodeDatabase;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,44 +26,42 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-
+import com.crashtestdummylimited.navydecoderplus.BuildConfig;
+import com.crashtestdummylimited.navydecoderplus.R;
+import com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding;
+import com.crashtestdummylimited.navydecoderplus.model.db.DecodeDatabase;
 import com.google.android.gms.tasks.Task;
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
 import com.google.android.play.core.review.ReviewManagerFactory;
-
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-
 import java.util.Objects;
 
-/**
- * Displays a word and its definition.
- */
+/** Displays a word and its definition. */
 public class SelectedItemActivity extends AppCompatActivity {
 
   // For Play Store In-App Review
   private static final String REVIEW_PREFS = "review_prefs";
   private static final String KEY_FIRST_LAUNCH_MS = "first_launch_ms";
-  private static final String KEY_LAST_PROMPT_MS  = "last_prompt_ms";
+  private static final String KEY_LAST_PROMPT_MS = "last_prompt_ms";
   private static final long MIN_INSTALL_AGE_MS = 3L * 24L * 60L * 60L * 1000L; // 3 days
-  private static final long COOLDOWN_MS        = 7L * 24L * 60L * 60L * 1000L; // 7 days
+  private static final long COOLDOWN_MS = 7L * 24L * 60L * 60L * 1000L; // 7 days
 
   private ReviewManager mReviewManager;
 
-  //*************************************************************************
+  // *************************************************************************
   //
   //  Overwritten to support menu
   //
-  //*************************************************************************
+  // *************************************************************************
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -81,9 +74,10 @@ public class SelectedItemActivity extends AppCompatActivity {
     MenuOptions.onOptionsItemSelected(this, item);
     return true;
   }
-  //*************************************************************************
+
+  // *************************************************************************
   //  End Menu Support Code
-  //*************************************************************************
+  // *************************************************************************
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +87,8 @@ public class SelectedItemActivity extends AppCompatActivity {
       mReviewManager = ReviewManagerFactory.create(this);
     }
 
-    com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding mBinding = FinalScreenSelectedItemBinding.inflate(getLayoutInflater());
+    com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding mBinding =
+        FinalScreenSelectedItemBinding.inflate(getLayoutInflater());
     View view = mBinding.getRoot();
     setContentView(view);
 
@@ -105,11 +100,13 @@ public class SelectedItemActivity extends AppCompatActivity {
           return WindowInsetsCompat.CONSUMED;
         });
 
-    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is defensive only.
+    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is
+    // defensive only.
     if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
 
     Uri mUri = getIntent().getData();
-    Cursor mCursor = getContentResolver().query(Objects.requireNonNull(mUri), null, null, null, null);
+    Cursor mCursor =
+        getContentResolver().query(Objects.requireNonNull(mUri), null, null, null, null);
 
     if (mCursor == null) {
       finish();
@@ -141,14 +138,17 @@ public class SelectedItemActivity extends AppCompatActivity {
     // time. FakeReviewManager completes silently without any visible UI, so it is
     // not useful for manual timing verification.
     if (BuildConfig.DEBUG) {
-      new Handler(Looper.getMainLooper()).postDelayed(() -> {
-        if (isFinishing()) return;
-        new AlertDialog.Builder(this)
-            .setTitle("[Debug] Review Prompt")
-            .setMessage("In a production build the Play Store review dialog appears here.")
-            .setPositiveButton("OK", null)
-            .show();
-      }, 500);
+      new Handler(Looper.getMainLooper())
+          .postDelayed(
+              () -> {
+                if (isFinishing()) return;
+                new AlertDialog.Builder(this)
+                    .setTitle("[Debug] Review Prompt")
+                    .setMessage("In a production build the Play Store review dialog appears here.")
+                    .setPositiveButton("OK", null)
+                    .show();
+              },
+              500);
       return;
     }
 
@@ -178,14 +178,15 @@ public class SelectedItemActivity extends AppCompatActivity {
 
   private void promptInAppReview() {
     Task<ReviewInfo> request = mReviewManager.requestReviewFlow();
-    request.addOnCompleteListener(requestTask -> {
-      if (isFinishing()) return;
-      if (requestTask.isSuccessful()) {
-        ReviewInfo reviewInfo = requestTask.getResult();
-        mReviewManager.launchReviewFlow(this, reviewInfo);
-        // The API does not indicate whether the dialog was shown or a review
-        // was submitted. Continue app flow regardless of the outcome.
-      }
-    });
+    request.addOnCompleteListener(
+        requestTask -> {
+          if (isFinishing()) return;
+          if (requestTask.isSuccessful()) {
+            ReviewInfo reviewInfo = requestTask.getResult();
+            mReviewManager.launchReviewFlow(this, reviewInfo);
+            // The API does not indicate whether the dialog was shown or a review
+            // was submitted. Continue app flow regardless of the outcome.
+          }
+        });
   }
 }

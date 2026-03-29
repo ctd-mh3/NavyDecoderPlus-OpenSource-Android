@@ -18,31 +18,26 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import com.crashtestdummylimited.navydecoderplus.R;
 import com.crashtestdummylimited.navydecoderplus.R.string;
 import com.crashtestdummylimited.navydecoderplus.databinding.RfasScreenBinding;
 import com.crashtestdummylimited.navydecoderplus.model.RFASEnlistedCodes;
 import com.crashtestdummylimited.navydecoderplus.model.RFASOfficerCodes;
 import com.crashtestdummylimited.navydecoderplus.model.RFASReferenceData;
-
-import android.content.Intent;
-
-import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView.OnItemSelectedListener;
-
 import java.util.Objects;
 
 public class RfasActivity extends AppCompatActivity {
@@ -50,11 +45,11 @@ public class RfasActivity extends AppCompatActivity {
   private RfasScreenBinding mBinding;
   private RFASReferenceData rfasReferenceData;
 
-  //*************************************************************************
+  // *************************************************************************
   //
   //  Overwritten to support menu
   //
-  //*************************************************************************
+  // *************************************************************************
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,13 +62,16 @@ public class RfasActivity extends AppCompatActivity {
     MenuOptions.onOptionsItemSelected(this, item);
     return true;
   }
-  //*************************************************************************
+
+  // *************************************************************************
   //  End Menu Support Code
-  //*************************************************************************
+  // *************************************************************************
 
-  private void setupSpinnerFromArray(Spinner spinner, String[] stringArray, OnItemSelectedListener listener) {
+  private void setupSpinnerFromArray(
+      Spinner spinner, String[] stringArray, OnItemSelectedListener listener) {
 
-    ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(this, R.layout.spinner_item, stringArray);
+    ArrayAdapter<CharSequence> adapter =
+        new ArrayAdapter<>(this, R.layout.spinner_item, stringArray);
 
     adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
 
@@ -82,9 +80,7 @@ public class RfasActivity extends AppCompatActivity {
     spinner.setOnItemSelectedListener(listener);
   }
 
-  /**
-   * Called when the activity is first created.
-   */
+  /** Called when the activity is first created. */
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -101,7 +97,8 @@ public class RfasActivity extends AppCompatActivity {
           return WindowInsetsCompat.CONSUMED;
         });
 
-    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is defensive only.
+    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is
+    // defensive only.
     if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
 
     // Grab info from bundle to tell if enlisted or officer RFAS
@@ -112,17 +109,37 @@ public class RfasActivity extends AppCompatActivity {
     switch (Objects.requireNonNull(mRfasType)) {
       case "Enlisted":
         rfasReferenceData = new RFASEnlistedCodes();
-        mBinding.rfasTopLevelDescription.setText(this.getString(string.rfasEnlistedTopLevelDescription));
-        setupSpinnerFromArray(mBinding.rfasFirstCharacter, rfasReferenceData.getFirstCharacterKeys(), new RFASDecoderItemSelectedListener());
-        setupSpinnerFromArray(mBinding.rfasSecondAndThirdCharacter, rfasReferenceData.getSecondAndThirdCharacterKeys(), new RFASDecoderItemSelectedListener());
-        setupSpinnerFromArray(mBinding.rfasFourthCharacter, rfasReferenceData.getFourthCharacterKeys(), new RFASDecoderItemSelectedListener());
+        mBinding.rfasTopLevelDescription.setText(
+            this.getString(string.rfasEnlistedTopLevelDescription));
+        setupSpinnerFromArray(
+            mBinding.rfasFirstCharacter,
+            rfasReferenceData.getFirstCharacterKeys(),
+            new RFASDecoderItemSelectedListener());
+        setupSpinnerFromArray(
+            mBinding.rfasSecondAndThirdCharacter,
+            rfasReferenceData.getSecondAndThirdCharacterKeys(),
+            new RFASDecoderItemSelectedListener());
+        setupSpinnerFromArray(
+            mBinding.rfasFourthCharacter,
+            rfasReferenceData.getFourthCharacterKeys(),
+            new RFASDecoderItemSelectedListener());
         break;
       case "Officer":
         rfasReferenceData = new RFASOfficerCodes();
-        mBinding.rfasTopLevelDescription.setText(this.getString(string.rfasOfficerTopLevelDescription));
-        setupSpinnerFromArray(mBinding.rfasFirstCharacter, rfasReferenceData.getFirstCharacterKeys(), new RFASDecoderItemSelectedListener());
-        setupSpinnerFromArray(mBinding.rfasSecondAndThirdCharacter, rfasReferenceData.getSecondAndThirdCharacterKeys(), new RFASDecoderItemSelectedListener());
-        setupSpinnerFromArray(mBinding.rfasFourthCharacter, rfasReferenceData.getFourthCharacterKeys(), new RFASDecoderItemSelectedListener());
+        mBinding.rfasTopLevelDescription.setText(
+            this.getString(string.rfasOfficerTopLevelDescription));
+        setupSpinnerFromArray(
+            mBinding.rfasFirstCharacter,
+            rfasReferenceData.getFirstCharacterKeys(),
+            new RFASDecoderItemSelectedListener());
+        setupSpinnerFromArray(
+            mBinding.rfasSecondAndThirdCharacter,
+            rfasReferenceData.getSecondAndThirdCharacterKeys(),
+            new RFASDecoderItemSelectedListener());
+        setupSpinnerFromArray(
+            mBinding.rfasFourthCharacter,
+            rfasReferenceData.getFourthCharacterKeys(),
+            new RFASDecoderItemSelectedListener());
         break;
       default:
         throw new IllegalArgumentException("Unknown RFAS type: " + mRfasType);
@@ -133,19 +150,31 @@ public class RfasActivity extends AppCompatActivity {
 
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
-      String firstCharacterKey = mBinding.rfasFirstCharacter.getItemAtPosition(mBinding.rfasFirstCharacter.getSelectedItemPosition()).toString();
+      String firstCharacterKey =
+          mBinding
+              .rfasFirstCharacter
+              .getItemAtPosition(mBinding.rfasFirstCharacter.getSelectedItemPosition())
+              .toString();
       String firstCharacterValue = rfasReferenceData.getFirstCharacterValue(firstCharacterKey);
 
-      String secondAndThirdCharacterKey = mBinding.rfasSecondAndThirdCharacter.getItemAtPosition(mBinding.rfasSecondAndThirdCharacter.getSelectedItemPosition()).toString();
-      String secondAndThirdCharacterValue = rfasReferenceData.getSecondAndThirdCharacterValue(secondAndThirdCharacterKey);
+      String secondAndThirdCharacterKey =
+          mBinding
+              .rfasSecondAndThirdCharacter
+              .getItemAtPosition(mBinding.rfasSecondAndThirdCharacter.getSelectedItemPosition())
+              .toString();
+      String secondAndThirdCharacterValue =
+          rfasReferenceData.getSecondAndThirdCharacterValue(secondAndThirdCharacterKey);
 
-      String fourthCharacterKey = mBinding.rfasFourthCharacter.getItemAtPosition(mBinding.rfasFourthCharacter.getSelectedItemPosition()).toString();
+      String fourthCharacterKey =
+          mBinding
+              .rfasFourthCharacter
+              .getItemAtPosition(mBinding.rfasFourthCharacter.getSelectedItemPosition())
+              .toString();
       String fourthCharacterValue = rfasReferenceData.getFourthCharacterValue(fourthCharacterKey);
 
-
-      String resultString = firstCharacterValue + "\n" + secondAndThirdCharacterValue + "\n" + fourthCharacterValue;
+      String resultString =
+          firstCharacterValue + "\n" + secondAndThirdCharacterValue + "\n" + fourthCharacterValue;
       mBinding.rfasDecodeDescription.setText(resultString);
-
 
       String sourceInfo = rfasReferenceData.getSourceInfo();
       mBinding.rfasSourceDescription.setText(sourceInfo);

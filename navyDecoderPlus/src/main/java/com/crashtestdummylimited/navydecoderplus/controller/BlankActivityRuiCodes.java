@@ -18,6 +18,4 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
-public class BlankActivityRuiCodes extends BlankActivity {
-
-}
+public class BlankActivityRuiCodes extends BlankActivity {}

@@ -18,20 +18,15 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
-import com.crashtestdummylimited.navydecoderplus.R;
-import com.crashtestdummylimited.navydecoderplus.databinding.BlankScreenBinding;
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.crashtestdummylimited.navydecoderplus.R;
+import com.crashtestdummylimited.navydecoderplus.databinding.BlankScreenBinding;
 import java.util.Objects;
-
-
 
 public class BlankActivity extends AppCompatActivity {
 
@@ -40,20 +35,24 @@ public class BlankActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setTheme(R.style.AppTheme);
 
-    com.crashtestdummylimited.navydecoderplus.databinding.BlankScreenBinding mBinding = BlankScreenBinding.inflate(getLayoutInflater());
+    com.crashtestdummylimited.navydecoderplus.databinding.BlankScreenBinding mBinding =
+        BlankScreenBinding.inflate(getLayoutInflater());
     View view = mBinding.getRoot();
     setContentView(view);
 
-    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is defensive only.
+    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is
+    // defensive only.
     if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
 
     // This activity is only used to cover up the main screen when the user has selected an item
-    //   that invokes the search functionality. When the user attempts to navigate back to the 
+    //   that invokes the search functionality. When the user attempts to navigate back to the
     //   to the main screen using the back button this screen should be gone from the stack.
-    final SearchManager searchManager = (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
+    final SearchManager searchManager =
+        (SearchManager) this.getSystemService(Context.SEARCH_SERVICE);
     Objects.requireNonNull(searchManager).setOnDismissListener(this::finish);
 
-    // Activity is only started when the user wants to start a search. Therefore kick the search off.
+    // Activity is only started when the user wants to start a search. Therefore kick the search
+    // off.
     onSearchRequested();
   }
 

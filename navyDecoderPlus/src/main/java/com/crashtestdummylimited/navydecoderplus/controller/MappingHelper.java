@@ -18,12 +18,10 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
+import android.content.Context;
+import com.crashtestdummylimited.navydecoderplus.R;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import com.crashtestdummylimited.navydecoderplus.R;
-
-import android.content.Context;
 
 public final class MappingHelper {
 
