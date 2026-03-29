@@ -20,14 +20,11 @@ package com.crashtestdummylimited.navydecoderplus.controller;
 
 import android.content.Context;
 import android.database.Cursor;
-
-import androidx.cursoradapter.widget.CursorAdapter;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import androidx.cursoradapter.widget.CursorAdapter;
 import com.crashtestdummylimited.navydecoderplus.R;
 import com.crashtestdummylimited.navydecoderplus.model.db.DecodeDatabase;
 
@@ -57,11 +54,13 @@ class SearchResultsCursorAdapter extends CursorAdapter {
 
     // 15JAN2023: Added to prevent the below crash which was expected to be caused by users moving
     //            from app and then back to app
-    // Exception android.database.StaleDataException: Attempting to access a closed CursorWindow.Most probable cause: cursor is deactivated prior to calling this method.
+    // Exception android.database.StaleDataException: Attempting to access a closed
+    // CursorWindow.Most probable cause: cursor is deactivated prior to calling this method.
     if (!cursor.isClosed()) {
       // Extract properties from cursor
       itemToDecodeString = cursor.getString(cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE));
-      itemInfoString = cursor.getString(cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_MEANING));
+      itemInfoString =
+          cursor.getString(cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_MEANING));
     }
     // Populate fields with extracted properties
     itemToDecode.setText(itemToDecodeString);

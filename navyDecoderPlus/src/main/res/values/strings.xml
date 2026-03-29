@@ -55,7 +55,7 @@
   <string name="sourceDescription">Source of Data:</string>
 
 
-  <!--  Level 0 Menu List 
+  <!--  Level 0 Menu List
         NOTE - changes to this list need to be reflected in NavyDecodePlus.onCreate()-->
   <string name="categoryAqdCodes">Additional Qualification Designation Codes</string>
   <string name="categoryEnlistedRatingCodes">Enlisted Rating Codes</string>
@@ -91,7 +91,7 @@
   <string name="hintReserveProgramCodes">Search for RPC</string>
 
 
-  <!-- 
+  <!--
    <string-array name="level0_list_array">
         <item>AQD Codes</item>
         <item>NECs</item>

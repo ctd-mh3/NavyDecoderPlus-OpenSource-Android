@@ -6,15 +6,15 @@
      http://developer.android.com/guide/topics/search/
  -->
 
-<!-- NOTE: path at the end of searchSuggestIntentData such as "enlistedratingcodes" should match the content of 
+<!-- NOTE: path at the end of searchSuggestIntentData such as "enlistedratingcodes" should match the content of
            android:searchSuggestPath
-     See http://developer.android.com/guide/topics/search/searchable-config.html 
-     
+     See http://developer.android.com/guide/topics/search/searchable-config.html
+
      android:searchSuggestPath - is used by android to determine the custom search suggestions
      android:searchSuggestIntentData - is used when 1) user selects an item, or the user press the search button on the search dialog
-     
+
      And in either case, the code flow path goes to the Content Provider specified in android:searchSuggestAuthority, so the
-     Uri (authority and path) should be the same in either case.     
+     Uri (authority and path) should be the same in either case.
 -->
 
 <searchable xmlns:android="http://schemas.android.com/apk/res/android"

@@ -18,6 +18,4 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
-public class SearchableDecoderActivityOfficerBilletCodes extends SearchableDecoderActivity {
-
-}
+public class SearchableDecoderActivityOfficerBilletCodes extends SearchableDecoderActivity {}

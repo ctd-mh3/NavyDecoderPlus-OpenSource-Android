@@ -23,22 +23,21 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
-
 import androidx.core.content.pm.PackageInfoCompat;
 
 public class CommonUtilities {
 
-/*	public static function String getVersionName(Context context, Class cls) 
-	{
-	  try {
-	    ComponentName comp = new ComponentName(context, cls);
-	    PackageInfo pinfo = context.getPackageManager().getPackageInfo(comp.getPackageName(), 0);
-	    return pinfo.versionName;
-	  } catch (android.content.pm.PackageManager.NameNotFoundException e) {
-	    return null;
-	  }
-	}
-*/
+  /*	public static function String getVersionName(Context context, Class cls)
+  	{
+  	  try {
+  	    ComponentName comp = new ComponentName(context, cls);
+  	    PackageInfo pinfo = context.getPackageManager().getPackageInfo(comp.getPackageName(), 0);
+  	    return pinfo.versionName;
+  	  } catch (android.content.pm.PackageManager.NameNotFoundException e) {
+  	    return null;
+  	  }
+  	}
+  */
 
   public static String getAppVersionName(Activity activity) {
     PackageInfo packageInfo;
@@ -70,6 +69,4 @@ public class CommonUtilities {
       return 0;
     }
   }
-
-
 }

@@ -27,5 +27,4 @@ public interface ReferenceData {
   String[] getKeys();
 
   String getValue(String key);
-
 }
