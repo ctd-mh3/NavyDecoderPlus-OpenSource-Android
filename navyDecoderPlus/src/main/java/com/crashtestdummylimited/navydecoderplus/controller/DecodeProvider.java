@@ -71,6 +71,7 @@ public class DecodeProvider extends ContentProvider {
     // MappingHelper.getInstance() can return null if the singleton was never initialised
     // (observed in a user crash: IndexOutOfBoundsException at DecodeProvider.query).
     // When null, mOffsetMatcher stays empty and query() returns null — safe fallback.
+    //noinspection StatementWithEmptyBody
     if (mMappingHelper == null) {
       // Intentionally empty: mOffsetMatcher.isEmpty() guard in query() handles this case.
     } else {

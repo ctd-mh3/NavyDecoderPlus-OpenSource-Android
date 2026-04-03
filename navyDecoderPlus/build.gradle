@@ -1,15 +1,10 @@
-buildscript {
-}
-
 apply plugin: 'com.android.application'
 apply plugin: 'com.diffplug.spotless'
-
-repositories {
-}
 
 
 android {
 
+    compileSdk = 36
 
     // https://developer.android.com/studio/build/shrink-code#keep-code
     // 20210130: Currently I do not build Android App Bundles, so the below is not used
@@ -24,9 +19,8 @@ android {
 
     defaultConfig {
         applicationId "com.crashtestdummylimited.navydecoderplus"
-        minSdkVersion 26
-        compileSdkVersion 36
-        targetSdkVersion 36
+        minSdk = 26
+        targetSdk = 36
     }
 
     buildFeatures {
@@ -62,6 +56,11 @@ android {
     namespace 'com.crashtestdummylimited.navydecoderplus'
 }
 
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs << "-Xlint:unchecked"
+    options.compilerArgs << "-Xlint:deprecation"
+}
+
 spotless {
     java {
         target 'src/main/java/**/*.java', 'src/test/java/**/*.java'
@@ -86,17 +85,6 @@ dependencies {
     //compile 'com.android.support:support-v4:25'
     //compile 'com.github.hotchemi:android-rate:{latest.version}'
     //compile project(':libraries:AppRate-Library')
-}
-
-// REQUIRED: Google's new Maven repo is required for the latest
-// support library that is compatible with Android 8.0
-repositories {
-    google()
-
-    // If you're using a version of Gradle lower than 4.1, you must instead use:
-    // maven {
-    //     url 'https://maven.google.com'
-    // }
 }
 
 // To fix issue per https://stackoverflow.com/questions/75274720/a-failure-occurred-while-executing-appcheckdebugduplicateclasses/75315276#75315276

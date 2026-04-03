@@ -10,7 +10,6 @@
     android:text="@string/topLevelDescription"/>
 
   <TextView
-    android:id="@+id/openSourceDataNotice"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="16dp"
