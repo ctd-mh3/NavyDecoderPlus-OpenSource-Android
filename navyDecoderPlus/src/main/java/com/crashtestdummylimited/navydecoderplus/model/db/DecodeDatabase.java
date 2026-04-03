@@ -57,6 +57,10 @@ public class DecodeDatabase {
 
   private static final HashMap<String, String> COLUMN_MAP = buildColumnMap();
 
+  // Cap search results to prevent loading an unbounded result set into memory. Navy codes are
+  // specific enough that any match set larger than this is too broad to be useful.
+  private static final int SEARCH_RESULT_LIMIT = 50;
+
   private static String mDataBaseFullPathWithFileName;
 
   private final DecoderOpenHelper mDatabaseOpenHelper;
@@ -163,7 +167,8 @@ public class DecodeDatabase {
             selectionArgs,
             null,
             null,
-            null);
+            null,
+            String.valueOf(SEARCH_RESULT_LIMIT));
 
     if (mCursor == null) {
       return null;
