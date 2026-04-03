@@ -18,4 +18,8 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
+// Manifest anchor required by the Android Search framework. Each category needs its own class so
+// AndroidManifest.xml can attach android.app.default_searchable metadata pointing to the paired
+// SearchableDecoderActivity subclass. Routing is by class name — intent extras cannot substitute.
+// All category data lives in Category.java; all search logic lives in BlankActivity.
 public class BlankActivityRuiCodes extends BlankActivity {}
