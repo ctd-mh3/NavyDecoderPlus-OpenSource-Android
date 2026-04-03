@@ -32,20 +32,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.preference.PreferenceManager;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityAqdCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityEnlistedRatingCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityImsCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityMasCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityNecCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityNobcCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityNraCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityOfficerBilletCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityOfficerDesignatorCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityOfficerPaygradeCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityRbscBilletCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityRpCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivityRuiCodes;
-import com.crashtestdummylimited.navydecoderplus.controller.BlankActivitySspCodes;
+import com.crashtestdummylimited.navydecoderplus.controller.Category;
 import com.crashtestdummylimited.navydecoderplus.controller.MappingHelper;
 import com.crashtestdummylimited.navydecoderplus.controller.MenuOptions;
 import com.crashtestdummylimited.navydecoderplus.controller.RfasActivity;
@@ -102,98 +89,33 @@ public class NavyDecoderPlus extends AppCompatActivity {
 
     ListView mListView = findViewById(R.id.mainItemToDecodeListView);
 
-    String[] mDecodeOptions =
-        new String[] {
-          this.getString(R.string.categoryAqdCodes),
-          this.getString(R.string.categoryEnlistedRatingCodes),
-          this.getString(R.string.categoryImsCodes),
-          this.getString(R.string.categoryMasCodes),
-          this.getString(R.string.categoryNecCodes),
-          this.getString(R.string.categoryNavyReserveActivitiesCodes),
-          this.getString(R.string.categoryNobcCodes),
-          this.getString(R.string.categoryOfficerBilletCodes),
-          this.getString(R.string.categoryOfficerDesignatorCodes),
-          this.getString(R.string.categoryOfficerPaygradeCodes),
-          this.getString(R.string.categoryRbscBilletCodes),
-          this.getString(R.string.categoryReserveUnitIdentificationCodes),
-          this.getString(R.string.categoryReserveProgramCodes),
-          this.getString(R.string.categoryRfasEnlistedCodes),
-          this.getString(R.string.categoryRfasOfficerCodes),
-          this.getString(R.string.categorySubspecialityCodes)
-        };
+    Category[] categories = Category.values();
+    String[] mDecodeOptions = new String[categories.length];
+    for (int i = 0; i < categories.length; i++) {
+      mDecodeOptions[i] = getString(categories[i].labelRes);
+    }
 
     mListView.setAdapter(
         new ArrayAdapter<>(
             this, R.layout.main_screen_selection_list_item, android.R.id.text1, mDecodeOptions));
     mListView.setOnItemClickListener(
         (parent, view, position, id) -> {
+          Category category = Category.values()[position];
+
           // RFAS categories use a spinner-based Activity instead of the standard search flow.
-          if (position == 13) {
+          if (category == Category.RFAS_ENLISTED || category == Category.RFAS_OFFICER) {
+            String rfasType =
+                (category == Category.RFAS_ENLISTED)
+                    ? RfasActivity.RFAS_TYPE_ENLISTED
+                    : RfasActivity.RFAS_TYPE_OFFICER;
             Intent mIntent = new Intent(NavyDecoderPlus.this, RfasActivity.class);
-            mIntent.putExtra(RfasActivity.EXTRA_RFAS_TYPE, RfasActivity.RFAS_TYPE_ENLISTED);
-            startActivity(mIntent);
-            return;
-          }
-          if (position == 14) {
-            Intent mIntent = new Intent(NavyDecoderPlus.this, RfasActivity.class);
-            mIntent.putExtra(RfasActivity.EXTRA_RFAS_TYPE, RfasActivity.RFAS_TYPE_OFFICER);
+            mIntent.putExtra(RfasActivity.EXTRA_RFAS_TYPE, rfasType);
             startActivity(mIntent);
             return;
           }
 
-          Class<?> activityClass;
-          switch (position) {
-            case 0:
-              activityClass = BlankActivityAqdCodes.class;
-              break;
-            case 1:
-              activityClass = BlankActivityEnlistedRatingCodes.class;
-              break;
-            case 2:
-              activityClass = BlankActivityImsCodes.class;
-              break;
-            case 3:
-              activityClass = BlankActivityMasCodes.class;
-              break;
-            case 4:
-              activityClass = BlankActivityNecCodes.class;
-              break;
-            case 5:
-              activityClass = BlankActivityNraCodes.class;
-              break;
-            case 6:
-              activityClass = BlankActivityNobcCodes.class;
-              break;
-            case 7:
-              activityClass = BlankActivityOfficerBilletCodes.class;
-              break;
-            case 8:
-              activityClass = BlankActivityOfficerDesignatorCodes.class;
-              break;
-            case 9:
-              activityClass = BlankActivityOfficerPaygradeCodes.class;
-              break;
-            case 10:
-              activityClass = BlankActivityRbscBilletCodes.class;
-              break;
-            case 11:
-              activityClass = BlankActivityRuiCodes.class;
-              break;
-            case 12:
-              activityClass = BlankActivityRpCodes.class;
-              break;
-            case 15:
-              activityClass = BlankActivitySspCodes.class;
-              break;
-            default:
-              throw new IllegalArgumentException("Invalid position: " + position);
-          }
-
-          MappingHelper mMappingHelper = MappingHelper.getInstance(getApplicationContext());
-          Intent mIntent = new Intent(NavyDecoderPlus.this, activityClass);
-          mIntent.putExtra(
-              MappingHelper.CATEGORY_KEY_IDENTIFIER,
-              mMappingHelper.getCategoryIdentify(mDecodeOptions[position]));
+          Intent mIntent = new Intent(NavyDecoderPlus.this, category.blankActivityClass);
+          mIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, category.key);
           startActivity(mIntent);
         });
 
