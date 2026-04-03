@@ -19,29 +19,18 @@
 package com.crashtestdummylimited.navydecoderplus.controller;
 
 import android.content.Context;
-import com.crashtestdummylimited.navydecoderplus.R;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public final class MappingHelper {
 
   public static final String CATEGORY_KEY_IDENTIFIER = "DECODE_CATEGORY_KEY";
 
-  private final HashMap<String, String> SELECTION_TO_CATEGORY_KEY_IDENTIFIER_MAP;
-  private final HashMap<String, String> CATEGORY_KEY_IDENTIFIER_TO_SELECTION_MAP;
-
   private static volatile MappingHelper mInstance = null;
 
-  // Singleton
-  private MappingHelper() {
-    // Exists only to defeat instantiation.
-    SELECTION_TO_CATEGORY_KEY_IDENTIFIER_MAP = null;
-    CATEGORY_KEY_IDENTIFIER_TO_SELECTION_MAP = null;
-  }
+  private final Context mContext;
 
   private MappingHelper(Context context) {
-    SELECTION_TO_CATEGORY_KEY_IDENTIFIER_MAP = buildMap(context);
-    CATEGORY_KEY_IDENTIFIER_TO_SELECTION_MAP = buildReverseMap(context);
+    mContext = context.getApplicationContext();
   }
 
   public static MappingHelper getInstance(Context context) {
@@ -61,65 +50,18 @@ public final class MappingHelper {
     return mInstance;
   }
 
-  private HashMap<String, String> buildMap(Context context) {
-    HashMap<String, String> mMap = new HashMap<>();
-    mMap.put(context.getString(R.string.categoryAqdCodes), "aqdcodes");
-    mMap.put(context.getString(R.string.categoryEnlistedRatingCodes), "enlistedratingcodes");
-    mMap.put(context.getString(R.string.categoryImsCodes), "imscodes");
-    mMap.put(context.getString(R.string.categoryMasCodes), "mascodes");
-    mMap.put(context.getString(R.string.categoryNecCodes), "neccodes");
-    mMap.put(context.getString(R.string.categoryNavyReserveActivitiesCodes), "nracodes");
-    mMap.put(context.getString(R.string.categoryNobcCodes), "nobccodes");
-    mMap.put(context.getString(R.string.categoryOfficerBilletCodes), "officerbilletcodes");
-    mMap.put(context.getString(R.string.categoryOfficerDesignatorCodes), "officerdesignatorcodes");
-    mMap.put(context.getString(R.string.categoryOfficerPaygradeCodes), "officerpaygradecodes");
-    mMap.put(context.getString(R.string.categoryRbscBilletCodes), "rbscbilletcodes");
-    mMap.put(context.getString(R.string.categoryReserveUnitIdentificationCodes), "ruicodes");
-    mMap.put(context.getString(R.string.categorySubspecialityCodes), "sspcodes");
-    mMap.put(context.getString(R.string.categoryReserveProgramCodes), "rpcodes");
-
-    return mMap;
-  }
-
-  private HashMap<String, String> buildReverseMap(Context context) {
-    HashMap<String, String> mMap = new HashMap<>();
-    mMap.put("aqdcodes", context.getString(R.string.categoryAqdCodes));
-    mMap.put("enlistedratingcodes", context.getString(R.string.categoryEnlistedRatingCodes));
-    mMap.put("imscodes", context.getString(R.string.categoryImsCodes));
-    mMap.put("mascodes", context.getString(R.string.categoryMasCodes));
-    mMap.put("neccodes", context.getString(R.string.categoryNecCodes));
-    mMap.put("nracodes", context.getString(R.string.categoryNavyReserveActivitiesCodes));
-    mMap.put("nobccodes", context.getString(R.string.categoryNobcCodes));
-    mMap.put("officerbilletcodes", context.getString(R.string.categoryOfficerBilletCodes));
-    mMap.put("officerdesignatorcodes", context.getString(R.string.categoryOfficerDesignatorCodes));
-    mMap.put("officerpaygradecodes", context.getString(R.string.categoryOfficerPaygradeCodes));
-    mMap.put("rbscbilletcodes", context.getString(R.string.categoryRbscBilletCodes));
-    mMap.put("ruicodes", context.getString(R.string.categoryReserveUnitIdentificationCodes));
-    mMap.put("sspcodes", context.getString(R.string.categorySubspecialityCodes));
-    mMap.put("rpcodes", context.getString(R.string.categoryReserveProgramCodes));
-
-    return mMap;
-  }
-
-  public String getCategoryIdentify(String key) {
-
-    String mReturnValue;
-
-    mReturnValue = SELECTION_TO_CATEGORY_KEY_IDENTIFIER_MAP.getOrDefault(key, "");
-
-    return mReturnValue;
-  }
-
+  /** Returns the display label for a given category key, or "" if not found. */
   public String getSelectionText(String key) {
-
-    String mReturnValue;
-
-    mReturnValue = CATEGORY_KEY_IDENTIFIER_TO_SELECTION_MAP.getOrDefault(key, "");
-
-    return mReturnValue;
+    Category c = Category.fromKey(key);
+    return c != null ? mContext.getString(c.labelRes) : "";
   }
 
+  /** Returns all searchable category keys (excludes RFAS, which has no key). */
   public ArrayList<String> getAllCategoryIdentifies() {
-    return new ArrayList<>(SELECTION_TO_CATEGORY_KEY_IDENTIFIER_MAP.values());
+    ArrayList<String> keys = new ArrayList<>();
+    for (Category c : Category.values()) {
+      if (c.key != null) keys.add(c.key);
+    }
+    return keys;
   }
 }

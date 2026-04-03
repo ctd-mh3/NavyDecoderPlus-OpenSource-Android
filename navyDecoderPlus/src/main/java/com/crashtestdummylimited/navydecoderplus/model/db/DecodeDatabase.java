@@ -28,6 +28,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
 import android.util.Log;
+import com.crashtestdummylimited.navydecoderplus.controller.Category;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -54,25 +55,7 @@ public class DecodeDatabase {
   private static final String DB_NAME = "navyDecoderDatabase.db";
   private static final String DB_NAME_IN_APK = "navyDecoderDatabase.sqlite3";
 
-  private static final String FTS_AQD_CODES_VIRTUAL_TABLE = "FTS_aqd_codes";
-  private static final String FTS_ENLISTED_RATING_CODES_VIRTUAL_TABLE = "FTS_enlisted_rating_codes";
-  private static final String FTS_IMS_CODES_VIRTUAL_TABLE = "FTS_ims_codes";
-  private static final String FTS_MAS_CODES_VIRTUAL_TABLE = "FTS_mas_codes";
-  private static final String FTS_NEC_CODES_VIRTUAL_TABLE = "FTS_nec_codes";
-  private static final String FTS_NRA_CODES_VIRTUAL_TABLE = "FTS_nra_codes";
-  private static final String FTS_RUI_CODES_VIRTUAL_TABLE = "FTS_rui_codes";
-  private static final String FTS_NOBC_CODES_VIRTUAL_TABLE = "FTS_nobc_codes";
-  private static final String FTS_OFFICER_BILLET_CODES_VIRTUAL_TABLE = "FTS_officer_billet_codes";
-  private static final String FTS_OFFICER_DESIGNATOR_CODES_VIRTUAL_TABLE =
-      "FTS_officer_designator_codes";
-  private static final String FTS_OFFICER_PAYGRADE_CODES_VIRTUAL_TABLE =
-      "FTS_officer_paygrade_codes";
-  private static final String FTS_RBSC_BILLET_CODES_VIRTUAL_TABLE = "FTS_rbsc_billet_codes";
-  private static final String FTS_SSP_CODES_VIRTUAL_TABLE = "FTS_ssp_codes";
-  private static final String FTS_RP_CODES_VIRTUAL_TABLE = "FTS_rp_codes";
-
   private static final HashMap<String, String> COLUMN_MAP = buildColumnMap();
-  private static final HashMap<String, String> SELECTION_TO_TABLE_MAP = buildSelectionToTableMap();
 
   private static String mDataBaseFullPathWithFileName;
 
@@ -113,27 +96,6 @@ public class DecodeDatabase {
     return mMap;
   }
 
-  private static HashMap<String, String> buildSelectionToTableMap() {
-    HashMap<String, String> mMap = new HashMap<>();
-
-    mMap.put("aqdcodes", FTS_AQD_CODES_VIRTUAL_TABLE);
-    mMap.put("enlistedratingcodes", FTS_ENLISTED_RATING_CODES_VIRTUAL_TABLE);
-    mMap.put("imscodes", FTS_IMS_CODES_VIRTUAL_TABLE);
-    mMap.put("mascodes", FTS_MAS_CODES_VIRTUAL_TABLE);
-    mMap.put("neccodes", FTS_NEC_CODES_VIRTUAL_TABLE);
-    mMap.put("nracodes", FTS_NRA_CODES_VIRTUAL_TABLE);
-    mMap.put("ruicodes", FTS_RUI_CODES_VIRTUAL_TABLE);
-    mMap.put("nobccodes", FTS_NOBC_CODES_VIRTUAL_TABLE);
-    mMap.put("officerbilletcodes", FTS_OFFICER_BILLET_CODES_VIRTUAL_TABLE);
-    mMap.put("officerdesignatorcodes", FTS_OFFICER_DESIGNATOR_CODES_VIRTUAL_TABLE);
-    mMap.put("officerpaygradecodes", FTS_OFFICER_PAYGRADE_CODES_VIRTUAL_TABLE);
-    mMap.put("rbscbilletcodes", FTS_RBSC_BILLET_CODES_VIRTUAL_TABLE);
-    mMap.put("sspcodes", FTS_SSP_CODES_VIRTUAL_TABLE);
-    mMap.put("rpcodes", FTS_RP_CODES_VIRTUAL_TABLE);
-
-    return mMap;
-  }
-
   /**
    * Returns a Cursor positioned at the row specified by rowId
    *
@@ -143,8 +105,8 @@ public class DecodeDatabase {
    */
   public Cursor getItemToDecode(String decodeCategoryKey, String rowId, String[] columns) {
 
-    //    	String mTableToQuery = getTableNameBasedOnDecodeCategory(decodeCategoryKey);
-    String mTableToQuery = SELECTION_TO_TABLE_MAP.get(decodeCategoryKey);
+    Category category = Category.fromKey(decodeCategoryKey);
+    String mTableToQuery = category != null ? category.ftsTable : null;
     String mSelection = "rowid = ?";
     String[] mSelectionArgs = new String[] {rowId};
 
@@ -164,8 +126,8 @@ public class DecodeDatabase {
    */
   public Cursor getDecodeMatches(String decodeCategoryKey, String query, String[] columns) {
 
-    //   	String mTableToQuery = getTableNameBasedOnDecodeCategory(decodeCategoryKey);
-    String mTableToQuery = SELECTION_TO_TABLE_MAP.get(decodeCategoryKey);
+    Category category = Category.fromKey(decodeCategoryKey);
+    String mTableToQuery = category != null ? category.ftsTable : null;
 
     //  Below code will only search the code column and not the entire table
     //  String selection = KEY_CODE + " MATCH ?";

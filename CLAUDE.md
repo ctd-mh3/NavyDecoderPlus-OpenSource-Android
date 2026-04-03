@@ -32,7 +32,7 @@ Navy Decoder Plus is an Android application (Java, minSdk 26, compileSdk/targetS
 
 **Important:** The CLI `./gradlew` requires JDK 17+. The machine's system JDK may be older; in that case builds must be run from Android Studio, which bundles its own JDK. There are no unit tests in the project.
 
-Spotless uses Google Java Format (currently `1.35.0`) for `.java` files and enforces trailing-whitespace cleanup + 4-space indent for `.xml` files. The `allprojects` block in the top-level `build.gradle` also enables `-Xlint:unchecked` and `-Xlint:deprecation` compiler warnings on every build.
+Spotless uses Google Java Format (currently `1.35.0`) for `.java` files and enforces trailing-whitespace cleanup + 4-space indent for `.xml` files. The `tasks.withType(JavaCompile).configureEach` block in `navyDecoderPlus/build.gradle` enables `-Xlint:unchecked` and `-Xlint:deprecation` compiler warnings on every build.
 
 ## Database Update Workflow
 
@@ -61,7 +61,8 @@ The project has one app module: `navyDecoderPlus`. The top-level `build.gradle` 
   - `SelectedItemActivity` — Displays the full decoded detail for a single item. Also owns Play Store In-App Review logic (3-day install age gate, 7-day cooldown between prompts).
   - `RfasActivity` — Special-cased activity for RFAS codes (enlisted and officer), which use a multi-step spinner UI instead of the standard search flow.
   - `DecodeProvider` — Android `ContentProvider` that routes URI-based queries to `DecodeDatabase`. Supports search suggestions and direct item lookup. The `AUTHORITY` string contains mixed case and **must not be changed** — it is baked into `AndroidManifest.xml` and all saved intents on existing installed devices.
-  - `MappingHelper` — Singleton that maps human-readable category strings (from `strings.xml`) to internal database key identifiers (e.g., `"enlistedratingcodes"`). Provides both a `getInstance(Context)` initialiser and a no-arg `getInstance()` for callers (like `DecodeProvider`) that lack a `Context`.
+  - `Category` — Enum that is the **single source of truth** for all decode categories. Each constant encodes the display order (via ordinal), the internal DB/URI key, the string-resource label ID, the SQLite FTS table name, and the `BlankActivity` subclass to launch. RFAS entries have nulls for the last three fields. `Category.fromKey(String)` provides reverse lookup. **Adding a new category requires a new constant here — no other Java files need changing.**
+  - `MappingHelper` — Singleton holding a `Context` for string resolution. Delegates `getSelectionText(key)` and `getAllCategoryIdentifies()` to `Category`. Provides both a `getInstance(Context)` initialiser and a no-arg `getInstance()` for callers (like `DecodeProvider`) that lack a `Context`.
   - `MenuOptions` — Shared options-menu logic reused across Activities.
   - `SearchResultsCursorAdapter` — `CursorAdapter` for the search results `ListView`.
 - **`model/`**:
@@ -77,7 +78,7 @@ Each searchable code category follows the same pattern:
 2. `BlankActivity<CodeType>` immediately calls `onSearchRequested()`, passing the category key in `APP_DATA`, then finishes when the search dialog is dismissed
 3. Android routes the search query to `SearchableDecoderActivity<CodeType>` (configured in `AndroidManifest.xml` via `android.app.default_searchable` / `android.app.searchable` metadata)
 4. `SearchableDecoderActivity` queries `DecodeProvider` via `ContentResolver`, displays results, and launches `SelectedItemActivity` on tap
-5. `DecodeProvider` uses `MappingHelper` to resolve the category key to a database table name, then delegates to `DecodeDatabase.getDecodeMatches()` (FTS3 prefix search)
+5. `DecodeProvider` uses `MappingHelper` to get all category keys, and `Category.fromKey()` to resolve a key to its FTS table name, then delegates to `DecodeDatabase.getDecodeMatches()` (FTS3 prefix search)
 
 ### UI Conventions
 
@@ -93,10 +94,9 @@ Each searchable code category follows the same pattern:
 
 1. Add SQL table creation to `database/create_navy_decoder_tables.sql` and a `fill_table_<name>.sql` file
 2. Update `database/createAndCopyDatabase.sh` to include the new fill script
-3. Increment `DB_VERSION` in `DecodeDatabase.java` and add the FTS table constant and entry to `SELECTION_TO_TABLE_MAP`
+3. Increment `DB_VERSION` in `DecodeDatabase.java`
 4. Add a string resource for the category in `res/values/strings.xml`
-5. Add entries to both maps in `MappingHelper.buildMap()` and `buildReverseMap()`
+5. Add a new constant to `Category.java` (in the correct ordinal position for display order) with the key, label resource, FTS table name, and `BlankActivity` subclass — **this is the only Java change required**
 6. Create `BlankActivity<NewType>` and `SearchableDecoderActivity<NewType>` (copy an existing pair)
 7. Add a searchable XML resource in `res/xml/`
 8. Register both activities and their metadata in `AndroidManifest.xml`
-9. Add the category string to the `mDecodeOptions` array in `NavyDecoderPlus.java` and add the corresponding `Intent` branch in the `onItemClickListener`
