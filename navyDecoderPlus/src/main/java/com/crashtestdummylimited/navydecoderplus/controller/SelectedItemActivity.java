@@ -43,7 +43,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
 import com.google.android.play.core.review.ReviewManagerFactory;
-import java.util.Objects;
 
 /** Displays a word and its definition. */
 public class SelectedItemActivity extends AppCompatActivity {
@@ -105,8 +104,11 @@ public class SelectedItemActivity extends AppCompatActivity {
     if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
 
     Uri mUri = getIntent().getData();
-    Cursor mCursor =
-        getContentResolver().query(Objects.requireNonNull(mUri), null, null, null, null);
+    if (mUri == null) {
+      finish();
+      return;
+    }
+    Cursor mCursor = getContentResolver().query(mUri, null, null, null, null);
 
     if (mCursor == null) {
       finish();

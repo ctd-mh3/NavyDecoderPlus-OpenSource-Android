@@ -30,7 +30,7 @@ public final class MappingHelper {
   private final HashMap<String, String> SELECTION_TO_CATEGORY_KEY_IDENTIFIER_MAP;
   private final HashMap<String, String> CATEGORY_KEY_IDENTIFIER_TO_SELECTION_MAP;
 
-  private static MappingHelper mInstance = null;
+  private static volatile MappingHelper mInstance = null;
 
   // Singleton
   private MappingHelper() {
@@ -46,7 +46,11 @@ public final class MappingHelper {
 
   public static MappingHelper getInstance(Context context) {
     if (mInstance == null) {
-      mInstance = new MappingHelper(context);
+      synchronized (MappingHelper.class) {
+        if (mInstance == null) {
+          mInstance = new MappingHelper(context);
+        }
+      }
     }
     return mInstance;
   }

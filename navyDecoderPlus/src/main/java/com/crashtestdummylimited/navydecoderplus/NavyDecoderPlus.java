@@ -130,13 +130,13 @@ public class NavyDecoderPlus extends AppCompatActivity {
           // RFAS categories use a spinner-based Activity instead of the standard search flow.
           if (position == 13) {
             Intent mIntent = new Intent(NavyDecoderPlus.this, RfasActivity.class);
-            mIntent.putExtra("RFAS_TYPE", "Enlisted");
+            mIntent.putExtra(RfasActivity.EXTRA_RFAS_TYPE, RfasActivity.RFAS_TYPE_ENLISTED);
             startActivity(mIntent);
             return;
           }
           if (position == 14) {
             Intent mIntent = new Intent(NavyDecoderPlus.this, RfasActivity.class);
-            mIntent.putExtra("RFAS_TYPE", "Officer");
+            mIntent.putExtra(RfasActivity.EXTRA_RFAS_TYPE, RfasActivity.RFAS_TYPE_OFFICER);
             startActivity(mIntent);
             return;
           }
