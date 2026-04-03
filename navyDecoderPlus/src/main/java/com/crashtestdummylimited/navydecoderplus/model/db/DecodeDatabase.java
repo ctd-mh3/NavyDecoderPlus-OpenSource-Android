@@ -131,15 +131,6 @@ public class DecodeDatabase {
     mMap.put("sspcodes", FTS_SSP_CODES_VIRTUAL_TABLE);
     mMap.put("rpcodes", FTS_RP_CODES_VIRTUAL_TABLE);
 
-    /*
-            // For every user selection that is searchable, there needs to be a table set up for it
-        	SortedSet<String> mSortedSet = MappingHelper.getSelectionsThatAreSearchable();
-        	Iterator <String> mIterator = mSortedSet.iterator();
-            while ( mIterator.hasNext() ){
-          	  	assertTrue(TAG + ": Selection item has no matching database table-" + mIterator.next(),
-          	  		mMap.containsKey(mIterator.next()));
-            }
-    */
     return mMap;
   }
 
@@ -181,24 +172,7 @@ public class DecodeDatabase {
     String mSelection = mTableToQuery + " MATCH ?";
     String[] mSelectionArgs = new String[] {query + "*"};
 
-    //  Below is the first attempt to search more than one column for matches
-    //  String selection = KEY_CODE + " MATCH ? OR " + KEY_CODE_MEANING + " MATCH ?";
-    //  String[] selectionArgs = new String[] {query + "*", query + "*"};
     return query(mTableToQuery, mSelection, mSelectionArgs, columns);
-
-    /* This builds a query that looks like:
-     *     SELECT <columns> FROM <table> WHERE <KEY_WORD> MATCH 'query*'
-     * which is an FTS3 search for the query text (plus a wildcard) inside the word column.
-     *
-     * - "rowid" is the unique id for all rows but we need this value for the "_id" column in
-     *    order for the Adapters to work, so the columns need to make "_id" an alias for "rowid"
-     * - "rowid" also needs to be used by the SUGGEST_COLUMN_INTENT_DATA alias in order
-     *   for suggestions to carry the proper intent data.
-     *   These aliases are defined in the DictionaryProvider when queries are made.
-     * - This can be revised to also search the definition text with FTS3 by changing
-     *   the selection clause to use FTS_VIRTUAL_TABLE instead of KEY_WORD (to search across
-     *   the entire table, but sorting the relevance could be difficult.
-     */
   }
 
   /**
@@ -219,23 +193,6 @@ public class DecodeDatabase {
     mBuilder.setTables(tableToQuery);
     mBuilder.setProjectionMap(COLUMN_MAP);
 
-    /*
-        SQLiteDatabase mTempDatabase = mDatabaseOpenHelper.getReadableDatabase();
-    		String mQuery = "SELECT * FROM sqlite_master WHERE type='table'";
-
-
-    		Cursor mCursor = mTempDatabase.rawQuery(mQuery, null);
-
-            mCursor.moveToFirst();
-            while (mCursor.isAfterLast() == false) {
-                String mTemp = mCursor.getString(0);
-                mTemp = mCursor.getString(1);
-                mTemp = mCursor.getString(2);
-
-                mCursor.moveToNext();
-            }
-            mCursor.close();
-    */
     Cursor mCursor =
         mBuilder.query(
             mDatabaseOpenHelper.getReadableDatabase(),
@@ -245,15 +202,6 @@ public class DecodeDatabase {
             null,
             null,
             null);
-
-    //		String mQuery = "SELECT _id, " + KEY_CODE + ", " + KEY_CODE_MEANING + " FROM " +
-    // FTS_VIRTUAL_TABLE +
-    //        " WHERE " + KEY_CODE + " MATCH '" + selectionArgs[0] + "' OR " + KEY_CODE_MEANING + "
-    // MATCH '" + selectionArgs[1] + "'";
-    //		String mQuery = "SELECT _id, " + KEY_CODE + ", " + KEY_CODE_MEANING + " FROM " +
-    // FTS_VIRTUAL_TABLE +
-    //                        " WHERE " + KEY_CODE + " MATCH '" + selectionArgs[0] + "'";
-    //		Cursor mCursor = mDatabaseOpenHelper.getReadableDatabase().rawQuery(mQuery, null);
 
     if (mCursor == null) {
       return null;
@@ -378,15 +326,7 @@ public class DecodeDatabase {
         try {
           copyDataBase();
 
-          // Set the database version
-          // SQLiteDatabase db_Write = this.getWritableDatabase();
-          // db_Write.setVersion(DB_VERSION);
-          // db_Write.close();
-
         } catch (IOException e) {
-          //    	    		throw new RuntimeException("Error copying database.\n" +
-          //    		                   e.getMessage());
-          //    	    		throw new RuntimeException(e.getMessage());
           throw new Error("Error copying database");
         }
       }
