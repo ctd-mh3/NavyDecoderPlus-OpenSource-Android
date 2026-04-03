@@ -42,6 +42,10 @@ import java.util.Objects;
 
 public class RfasActivity extends AppCompatActivity {
 
+  public static final String EXTRA_RFAS_TYPE = "RFAS_TYPE";
+  public static final String RFAS_TYPE_ENLISTED = "Enlisted";
+  public static final String RFAS_TYPE_OFFICER = "Officer";
+
   private RfasScreenBinding mBinding;
   private RFASReferenceData rfasReferenceData;
 
@@ -103,11 +107,11 @@ public class RfasActivity extends AppCompatActivity {
 
     // Grab info from bundle to tell if enlisted or officer RFAS
     Intent mIntent = getIntent();
-    String mRfasType = mIntent.getStringExtra("RFAS_TYPE");
+    String mRfasType = mIntent.getStringExtra(EXTRA_RFAS_TYPE);
 
     // Setup all the spinners
     switch (Objects.requireNonNull(mRfasType)) {
-      case "Enlisted":
+      case RFAS_TYPE_ENLISTED:
         rfasReferenceData = new RFASEnlistedCodes();
         mBinding.rfasTopLevelDescription.setText(
             this.getString(string.rfasEnlistedTopLevelDescription));
@@ -124,7 +128,7 @@ public class RfasActivity extends AppCompatActivity {
             rfasReferenceData.getFourthCharacterKeys(),
             new RFASDecoderItemSelectedListener());
         break;
-      case "Officer":
+      case RFAS_TYPE_OFFICER:
         rfasReferenceData = new RFASOfficerCodes();
         mBinding.rfasTopLevelDescription.setText(
             this.getString(string.rfasOfficerTopLevelDescription));

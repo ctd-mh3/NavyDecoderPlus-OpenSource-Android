@@ -369,25 +369,21 @@ public class DecodeDatabase {
      */
     private void copyDataBase() throws IOException {
 
-      // Open your local db as the input stream
-      InputStream mInput = mContext.getAssets().open(DB_NAME_IN_APK);
+      try (InputStream mInput = mContext.getAssets().open(DB_NAME_IN_APK);
+          OutputStream mOutput = Files.newOutputStream(Paths.get(mDataBaseFullPathWithFileName))) {
 
-      // Open the empty db as the output stream
-      OutputStream mOutput = Files.newOutputStream(Paths.get(mDataBaseFullPathWithFileName));
-
-      // transfer bytes from the inputfile to the outputfile
-      byte[] mBuffer = new byte[1024];
-      int mLength;
-
-      while ((mLength = mInput.read(mBuffer)) > 0) {
-        mOutput.write(mBuffer, 0, mLength);
+        // transfer bytes from the inputfile to the outputfile
+        byte[] mBuffer = new byte[1024];
+        int mLength;
+        while ((mLength = mInput.read(mBuffer)) > 0) {
+          mOutput.write(mBuffer, 0, mLength);
+        }
+        mOutput.flush();
       }
 
       // The below code is attempting to force the system to record the db version number
-      SQLiteDatabase checkDB; // get a reference to the db..
-
       try {
-        checkDB =
+        SQLiteDatabase checkDB =
             SQLiteDatabase.openDatabase(
                 mDataBaseFullPathWithFileName, null, SQLiteDatabase.OPEN_READWRITE);
 
@@ -397,11 +393,6 @@ public class DecodeDatabase {
       } catch (SQLiteException e) {
         // database does not exist yet.
       }
-
-      // Close the streams
-      mOutput.flush();
-      mOutput.close();
-      mInput.close();
     }
 
     void openDataBase() throws SQLException {
