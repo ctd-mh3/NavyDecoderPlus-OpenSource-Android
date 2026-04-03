@@ -67,14 +67,7 @@ public class DecodeProvider extends ContentProvider {
     UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     MappingHelper mMappingHelper = MappingHelper.getInstance();
-
-    // MappingHelper.getInstance() can return null if the singleton was never initialised
-    // (observed in a user crash: IndexOutOfBoundsException at DecodeProvider.query).
-    // When null, mOffsetMatcher stays empty and query() returns null — safe fallback.
-    //noinspection StatementWithEmptyBody
-    if (mMappingHelper == null) {
-      // Intentionally empty: mOffsetMatcher.isEmpty() guard in query() handles this case.
-    } else {
+    if (mMappingHelper != null) {
       ArrayList<String> mArrayList = mMappingHelper.getAllCategoryIdentifies();
       Iterator<String> mIterator = mArrayList.iterator();
 
@@ -117,7 +110,8 @@ public class DecodeProvider extends ContentProvider {
   @Override
   public boolean onCreate() {
     mDecodeDatabase = new DecodeDatabase(getContext());
-
+    MappingHelper.getInstance(getContext());
+    mURIMatcher = buildUriMatcher();
     return true;
   }
 
@@ -135,13 +129,6 @@ public class DecodeProvider extends ContentProvider {
       String[] selectionArgs,
       String sortOrder) {
 
-    // 15JAN2023: At least one case of user crash when mOffsetMatcher.get(mtemp2) results in:
-    //            Caused by java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
-    //            Unclear how mOffsetMatcher is not initialized as it is constructed in
-    //            buildUriMatcher where it appears that it could not be null
-    //
-    mURIMatcher = buildUriMatcher();
-
     int mtemp = mURIMatcher.match(uri);
 
     // Match should always find a match, if not stop processing and return null for the cursor
@@ -152,8 +139,6 @@ public class DecodeProvider extends ContentProvider {
     int mtemp2 = mtemp / NUMBER_OF_BASE_TYPES;
     int mtemp3 = mtemp - mtemp2 * NUMBER_OF_BASE_TYPES;
 
-    // 15JAN2023: Just return null for Cursor if mOffsetMatcher appears to be not correct and
-    //            a call to mOffsetMatcher.get() will result in java.lang.IndexOutOfBoundsException
     if (mOffsetMatcher.isEmpty()) {
       return null;
     }
