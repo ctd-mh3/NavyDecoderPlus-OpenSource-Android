@@ -48,22 +48,14 @@ class SearchResultsCursorAdapter extends CursorAdapter {
     TextView itemToDecode = view.findViewById(R.id.searchScreenResultItemToDecodeTextView);
     TextView itemInfo = view.findViewById(R.id.searchScreenResultDecodeInfoTextView);
 
-    // Default to Error Message
-    String itemToDecodeString = "Please Restart App";
-    String itemInfoString = "Please Restart App";
+    // Extract properties from cursor
+    String itemToDecodeString =
+        cursor.getString(cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE));
+    String itemInfoString =
+        cursor.getString(cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_MEANING));
 
-    // 15JAN2023: Added to prevent the below crash which was expected to be caused by users moving
-    //            from app and then back to app
-    // Exception android.database.StaleDataException: Attempting to access a closed
-    // CursorWindow.Most probable cause: cursor is deactivated prior to calling this method.
-    if (!cursor.isClosed()) {
-      // Extract properties from cursor
-      itemToDecodeString = cursor.getString(cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE));
-      itemInfoString =
-          cursor.getString(cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_MEANING));
-    }
     // Populate fields with extracted properties
     itemToDecode.setText(itemToDecodeString);
-    itemInfo.setText(String.valueOf(itemInfoString));
+    itemInfo.setText(itemInfoString);
   }
 }

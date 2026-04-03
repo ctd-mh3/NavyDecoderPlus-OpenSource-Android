@@ -45,6 +45,8 @@ public class SearchableDecoderActivity extends AppCompatActivity {
 
   private String mDecodeCategory = "";
 
+  private SearchResultsCursorAdapter mAdapter;
+
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuOptions.onCreateOptionsMenu(this, menu);
@@ -127,7 +129,8 @@ public class SearchableDecoderActivity extends AppCompatActivity {
     }
 
     ListView lvItems = mBinding.searchScreenListView;
-    lvItems.setAdapter(new SearchResultsCursorAdapter(this, mCursor));
+    mAdapter = new SearchResultsCursorAdapter(this, mCursor);
+    lvItems.setAdapter(mAdapter);
 
     lvItems.setOnItemClickListener(
         (parent, view, position, id) -> {
@@ -140,7 +143,13 @@ public class SearchableDecoderActivity extends AppCompatActivity {
           mItemIntent.setData(itemUri);
           startActivity(mItemIntent);
         });
+  }
 
-    mCursor.close();
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    if (mAdapter != null) {
+      mAdapter.changeCursor(null);
+    }
   }
 }
