@@ -1,70 +1,109 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
 
-
-# [{ "category": "MAS", "codeKey": "AAP", "codeValue": "Admin Action", "codeSource": "NRH Page" },
-#  { "category": "MAS", "codeKey": "ARR", "codeValue": "Retirement Pending", "codeSource": "NRH Page" },
-#  { "category": "IMS", "codeKey": "D3G", "codeValue": "4-30 day granted", "codeSource": "NRH Page" },
-#  { "category": "IMS", "codeKey": "D3P", "codeValue": "4-30 delay pending", "codeSource": "NRH Page"} ]
-
-
-
-#my @INPUT_FILE_NAME_ARRAY;
-#push(@INPUT_FILE_NAME_ARRAY, "fill_table_ims_codes.sql");
-my %INPUT_FILE_HASH = ();
-$INPUT_FILE_HASH{'AQD'} = 'fill_table_aqd_codes.sql';
-$INPUT_FILE_HASH{'Enlisted Rating'} = 'fill_table_enlisted_rating_codes.sql';
-$INPUT_FILE_HASH{'IMS'} = 'fill_table_ims_codes.sql';
-$INPUT_FILE_HASH{'MAS'} = 'fill_table_mas_codes.sql';
-$INPUT_FILE_HASH{'NEC'} = 'fill_table_nec_codes.sql';
-$INPUT_FILE_HASH{'NOBC'} = 'fill_table_nobc_codes.sql';
-$INPUT_FILE_HASH{'NRA'} = 'fill_table_nra_codes.sql';
-$INPUT_FILE_HASH{'Officer Billet'} = 'fill_table_officer_billet_codes.sql';
-$INPUT_FILE_HASH{'Officer Designator'} = 'fill_table_officer_designator_codes.sql';
-$INPUT_FILE_HASH{'Officer Paygrade'} = 'fill_table_officer_paygrade_codes.sql';
-$INPUT_FILE_HASH{'RBSC'} = 'fill_table_rbsc_billet_codes.sql';
-$INPUT_FILE_HASH{'RFAS-Enlisted'} = 'fill_table_rfas_codes_dummy.sql';
-$INPUT_FILE_HASH{'RFAS-Officer'} = 'fill_table_rfas_codes_dummy.sql';
-$INPUT_FILE_HASH{'RUIC'} = 'fill_table_rui_codes.sql';
-$INPUT_FILE_HASH{'SSP'} = 'fill_table_ssp_codes.sql';
-$INPUT_FILE_HASH{'RPC'} = 'fill_table_rp_codes.sql';
-
+my %INPUT_FILE_HASH = (
+    'AQD' => 'fill_table_aqd_codes.sql',
+    'Enlisted Rating' => 'fill_table_enlisted_rating_codes.sql',
+    'IMS' => 'fill_table_ims_codes.sql',
+    'MAS' => 'fill_table_mas_codes.sql',
+    'NEC' => 'fill_table_nec_codes.sql',
+    'NOBC' => 'fill_table_nobc_codes.sql',
+    'NRA' => 'fill_table_nra_codes.sql',
+    'Officer Billet' => 'fill_table_officer_billet_codes.sql',
+    'Officer Designator' => 'fill_table_officer_designator_codes.sql',
+    'Officer Paygrade' => 'fill_table_officer_paygrade_codes.sql',
+    'RBSC' => 'fill_table_rbsc_billet_codes.sql',
+    'RFAS-Enlisted' => 'fill_table_rfas_codes_dummy.sql',
+    'RFAS-Officer' => 'fill_table_rfas_codes_dummy.sql',
+    'RUIC' => 'fill_table_rui_codes.sql',
+    'SSP' => 'fill_table_ssp_codes.sql',
+    'RPC' => 'fill_table_rp_codes.sql',
+);
 
 my $OUTPUT_FILE_NAME = "DecoderData.json";
-open OUTPUT_FILE, ">", $OUTPUT_FILE_NAME or die $!;
+open my $OUT, ">", $OUTPUT_FILE_NAME or die "open $OUTPUT_FILE_NAME: $!";
 
-
-# Output header for JSON file
-print OUTPUT_FILE "[\n";
-
+print $OUT "[\n";
 
 my $needComma = 0;
 
-# For each input file output JSON information
-for my $key ( keys %INPUT_FILE_HASH ) {
-	my $fileName = $INPUT_FILE_HASH{$key};
-
-		
-	open FILE, "<", $fileName or die $!;
-
-	while (<FILE>) {
-		my $line = $_;
-
-		if ($line =~ /^insert into.*values \(\"(.*)\",\"(.*)\",\"(.*)\".*/) {
-			
-			if ($needComma) {
-				print OUTPUT_FILE  ",\n";
-			}
-			else {
-				$needComma = 1;
-		    }
-			print OUTPUT_FILE "{ \"categoryTitle\": \"$key\", ";
-			print OUTPUT_FILE  "\"codeKey\": \"$1\", ";
-			print OUTPUT_FILE  "\"codeValue\": \"$2\", ";
-			print OUTPUT_FILE  "\"codeSource\": \"$3\"}";
-		}
-	}
+# JSON escape helper (robust, without external modules)
+sub json_escape {
+    my ($s) = @_;
+    return "" unless defined $s;
+    # backslash and double-quote
+    $s =~ s/\\/\\\\/g;
+    $s =~ s/"/\\"/g;
+    # control characters
+    $s =~ s/\x08/\\b/g;   # backspace (fix: match the actual control char)
+    $s =~ s/\f/\\f/g;     # formfeed
+    $s =~ s/\n/\\n/g;
+    $s =~ s/\r/\\r/g;
+    $s =~ s/\t/\\t/g;
+    # escape any other C0 control chars as \uXXXX
+    $s =~ s/([\x00-\x1f])/sprintf("\\u%04x", ord($1))/eg;
+    return $s;
 }
 
-# Output footer for JSON file
-print OUTPUT_FILE "\n]\n";
+# Pattern: match values('a','b','c') or values("a","b","c") and allow doubled quotes inside
+my $pattern = qr/
+    \bvalues\s*\(                     # values (
+      \s* (['"])                      # opening quote captured in $1
+      ( (?:(?:(?!\1).)|\1\1)* )       # field1 in $2
+      \1 \s* , \s*
+      \1 ( (?:(?:(?!\1).)|\1\1)* )    # field2 in $3
+      \1 \s* , \s*
+      \1 ( (?:(?:(?!\1).)|\1\1)* )    # field3 in $4
+      \1
+    /ix;
 
+for my $key ( sort keys %INPUT_FILE_HASH ) {   # sorted for deterministic output
+    my $fileName = $INPUT_FILE_HASH{$key};
+    open my $FH, "<", $fileName or do {
+        warn "Could not open $fileName: $!\n";
+        next;
+    };
 
+    while (my $line = <$FH>) {
+        chomp $line;
+        if ($line =~ /$pattern/) {
+            my ($quote, $raw1, $raw2, $raw3) = ($1, $2, $3, $4);
+
+            # Unescape doubled quotes depending on which quote was used
+            if ($quote eq "'") {
+                $raw1 =~ s/''/'/g;
+                $raw2 =~ s/''/'/g;
+                $raw3 =~ s/''/'/g;
+            } else {
+                $raw1 =~ s/""/"/g;
+                $raw2 =~ s/""/"/g;
+                $raw3 =~ s/""/"/g;
+            }
+
+            # Trim whitespace
+            for my $ref (\$raw1, \$raw2, \$raw3) {
+                $$ref =~ s/^\s+//;
+                $$ref =~ s/\s+$//;
+            }
+
+            # JSON-escape values
+            my $j_cat = json_escape($key);
+            my $j_key = json_escape($raw1);
+            my $j_val = json_escape($raw2);
+            my $j_src = json_escape($raw3);
+
+            print $OUT ",\n" if $needComma;
+            $needComma = 1;
+
+            print $OUT "  { \"categoryTitle\": \"$j_cat\", ";
+            print $OUT "\"codeKey\": \"$j_key\", ";
+            print $OUT "\"codeValue\": \"$j_val\", ";
+            print $OUT "\"codeSource\": \"$j_src\" }";
+        }
+    }
+    close $FH;
+}
+
+print $OUT "\n]\n";
+close $OUT;
