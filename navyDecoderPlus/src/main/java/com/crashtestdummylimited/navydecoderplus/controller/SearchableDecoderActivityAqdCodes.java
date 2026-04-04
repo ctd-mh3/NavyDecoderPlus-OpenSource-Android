@@ -21,7 +21,8 @@ package com.crashtestdummylimited.navydecoderplus.controller;
 // Manifest anchor required by the Android Search framework. Each category needs its own class so
 // AndroidManifest.xml can attach android.app.searchable metadata pointing to a per-category
 // res/xml/searchable_*.xml. That XML encodes the category-specific suggestion URI path
-// (searchSuggestPath), which is what makes autocomplete suggestions category-specific. Consolidating
+// (searchSuggestPath), which is what makes autocomplete suggestions category-specific.
+// Consolidating
 // these into one class would break per-category suggestions. All search logic lives in
 // SearchableDecoderActivity; all category data lives in Category.java.
 public class SearchableDecoderActivityAqdCodes extends SearchableDecoderActivity {}
