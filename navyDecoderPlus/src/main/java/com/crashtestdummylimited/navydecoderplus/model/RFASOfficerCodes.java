@@ -77,7 +77,7 @@ public class RFASOfficerCodes implements RFASReferenceData {
       },
       {
         "LX",
-        "6XXX, 7XXX within skill categories (2nd and 3rd digit of designator match, i.e. 611X can fill 711X billet or vice versa; 633x and 734X are considered equivalent skill categories) and coded SSP or AQD"
+        "6XXX, 7XXX within skill categories (2nd and 3rd digit of designator match, i.e. 611X can fill 711X billet or vice versa; 633X and 734X are considered equivalent skill categories) and coded SSP or AQD"
       },
       {"MO", "11XX, 166X"},
       {"MP", "111X, 166X and coded SSP or AQD"},
