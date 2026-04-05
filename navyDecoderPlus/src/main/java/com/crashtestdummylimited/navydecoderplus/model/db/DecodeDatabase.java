@@ -21,7 +21,6 @@ package com.crashtestdummylimited.navydecoderplus.model.db;
 import android.app.SearchManager;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -75,8 +74,6 @@ public class DecodeDatabase {
     mDatabaseOpenHelper = new DecoderOpenHelper(context);
 
     mDatabaseOpenHelper.createDataBase();
-
-    mDatabaseOpenHelper.openDataBase();
   }
 
   /**
@@ -217,7 +214,6 @@ public class DecodeDatabase {
     private static final int DB_VERSION = 27;
 
     private final Context mContext;
-    private SQLiteDatabase mDatabase;
 
     DecoderOpenHelper(final Context context) {
       super(context, DB_NAME, null, DB_VERSION);
@@ -268,9 +264,10 @@ public class DecodeDatabase {
         db_Read2.close();
 
         if (DB_VERSION > versionOfActiveDatabase) {
-          // Force call to upgrade the database
-          // SQLiteDatabase parameter is not used so passing in referenced to closed db not an issue
-          onUpgrade(db_Read2, versionOfActiveDatabase, DB_VERSION);
+          // Force call to upgrade the database.
+          // onUpgrade does not use the db parameter (it calls mContext.deleteDatabase()),
+          // so null is passed rather than a closed handle.
+          onUpgrade(null, versionOfActiveDatabase, DB_VERSION);
         }
       }
 
@@ -360,23 +357,6 @@ public class DecodeDatabase {
       } catch (SQLiteException e) {
         // database does not exist yet.
       }
-    }
-
-    void openDataBase() throws SQLException {
-      Log.d(TAG, "DecoderOpenHelper.openDataBase");
-      mDatabase =
-          SQLiteDatabase.openDatabase(
-              mDataBaseFullPathWithFileName, null, SQLiteDatabase.OPEN_READONLY);
-    }
-
-    @Override
-    public synchronized void close() {
-
-      if (mDatabase != null) {
-        mDatabase.close();
-      }
-
-      super.close();
     }
 
     @Override

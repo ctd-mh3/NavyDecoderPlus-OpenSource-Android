@@ -5,10 +5,10 @@
   android:layout_height="wrap_content"
   android:minHeight="48dp"
   android:background="?attr/selectableItemBackground"
-  android:paddingStart="16dp"
-  android:paddingEnd="12dp"
-  android:paddingTop="14dp"
-  android:paddingBottom="14dp">
+  android:paddingStart="@dimen/listItem_paddingStart"
+  android:paddingEnd="@dimen/listItem_paddingEnd"
+  android:paddingTop="@dimen/listItem_paddingVertical"
+  android:paddingBottom="@dimen/listItem_paddingVertical">
 
   <TextView
     android:id="@android:id/text1"

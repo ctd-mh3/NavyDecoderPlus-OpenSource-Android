@@ -32,8 +32,8 @@ public class BlankActivity extends AppCompatActivity {
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
     setTheme(R.style.AppTheme);
+    super.onCreate(savedInstanceState);
 
     com.crashtestdummylimited.navydecoderplus.databinding.BlankScreenBinding mBinding =
         BlankScreenBinding.inflate(getLayoutInflater());
