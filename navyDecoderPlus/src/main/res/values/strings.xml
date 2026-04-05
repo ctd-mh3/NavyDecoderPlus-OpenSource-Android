@@ -76,31 +76,9 @@
   <string name="categoryReserveProgramCodes">Reserve Program Codes</string>
 
 
-  <string name="hintAqdCodes">Search for AQD</string>
-  <string name="hintEnlistedRatingCodes">Search for Enlisted Rating</string>
-  <string name="hintImsCodes">Search for IMS Code</string>
-  <string name="hintMasCodes">Search for MAS Code</string>
-  <string name="hintNecCodes">Search for NEC Code</string>
-  <string name="hintNavyReserveActivitiesCodes">Search for NRA Code</string>
-  <string name="hintNobcCodes">Search for NOBC Code</string>
-  <string name="hintOfficerBilletCodes">Search for Billet Code</string>
-  <string name="hintOfficerDesignatorCodes">Search for Designator Code</string>
-  <string name="hintOfficerPaygradeCodes">Search for Paygrade Code</string>
-  <string name="hintRbscBilletCodes">Search for RBSC</string>
-  <string name="hintReserveUnitIdentificationCodes">Search for RUIC</string>
-  <string name="hintSubspecialityCodes">Search for SSP Code</string>
-  <string name="hintReserveProgramCodes">Search for RPC</string>
-
-
-  <!--
-   <string-array name="level0_list_array">
-        <item>AQD Codes</item>
-        <item>NECs</item>
-        <item>OSD Codes</item>
-    </string-array>
--->
-
-  <!-- The hint text that appears in the search box. -->
+  <!-- Search screen -->
+  <string name="search_hint">Search…</string>
+  <string name="search_prompt">Type to search</string>
 
   <!-- Search failure message. -->
   <string name="no_results">No results found for \"%s\"</string>

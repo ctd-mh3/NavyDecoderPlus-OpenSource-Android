@@ -36,6 +36,7 @@ import com.crashtestdummylimited.navydecoderplus.controller.Category;
 import com.crashtestdummylimited.navydecoderplus.controller.MappingHelper;
 import com.crashtestdummylimited.navydecoderplus.controller.MenuOptions;
 import com.crashtestdummylimited.navydecoderplus.controller.RfasActivity;
+import com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivity;
 import com.crashtestdummylimited.navydecoderplus.util.ChangelogBuilder;
 import com.crashtestdummylimited.navydecoderplus.util.CommonUtilities;
 
@@ -114,7 +115,7 @@ public class NavyDecoderPlus extends AppCompatActivity {
             return;
           }
 
-          Intent mIntent = new Intent(NavyDecoderPlus.this, category.blankActivityClass);
+          Intent mIntent = new Intent(NavyDecoderPlus.this, SearchableDecoderActivity.class);
           mIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, category.key);
           startActivity(mIntent);
         });
