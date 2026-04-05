@@ -56,7 +56,8 @@
 
 
   <!--  Level 0 Menu List
-        NOTE - changes to this list need to be reflected in NavyDecodePlus.onCreate()-->
+        Adding a new category: add the string here, then add a constant to Category.java.
+        The main screen list is driven automatically by the Category enum. -->
   <string name="categoryAqdCodes">Additional Qualification Designation Codes</string>
   <string name="categoryEnlistedRatingCodes">Enlisted Rating Codes</string>
   <string name="categoryImsCodes">IMS Codes</string>
