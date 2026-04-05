@@ -19,7 +19,7 @@ insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("HB",
 insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("JS","200X, 210X, 220X, 230X, 290X","RESPERMAN 1000-010 (30 Apr 20");
 insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("KP","310X, 651X, 751X [Supply]","RESPERMAN 1000-010 (30 Apr 20");
 insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("LB","510X, 653X, 753X","RESPERMAN 1000-010 (30 Apr 20");
-insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("LW","6XXX, 7XXX [6XXX, 7XXX within skill categories (2nd and 3rd digit of designator match, i.e., 711X can fill 611X billet or vice versa; 633x and 734X are considered equivalent skill categories)]","RESPERMAN 1000-010 (30 Apr 20");
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("LW","6XXX, 7XXX [6XXX, 7XXX within skill categories (2nd and 3rd digit of designator match, i.e., 711X can fill 611X billet or vice versa; 633X and 734X are considered equivalent skill categories)]","RESPERMAN 1000-010 (30 Apr 20");
 insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("MO","11XX, 166X","RESPERMAN 1000-010 (30 Apr 20");
 insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("OM","181X, 644X, 744X","RESPERMAN 1000-010 (30 Apr 20");
 insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("ON","183X, 645X, 745X","RESPERMAN 1000-010 (30 Apr 20");
