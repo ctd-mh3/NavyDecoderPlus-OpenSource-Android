@@ -32,6 +32,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -49,6 +50,8 @@ public class DecodeDatabase {
   public static final String KEY_CODE = SearchManager.SUGGEST_COLUMN_TEXT_1;
   public static final String KEY_CODE_MEANING = SearchManager.SUGGEST_COLUMN_TEXT_2;
   public static final String KEY_CODE_SOURCE = "source";
+  // Present only in global (all-categories) search results; holds the category key for each row.
+  public static final String KEY_CATEGORY_KEY = "category_key";
 
   private static final String DB_NAME = "navyDecoderDatabase.db";
   private static final String DB_NAME_IN_APK = "navyDecoderDatabase.sqlite3";
@@ -143,6 +146,57 @@ public class DecodeDatabase {
     String[] mSelectionArgs = new String[] {sanitizedQuery + "*"};
 
     return query(mTableToQuery, mSelection, mSelectionArgs, columns);
+  }
+
+  /**
+   * Returns a Cursor over decode items matching the given query across every searchable category.
+   * Each row includes a {@link #KEY_CATEGORY_KEY} column identifying which category it came from.
+   *
+   * @param query The search query (will be sanitized and prefix-matched internally)
+   * @return Cursor with columns _id, suggest_text_1, suggest_text_2, category_key; or null.
+   */
+  public Cursor getAllDecodeMatches(String query) {
+    String sanitizedQuery = query.replaceAll("[^a-zA-Z0-9 ]", " ").trim().replaceAll("\\s+", " ");
+    if (sanitizedQuery.isEmpty()) return null;
+
+    String searchTerm = sanitizedQuery + "*";
+
+    StringBuilder sql = new StringBuilder();
+    ArrayList<String> args = new ArrayList<>();
+    boolean first = true;
+
+    for (Category c : Category.values()) {
+      if (c.ftsTable == null) continue; // skip RFAS (no FTS table)
+      if (!first) sql.append(" UNION ALL ");
+      sql.append("SELECT rowid AS _id, suggest_text_1, suggest_text_2, '")
+          .append(c.key)
+          .append("' AS category_key FROM ")
+          .append(c.ftsTable)
+          .append(" WHERE ")
+          .append(c.ftsTable)
+          .append(" MATCH ?");
+      args.add(searchTerm);
+      first = false;
+    }
+    sql.append(" LIMIT ").append(SEARCH_RESULT_LIMIT);
+
+    String sqlStr = sql.toString();
+    String[] argsArray = args.toArray(new String[0]);
+    Log.d(TAG, "getAllDecodeMatches SQL: " + sqlStr);
+
+    Cursor cursor;
+    try {
+      cursor = mDatabaseOpenHelper.getReadableDatabase().rawQuery(sqlStr, argsArray);
+    } catch (Exception e) {
+      Log.e(TAG, "getAllDecodeMatches failed: " + e.getMessage(), e);
+      return null;
+    }
+
+    if (cursor == null || !cursor.moveToFirst()) {
+      if (cursor != null) cursor.close();
+      return null;
+    }
+    return cursor;
   }
 
   /**

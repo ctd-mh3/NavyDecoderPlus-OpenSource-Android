@@ -91,9 +91,11 @@ public class NavyDecoderPlus extends AppCompatActivity {
     ListView mListView = findViewById(R.id.mainItemToDecodeListView);
 
     Category[] categories = Category.values();
-    String[] mDecodeOptions = new String[categories.length];
+    // Position 0 is the global "Search All" entry; categories follow at positions 1..N.
+    String[] mDecodeOptions = new String[categories.length + 1];
+    mDecodeOptions[0] = getString(R.string.categorySearchAll);
     for (int i = 0; i < categories.length; i++) {
-      mDecodeOptions[i] = getString(categories[i].labelRes);
+      mDecodeOptions[i + 1] = getString(categories[i].labelRes);
     }
 
     mListView.setAdapter(
@@ -101,7 +103,17 @@ public class NavyDecoderPlus extends AppCompatActivity {
             this, R.layout.main_screen_selection_list_item, android.R.id.text1, mDecodeOptions));
     mListView.setOnItemClickListener(
         (parent, view, position, id) -> {
-          Category category = Category.values()[position];
+          if (position == 0) {
+            // Global search across all categories.
+            Intent mIntent = new Intent(NavyDecoderPlus.this, SearchableDecoderActivity.class);
+            mIntent.putExtra(
+                MappingHelper.CATEGORY_KEY_IDENTIFIER,
+                SearchableDecoderActivity.ALL_CATEGORIES_KEY);
+            startActivity(mIntent);
+            return;
+          }
+
+          Category category = Category.values()[position - 1];
 
           // RFAS categories use a spinner-based Activity instead of the standard search flow.
           if (category == Category.RFAS_ENLISTED || category == Category.RFAS_OFFICER) {
