@@ -18,10 +18,8 @@
  */
 package com.crashtestdummylimited.navydecoderplus.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class RFASOfficerCodes implements RFASReferenceData {
 
@@ -137,23 +135,9 @@ public class RFASOfficerCodes implements RFASReferenceData {
   @Override
   public String[] getFirstCharacterKeys() {
 
-    // TO-DO:  All of this is likely not needed.  We know the # of keys so
-    //        we should just be able to create a static array of that
-    //        size and then copy the keys over as we iterator through them
-    Iterator<String> iterator = mFirstCharacterCodesHashMap.keySet().iterator();
-
-    ArrayList<String> mArrayList = new ArrayList<>();
-
-    while (iterator.hasNext()) {
-      mArrayList.add(iterator.next());
-    }
-
-    Collections.sort(mArrayList);
-
-    String[] stringArray = new String[mArrayList.size()];
-    stringArray = mArrayList.toArray(stringArray);
-
-    return stringArray;
+    String[] keys = mFirstCharacterCodesHashMap.keySet().toArray(new String[0]);
+    Arrays.sort(keys);
+    return keys;
   }
 
   @Override
@@ -173,23 +157,9 @@ public class RFASOfficerCodes implements RFASReferenceData {
   @Override
   public String[] getSecondAndThirdCharacterKeys() {
 
-    // TO-DO:  All of this is likely not needed.  We know the # of keys so
-    //        we should just be able to create a static array of that
-    //        size and then copy the keys over as we iterator through them
-    Iterator<String> iterator = mSecondAndThirdCharacterCodesHashMap.keySet().iterator();
-
-    ArrayList<String> mArrayList = new ArrayList<>();
-
-    while (iterator.hasNext()) {
-      mArrayList.add(iterator.next());
-    }
-
-    Collections.sort(mArrayList);
-
-    String[] stringArray = new String[mArrayList.size()];
-    stringArray = mArrayList.toArray(stringArray);
-
-    return stringArray;
+    String[] keys = mSecondAndThirdCharacterCodesHashMap.keySet().toArray(new String[0]);
+    Arrays.sort(keys);
+    return keys;
   }
 
   @Override
@@ -209,23 +179,9 @@ public class RFASOfficerCodes implements RFASReferenceData {
   @Override
   public String[] getFourthCharacterKeys() {
 
-    // TO-DO:  All of this is likely not needed.  We know the # of keys so
-    //        we should just be able to create a static array of that
-    //        size and then copy the keys over as we iterator through them
-    Iterator<String> iterator = mFourthCharacterCodesHashMap.keySet().iterator();
-
-    ArrayList<String> mArrayList = new ArrayList<>();
-
-    while (iterator.hasNext()) {
-      mArrayList.add(iterator.next());
-    }
-
-    Collections.sort(mArrayList);
-
-    String[] stringArray = new String[mArrayList.size()];
-    stringArray = mArrayList.toArray(stringArray);
-
-    return stringArray;
+    String[] keys = mFourthCharacterCodesHashMap.keySet().toArray(new String[0]);
+    Arrays.sort(keys);
+    return keys;
   }
 
   @Override

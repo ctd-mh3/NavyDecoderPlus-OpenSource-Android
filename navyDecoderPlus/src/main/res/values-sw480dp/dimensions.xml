@@ -21,6 +21,12 @@
   <dimen name="resultDescription_paddingBottom">15dp</dimen>
   <dimen name="resultDescription_textSize">18sp</dimen>
 
+  <dimen name="contentArea_padding">8dp</dimen>
+
+  <dimen name="listItem_paddingStart">18dp</dimen>
+  <dimen name="listItem_paddingEnd">14dp</dimen>
+  <dimen name="listItem_paddingVertical">16dp</dimen>
+
   <dimen name="rfasDecodeSpinner_paddingAboveSpinners">24dp</dimen>
   <dimen name="rfasDecodeSpinner_textSize">18sp</dimen>
   <dimen name="rfasDecodeSpinner_layoutMargin">5dp</dimen>
