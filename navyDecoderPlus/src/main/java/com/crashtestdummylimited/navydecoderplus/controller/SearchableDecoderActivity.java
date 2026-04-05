@@ -18,7 +18,7 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
-import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -26,19 +26,19 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.crashtestdummylimited.navydecoderplus.R;
 import com.crashtestdummylimited.navydecoderplus.databinding.SearchScreenBinding;
 
-/**
- * The main activity for the decoder. Displays search results triggered by the search dialog and
- * handles actions from search suggestions.
- */
+/** Displays search results for a specific decode category using an embedded SearchView. */
 public class SearchableDecoderActivity extends AppCompatActivity {
 
   private SearchScreenBinding mBinding;
@@ -55,6 +55,10 @@ public class SearchableDecoderActivity extends AppCompatActivity {
 
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      finish();
+      return true;
+    }
     MenuOptions.onOptionsItemSelected(this, item);
     return true;
   }
@@ -79,34 +83,59 @@ public class SearchableDecoderActivity extends AppCompatActivity {
           return WindowInsetsCompat.CONSUMED;
         });
 
-    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is
-    // defensive only.
-    if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
+    mDecodeCategory = getIntent().getStringExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER);
+
+    // Set toolbar title to the category label so the user knows what they are searching.
+    if (getSupportActionBar() != null) {
+      Category category = Category.fromKey(mDecodeCategory);
+      getSupportActionBar()
+          .setTitle(category != null ? getString(category.labelRes) : getString(R.string.app_name));
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    // Show prompt text until the user starts typing.
+    mBinding.searchScreenEmptyView.setText(R.string.search_prompt);
+    mBinding.searchScreenEmptyView.setVisibility(View.VISIBLE);
     mBinding.searchScreenListView.setEmptyView(mBinding.searchScreenEmptyView);
 
-    Intent mIntent = getIntent();
+    mBinding.searchView.setOnQueryTextListener(
+        new SearchView.OnQueryTextListener() {
+          @Override
+          public boolean onQueryTextSubmit(String query) {
+            showResults(query);
+            return true;
+          }
 
-    // Save the information on what is being decoded
-    Bundle mAppData = getIntent().getBundleExtra(SearchManager.APP_DATA);
-    if (mAppData != null) {
-      mDecodeCategory = mAppData.getString(MappingHelper.CATEGORY_KEY_IDENTIFIER);
-    }
+          @Override
+          public boolean onQueryTextChange(String newText) {
+            if (newText.trim().isEmpty()) {
+              if (mAdapter != null) {
+                mAdapter.changeCursor(null);
+              }
+              mBinding.searchScreenEmptyView.setText(R.string.search_prompt);
+            } else {
+              showResults(newText.trim());
+            }
+            return true;
+          }
+        });
 
-    if (Intent.ACTION_VIEW.equals(mIntent.getAction())) {
-
-      // Handles a click on a search suggestion; launches activity to show
-      //    the specifics of the item clicked
-      Intent mItemIntent = new Intent(this, SelectedItemActivity.class);
-
-      mItemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, mDecodeCategory);
-      mItemIntent.setData(mIntent.getData());
-      startActivity(mItemIntent);
-      finish();
-    } else if (Intent.ACTION_SEARCH.equals(mIntent.getAction())) {
-      // Handles a search query
-      String mQuery = mIntent.getStringExtra(SearchManager.QUERY);
-      showResults(mQuery);
-    }
+    // Focus the SearchView's inner EditText and show the soft keyboard immediately.
+    // setIconified(false) routes focus to the inner EditText; post() defers until after layout.
+    mBinding.searchView.setIconified(false);
+    mBinding.searchView.post(
+        () -> {
+          EditText searchEditText =
+              mBinding.searchView.findViewById(androidx.appcompat.R.id.search_src_text);
+          if (searchEditText != null) {
+            searchEditText.requestFocus();
+            InputMethodManager imm =
+                (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+              imm.showSoftInput(searchEditText, InputMethodManager.SHOW_IMPLICIT);
+            }
+          }
+        });
   }
 
   /**

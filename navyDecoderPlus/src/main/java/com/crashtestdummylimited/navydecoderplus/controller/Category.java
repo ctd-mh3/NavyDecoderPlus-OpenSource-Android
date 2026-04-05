@@ -22,68 +22,40 @@ import com.crashtestdummylimited.navydecoderplus.R;
 
 /**
  * Single source of truth for all decode categories. Each constant encodes the display order in the
- * main list (via ordinal), the internal DB/URI key, the string-resource label, the SQLite FTS table
- * name, and the BlankActivity subclass to launch for search.
+ * main list (via ordinal), the internal DB/URI key, the string-resource label, and the SQLite FTS
+ * table name.
  *
  * <p>RFAS categories ({@link #RFAS_ENLISTED}, {@link #RFAS_OFFICER}) are special-cased: they use
- * {@link RfasActivity} instead of the standard search flow, so {@code key}, {@code ftsTable}, and
- * {@code blankActivityClass} are all null for those entries.
+ * {@link RfasActivity} instead of the standard search flow, so {@code key} and {@code ftsTable} are
+ * both null for those entries.
  *
- * <p>Adding a new category requires: (1) a new constant here, (2) the two BlankActivity /
- * SearchableDecoderActivity subclass files, (3) a searchable XML resource, (4) manifest entries,
- * and (5) the SQL table + database rebuild. Nothing else needs to change in Java.
+ * <p>Adding a new category requires: (1) a new constant here, (2) the SQL table + database rebuild,
+ * (3) a string resource for the label, and (4) a manifest entry for {@link
+ * SearchableDecoderActivity}. Nothing else needs to change in Java.
  */
 public enum Category {
-  AQD_CODES("aqdcodes", R.string.categoryAqdCodes, "FTS_aqd_codes", BlankActivityAqdCodes.class),
+  AQD_CODES("aqdcodes", R.string.categoryAqdCodes, "FTS_aqd_codes"),
   ENLISTED_RATING_CODES(
-      "enlistedratingcodes",
-      R.string.categoryEnlistedRatingCodes,
-      "FTS_enlisted_rating_codes",
-      BlankActivityEnlistedRatingCodes.class),
-  IMS_CODES("imscodes", R.string.categoryImsCodes, "FTS_ims_codes", BlankActivityImsCodes.class),
-  MAS_CODES("mascodes", R.string.categoryMasCodes, "FTS_mas_codes", BlankActivityMasCodes.class),
-  NEC_CODES("neccodes", R.string.categoryNecCodes, "FTS_nec_codes", BlankActivityNecCodes.class),
-  NRA_CODES(
-      "nracodes",
-      R.string.categoryNavyReserveActivitiesCodes,
-      "FTS_nra_codes",
-      BlankActivityNraCodes.class),
-  NOBC_CODES(
-      "nobccodes", R.string.categoryNobcCodes, "FTS_nobc_codes", BlankActivityNobcCodes.class),
+      "enlistedratingcodes", R.string.categoryEnlistedRatingCodes, "FTS_enlisted_rating_codes"),
+  IMS_CODES("imscodes", R.string.categoryImsCodes, "FTS_ims_codes"),
+  MAS_CODES("mascodes", R.string.categoryMasCodes, "FTS_mas_codes"),
+  NEC_CODES("neccodes", R.string.categoryNecCodes, "FTS_nec_codes"),
+  NRA_CODES("nracodes", R.string.categoryNavyReserveActivitiesCodes, "FTS_nra_codes"),
+  NOBC_CODES("nobccodes", R.string.categoryNobcCodes, "FTS_nobc_codes"),
   OFFICER_BILLET_CODES(
-      "officerbilletcodes",
-      R.string.categoryOfficerBilletCodes,
-      "FTS_officer_billet_codes",
-      BlankActivityOfficerBilletCodes.class),
+      "officerbilletcodes", R.string.categoryOfficerBilletCodes, "FTS_officer_billet_codes"),
   OFFICER_DESIGNATOR_CODES(
       "officerdesignatorcodes",
       R.string.categoryOfficerDesignatorCodes,
-      "FTS_officer_designator_codes",
-      BlankActivityOfficerDesignatorCodes.class),
+      "FTS_officer_designator_codes"),
   OFFICER_PAYGRADE_CODES(
-      "officerpaygradecodes",
-      R.string.categoryOfficerPaygradeCodes,
-      "FTS_officer_paygrade_codes",
-      BlankActivityOfficerPaygradeCodes.class),
-  RBSC_BILLET_CODES(
-      "rbscbilletcodes",
-      R.string.categoryRbscBilletCodes,
-      "FTS_rbsc_billet_codes",
-      BlankActivityRbscBilletCodes.class),
-  RUI_CODES(
-      "ruicodes",
-      R.string.categoryReserveUnitIdentificationCodes,
-      "FTS_rui_codes",
-      BlankActivityRuiCodes.class),
-  RP_CODES(
-      "rpcodes", R.string.categoryReserveProgramCodes, "FTS_rp_codes", BlankActivityRpCodes.class),
-  RFAS_ENLISTED(null, R.string.categoryRfasEnlistedCodes, null, null),
-  RFAS_OFFICER(null, R.string.categoryRfasOfficerCodes, null, null),
-  SSP_CODES(
-      "sspcodes",
-      R.string.categorySubspecialityCodes,
-      "FTS_ssp_codes",
-      BlankActivitySspCodes.class);
+      "officerpaygradecodes", R.string.categoryOfficerPaygradeCodes, "FTS_officer_paygrade_codes"),
+  RBSC_BILLET_CODES("rbscbilletcodes", R.string.categoryRbscBilletCodes, "FTS_rbsc_billet_codes"),
+  RUI_CODES("ruicodes", R.string.categoryReserveUnitIdentificationCodes, "FTS_rui_codes"),
+  RP_CODES("rpcodes", R.string.categoryReserveProgramCodes, "FTS_rp_codes"),
+  RFAS_ENLISTED(null, R.string.categoryRfasEnlistedCodes, null),
+  RFAS_OFFICER(null, R.string.categoryRfasOfficerCodes, null),
+  SSP_CODES("sspcodes", R.string.categorySubspecialityCodes, "FTS_ssp_codes");
 
   /** Internal DB/URI key. Null for RFAS categories, which bypass the search flow. */
   public final String key;
@@ -94,18 +66,10 @@ public enum Category {
   /** SQLite FTS virtual table name. Null for RFAS categories. */
   public final String ftsTable;
 
-  /** BlankActivity subclass that triggers the search dialog. Null for RFAS categories. */
-  public final Class<? extends BlankActivity> blankActivityClass;
-
-  Category(
-      String key,
-      int labelRes,
-      String ftsTable,
-      Class<? extends BlankActivity> blankActivityClass) {
+  Category(String key, int labelRes, String ftsTable) {
     this.key = key;
     this.labelRes = labelRes;
     this.ftsTable = ftsTable;
-    this.blankActivityClass = blankActivityClass;
   }
 
   /** Returns the Category whose {@link #key} matches the given string, or null if not found. */
