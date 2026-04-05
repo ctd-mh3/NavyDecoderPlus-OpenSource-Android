@@ -47,15 +47,24 @@ class SearchResultsCursorAdapter extends CursorAdapter {
     // Find fields to populate in inflated template
     TextView itemToDecode = view.findViewById(R.id.searchScreenResultItemToDecodeTextView);
     TextView itemInfo = view.findViewById(R.id.searchScreenResultDecodeInfoTextView);
+    TextView itemCategory = view.findViewById(R.id.searchScreenResultCategoryTextView);
 
     // Extract properties from cursor
-    String itemToDecodeString =
-        cursor.getString(cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE));
-    String itemInfoString =
-        cursor.getString(cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_MEANING));
+    itemToDecode.setText(cursor.getString(cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE)));
+    itemInfo.setText(
+        cursor.getString(cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_MEANING)));
 
-    // Populate fields with extracted properties
-    itemToDecode.setText(itemToDecodeString);
-    itemInfo.setText(itemInfoString);
+    // category_key column is only present in global (all-categories) search results.
+    int categoryColIndex = cursor.getColumnIndex(DecodeDatabase.KEY_CATEGORY_KEY);
+    if (categoryColIndex >= 0) {
+      MappingHelper mh = MappingHelper.getInstance();
+      String label = mh != null ? mh.getSelectionText(cursor.getString(categoryColIndex)) : "";
+      if (!label.isEmpty()) {
+        itemCategory.setText(label);
+        itemCategory.setVisibility(View.VISIBLE);
+        return;
+      }
+    }
+    itemCategory.setVisibility(View.GONE);
   }
 }

@@ -76,6 +76,9 @@
   <string name="categoryReserveProgramCodes">Reserve Program Codes</string>
 
 
+  <!-- Main screen -->
+  <string name="categorySearchAll">Search All Non-RFAS Categories</string>
+
   <!-- Search screen -->
   <string name="search_hint">Search…</string>
   <string name="search_prompt">Type to search</string>

@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.BaseColumns;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,9 +38,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import com.crashtestdummylimited.navydecoderplus.R;
 import com.crashtestdummylimited.navydecoderplus.databinding.SearchScreenBinding;
+import com.crashtestdummylimited.navydecoderplus.model.db.DecodeDatabase;
 
 /** Displays search results for a specific decode category using an embedded SearchView. */
 public class SearchableDecoderActivity extends AppCompatActivity {
+
+  /**
+   * Category key value that triggers a cross-category search across all FTS tables. Pass this as
+   * the {@link MappingHelper#CATEGORY_KEY_IDENTIFIER} Intent extra to search everything.
+   */
+  public static final String ALL_CATEGORIES_KEY = "all";
 
   private SearchScreenBinding mBinding;
 
@@ -85,11 +93,16 @@ public class SearchableDecoderActivity extends AppCompatActivity {
 
     mDecodeCategory = getIntent().getStringExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER);
 
-    // Set toolbar title to the category label so the user knows what they are searching.
+    // Set toolbar title: category label for single-category, "Search All" for global.
     if (getSupportActionBar() != null) {
-      Category category = Category.fromKey(mDecodeCategory);
-      getSupportActionBar()
-          .setTitle(category != null ? getString(category.labelRes) : getString(R.string.app_name));
+      if (ALL_CATEGORIES_KEY.equals(mDecodeCategory)) {
+        getSupportActionBar().setTitle(R.string.categorySearchAll);
+      } else {
+        Category category = Category.fromKey(mDecodeCategory);
+        getSupportActionBar()
+            .setTitle(
+                category != null ? getString(category.labelRes) : getString(R.string.app_name));
+      }
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -146,9 +159,13 @@ public class SearchableDecoderActivity extends AppCompatActivity {
   private void showResults(String query) {
     mBinding.searchScreenEmptyView.setText(getString(R.string.no_results, query));
 
-    Uri mUriWithPath = Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mDecodeCategory);
+    Uri uriWithPath =
+        ALL_CATEGORIES_KEY.equals(mDecodeCategory)
+            ? Uri.withAppendedPath(DecodeProvider.CONTENT_URI, "all")
+            : Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mDecodeCategory);
+
     Cursor mCursor =
-        getContentResolver().query(mUriWithPath, null, null, new String[] {query}, null);
+        getContentResolver().query(uriWithPath, null, null, new String[] {query}, null);
 
     if (mCursor == null) {
       // Provider error: setEmptyView() only auto-fires once an adapter is attached,
@@ -163,12 +180,26 @@ public class SearchableDecoderActivity extends AppCompatActivity {
 
     lvItems.setOnItemClickListener(
         (parent, view, position, id) -> {
+          String clickedCategory;
+          long rowId;
+
+          if (ALL_CATEGORIES_KEY.equals(mDecodeCategory)) {
+            // Global search: rowids conflict across tables, so read both fields from the cursor.
+            Cursor c = (Cursor) mAdapter.getItem(position);
+            int catCol = c.getColumnIndex(DecodeDatabase.KEY_CATEGORY_KEY);
+            clickedCategory = catCol >= 0 ? c.getString(catCol) : "";
+            rowId = c.getLong(c.getColumnIndexOrThrow(BaseColumns._ID));
+          } else {
+            clickedCategory = mDecodeCategory;
+            rowId = id;
+          }
+
           Intent mItemIntent = new Intent(getApplicationContext(), SelectedItemActivity.class);
           Uri itemUri =
               Uri.withAppendedPath(
-                  Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mDecodeCategory),
-                  String.valueOf(id));
-          mItemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, mDecodeCategory);
+                  Uri.withAppendedPath(DecodeProvider.CONTENT_URI, clickedCategory),
+                  String.valueOf(rowId));
+          mItemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, clickedCategory);
           mItemIntent.setData(itemUri);
           startActivity(mItemIntent);
         });

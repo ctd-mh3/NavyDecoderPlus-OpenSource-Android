@@ -23,4 +23,14 @@
     android:maxLines="1"
     android:textAppearance="?attr/textAppearanceBodySmall"
     android:textSize="@dimen/resultDescription_textSize" />
+
+  <TextView
+    android:id="@+id/searchScreenResultCategoryTextView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:textAppearance="?attr/textAppearanceLabelSmall"
+    android:textColor="?attr/colorOnSurfaceVariant"
+    android:textSize="@dimen/resultDescription_textSize"
+    android:visibility="gone" />
+
 </LinearLayout>

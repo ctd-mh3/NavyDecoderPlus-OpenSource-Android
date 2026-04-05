@@ -55,6 +55,9 @@ public class DecodeProvider extends ContentProvider {
   private static final int SEARCH_SUGGEST = 2;
   // Number of items above
   private static final int NUMBER_OF_BASE_TYPES = 3;
+  // Special matcher code for the cross-category global search URI ("decodeData/all").
+  // Must be outside the per-category range (max ~13 categories × 3 = 39).
+  private static final int SEARCH_INFO_ALL = 1000;
   //    private static final int REFRESH_SHORTCUT = 1000;
   private static UriMatcher mURIMatcher;
 
@@ -65,6 +68,10 @@ public class DecodeProvider extends ContentProvider {
     ArrayList<String> mOffsetMatcherTemp = new ArrayList<>();
 
     UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
+
+    // Global cross-category search — must be registered before per-category entries so "all"
+    // is not accidentally matched as a category path segment.
+    matcher.addURI(AUTHORITY, "decodeData/all", SEARCH_INFO_ALL);
 
     MappingHelper mMappingHelper = MappingHelper.getInstance();
     if (mMappingHelper != null) {
@@ -134,6 +141,14 @@ public class DecodeProvider extends ContentProvider {
     // Match should always find a match, if not stop processing and return null for the cursor
     if (mtemp == -1) {
       return null;
+    }
+
+    // Handle global search before the per-category offset arithmetic.
+    if (mtemp == SEARCH_INFO_ALL) {
+      if (selectionArgs == null) {
+        throw new IllegalArgumentException("selectionArgs must be provided for the Uri: " + uri);
+      }
+      return mDecodeDatabase.getAllDecodeMatches(selectionArgs[0].toLowerCase());
     }
 
     int mtemp2 = mtemp / NUMBER_OF_BASE_TYPES;
