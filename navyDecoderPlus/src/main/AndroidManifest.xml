@@ -29,7 +29,9 @@
     <!--********************************************************************************************
         Additional Qualification Designator (AQD) Codes
      ********************************************************************************************-->
-    <activity android:name=".controller.BlankActivityAqdCodes">
+    <activity
+      android:name=".controller.BlankActivityAqdCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value=".controller.SearchableDecoderActivityAqdCodes" />
@@ -52,7 +54,9 @@
     <!--********************************************************************************************
         Enlisted Rating Codes
      ********************************************************************************************-->
-    <activity android:name=".controller.BlankActivityEnlistedRatingCodes">
+    <activity
+      android:name=".controller.BlankActivityEnlistedRatingCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value=".controller.SearchableDecoderActivityEnlistedRatingsCodes" />
@@ -75,7 +79,9 @@
     <!--********************************************************************************************
         Manpower Availability Status (MAS) Codes
      ********************************************************************************************-->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityMasCodes">
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityMasCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivityMasCodes" />
@@ -98,7 +104,9 @@
     <!--********************************************************************************************
          Navy Office Billet Classification (NOBC) Codes
       ********************************************************************************************-->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityNobcCodes">
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityNobcCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivityNobcCodes" />
@@ -121,7 +129,9 @@
     <!--********************************************************************************************
          Navy Enlisted Classification (NEC) Codes
       ********************************************************************************************-->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityNecCodes">
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityNecCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivityNecCodes" />
@@ -144,7 +154,9 @@
     <!--********************************************************************************************
         Navy Reserve Activity (NRA) Codes
      ********************************************************************************************-->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityNraCodes">
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityNraCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivityNraCodes" />
@@ -167,7 +179,9 @@
     <!--********************************************************************************************
         Reserve Unit Identification Codes (RUIC)
      ********************************************************************************************-->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityRuiCodes">
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityRuiCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivityRuiCodes" />
@@ -190,7 +204,9 @@
     <!--********************************************************************************************
         Individual Mobilization Status (IMS) Codes
      ********************************************************************************************-->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityImsCodes">
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityImsCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivityImsCodes" />
@@ -213,7 +229,9 @@
     <!--********************************************************************************************
         Officer Billet Codes
      ********************************************************************************************-->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityOfficerBilletCodes">
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityOfficerBilletCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivityOfficerBilletCodes" />
@@ -236,7 +254,9 @@
     <!--********************************************************************************************
          Officer Designator Codes
       ********************************************************************************************-->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityOfficerDesignatorCodes">
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityOfficerDesignatorCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivityOfficerDesignatorCodes" />
@@ -259,7 +279,9 @@
     <!--********************************************************************************************
          Officer Paygrade Codes
       ********************************************************************************************-->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityOfficerPaygradeCodes">
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityOfficerPaygradeCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivityOfficerPaygradeCodes" />
@@ -282,7 +304,9 @@
     <!--********************************************************************************************
          Reserve Billet Sequence Code (RBSC)
       ********************************************************************************************-->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityRbscBilletCodes">
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityRbscBilletCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivityRbscBilletCodes" />
@@ -305,7 +329,9 @@
     <!--********************************************************************************************
          Subspecialty System (SSP) Codes
       ********************************************************************************************-->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivitySspCodes">
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivitySspCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivitySspCodes" />
@@ -328,7 +354,9 @@
     <!--********************************************************************************************
         Reserve Program Codes
      ********************************************************************************************-->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityRpCodes">
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.BlankActivityRpCodes"
+      android:exported="false">
       <meta-data
         android:name="android.app.default_searchable"
         android:value="com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivityRpCodes" />
@@ -350,10 +378,14 @@
 
 
     <!-- Unique activity for the RFAS codes which are not searchable -->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.RfasActivity"/>
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.RfasActivity"
+      android:exported="false" />
 
     <!-- Displays the information for the decoded item. -->
-    <activity android:name="com.crashtestdummylimited.navydecoderplus.controller.SelectedItemActivity" />
+    <activity
+      android:name="com.crashtestdummylimited.navydecoderplus.controller.SelectedItemActivity"
+      android:exported="false" />
 
     <!-- Provides search suggestions for words and their definitions. -->
     <provider
