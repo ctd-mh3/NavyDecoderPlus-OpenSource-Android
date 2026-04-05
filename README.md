@@ -20,7 +20,7 @@ With the movement of both of these applications to open source in 2024, it is up
 * Reserve Program Codes
 * Reserve Unit Identification Codes
 * RFAS Codes
-* Subspeciality (SSP) Codes
+* Subspecialty (SSP) Codes
 
 
 ## Contributing
