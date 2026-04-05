@@ -11,14 +11,16 @@
 
   <TextView
     android:id="@+id/searchScreenResultItemToDecodeTextView"
-    style="@android:style/TextAppearance.Large"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+    android:textAppearance="?attr/textAppearanceTitleSmall"
+    android:textSize="@dimen/applicationTheme_textSize" />
 
   <TextView
     android:id="@+id/searchScreenResultDecodeInfoTextView"
-    style="@android:style/TextAppearance.Small"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:maxLines="1" />
+    android:maxLines="1"
+    android:textAppearance="?attr/textAppearanceBodySmall"
+    android:textSize="@dimen/resultDescription_textSize" />
 </LinearLayout>
