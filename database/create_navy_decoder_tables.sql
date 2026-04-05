@@ -76,16 +76,10 @@ CREATE VIRTUAL TABLE FTS_aqd_codes USING fts3 (
   suggest_text_2,
   source);
 
-/* Original command when not using fts3 table
-CREATE VIRTUAL TABLE enlisted_rating_codes USING fts3(
-  rating_code, 
-  rating_description,
-  source);
-
-
+/* Historical non-FTS table format, kept for reference:
 create table enlisted_rating_codes (
   _id integer primary key,
-  rating_code text unique check (length(rating_code) <= 4) not null, 
+  rating_code text unique check (length(rating_code) <= 4) not null,
   rating_description text not null,
   source text not null);
 */

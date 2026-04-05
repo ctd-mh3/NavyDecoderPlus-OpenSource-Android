@@ -24,7 +24,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.BaseColumns;
 import android.util.Log;
 import com.crashtestdummylimited.navydecoderplus.controller.Category;
@@ -130,10 +129,18 @@ public class DecodeDatabase {
     Category category = Category.fromKey(decodeCategoryKey);
     String mTableToQuery = category != null ? category.ftsTable : null;
 
+    // FTS5 treats several characters as query operators (- is NOT, " starts a phrase, etc.).
+    // Replace any non-alphanumeric, non-space character with a space so that a search like
+    // "E-6" becomes "e 6*" — FTS5 implicit AND — rather than "e NOT 6*".
+    String sanitizedQuery = query.replaceAll("[^a-zA-Z0-9 ]", " ").trim().replaceAll("\\s+", " ");
+    if (sanitizedQuery.isEmpty()) {
+      return null;
+    }
+
     //  Below code will only search the code column and not the entire table
     //  String selection = KEY_CODE + " MATCH ?";
     String mSelection = mTableToQuery + " MATCH ?";
-    String[] mSelectionArgs = new String[] {query + "*"};
+    String[] mSelectionArgs = new String[] {sanitizedQuery + "*"};
 
     return query(mTableToQuery, mSelection, mSelectionArgs, columns);
   }
@@ -148,32 +155,47 @@ public class DecodeDatabase {
    */
   private Cursor query(
       String tableToQuery, String selection, String[] selectionArgs, String[] columns) {
-    /* The SQLiteBuilder provides a map for all possible columns requested to
-     * actual columns in the database, creating a simple column alias mechanism
-     * by which the ContentProvider does not need to know the real column names
-     */
-    SQLiteQueryBuilder mBuilder = new SQLiteQueryBuilder();
-    mBuilder.setTables(tableToQuery);
-    mBuilder.setProjectionMap(COLUMN_MAP);
+    // SQLiteQueryBuilder wraps the WHERE clause in parentheses — "WHERE (table MATCH ?)" —
+    // which breaks FTS5 on the SQLite versions bundled with Android 8-9 (< SQLite 3.28).
+    // Use rawQuery() directly so the MATCH expression is unparenthesised.
+    StringBuilder selectClause = new StringBuilder();
+    for (int i = 0; i < columns.length; i++) {
+      if (i > 0) selectClause.append(", ");
+      String mapped = COLUMN_MAP.get(columns[i]);
+      selectClause.append(mapped != null ? mapped : columns[i]);
+    }
 
-    Cursor mCursor =
-        mBuilder.query(
-            mDatabaseOpenHelper.getReadableDatabase(),
-            columns,
-            selection,
-            selectionArgs,
-            null,
-            null,
-            null,
-            String.valueOf(SEARCH_RESULT_LIMIT));
+    String sql =
+        "SELECT "
+            + selectClause
+            + " FROM "
+            + tableToQuery
+            + " WHERE "
+            + selection
+            + " LIMIT "
+            + SEARCH_RESULT_LIMIT;
+
+    Log.d(TAG, "query SQL: " + sql);
+    Log.d(TAG, "query args: " + java.util.Arrays.toString(selectionArgs));
+
+    Cursor mCursor;
+    try {
+      mCursor = mDatabaseOpenHelper.getReadableDatabase().rawQuery(sql, selectionArgs);
+    } catch (Exception e) {
+      Log.e(TAG, "rawQuery failed: " + e.getMessage(), e);
+      return null;
+    }
 
     if (mCursor == null) {
+      Log.d(TAG, "query: cursor is null");
       return null;
     } else if (!mCursor.moveToFirst()) {
+      Log.d(TAG, "query: cursor is empty (0 rows)");
       mCursor.close();
       return null;
     }
 
+    Log.d(TAG, "query: returned results");
     return mCursor;
   }
 
@@ -211,7 +233,8 @@ public class DecodeDatabase {
     //   25 = App v1.38 database (Corrected SSP for 1950)
     //   26 = App v1.40 database (Added AQD. Updated designators and NOBCs.)
     //   27 = App v1.41 database (Updated MAS and IMS codes.)
-    private static final int DB_VERSION = 27;
+    //   28 = App v1.45 database (Updated NOBCs, Officer Billets, Officer Designators, and SSPs)
+    private static final int DB_VERSION = 28;
 
     private final Context mContext;
 
@@ -264,10 +287,17 @@ public class DecodeDatabase {
         db_Read2.close();
 
         if (DB_VERSION > versionOfActiveDatabase) {
+          Log.d(
+              TAG,
+              "createDataBase: upgrading from " + versionOfActiveDatabase + " to " + DB_VERSION);
           // Force call to upgrade the database.
           // onUpgrade does not use the db parameter (it calls mContext.deleteDatabase()),
           // so null is passed rather than a closed handle.
           onUpgrade(null, versionOfActiveDatabase, DB_VERSION);
+        } else {
+          Log.d(
+              TAG,
+              "createDataBase: version " + versionOfActiveDatabase + " is current, no copy needed");
         }
       }
 
