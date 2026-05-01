@@ -10,8 +10,8 @@ insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) v
 insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ('SN','Seaman','NAVPERS 18068F (APR 2026)');
 insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ('AB','Aviation Boatswain''s Mate','NAVPERS 18068F (APR 2026)');
 insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ('ABE','Aviation Boatswain''s Mate (Launching and Recovery Equipment)','NAVPERS 18068F (APR 2026)');
-insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ('ABF','Aviation Boatswain''s Mate(Fuels)','NAVPERS 18068F (APR 2026)');
-insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ('ABH','Aviation Boatswain''s Mate(Aircraft Handling)','NAVPERS 18068F (APR 2026)');
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ('ABF','Aviation Boatswain''s Mate (Fuels)','NAVPERS 18068F (APR 2026)');
+insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ('ABH','Aviation Boatswain''s Mate (Aircraft Handling)','NAVPERS 18068F (APR 2026)');
 insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ('AC','Air Traffic Controller','NAVPERS 18068F (APR 2026)');			
 insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ('AD','Aviation Machinist''s Mate','NAVPERS 18068F (APR 2026)');
 insert into FTS_enlisted_rating_codes (suggest_text_1, suggest_text_2, source) values ('AE','Aviation Electrician''s Mate','NAVPERS 18068F (APR 2026)');
