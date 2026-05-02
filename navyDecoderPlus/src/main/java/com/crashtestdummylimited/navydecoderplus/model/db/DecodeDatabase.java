@@ -192,10 +192,11 @@ public class DecodeDatabase {
       return null;
     }
 
-    if (cursor == null || !cursor.moveToFirst()) {
+    if (cursor == null || cursor.getCount() == 0) {
       if (cursor != null) cursor.close();
       return null;
     }
+    // Cursor is returned at position -1 (before first row), as CursorAdapter expects.
     return cursor;
   }
 
@@ -243,13 +244,14 @@ public class DecodeDatabase {
     if (mCursor == null) {
       Log.d(TAG, "query: cursor is null");
       return null;
-    } else if (!mCursor.moveToFirst()) {
+    } else if (mCursor.getCount() == 0) {
       Log.d(TAG, "query: cursor is empty (0 rows)");
       mCursor.close();
       return null;
     }
 
     Log.d(TAG, "query: returned results");
+    // Cursor is returned at position -1 (before first row), as CursorAdapter expects.
     return mCursor;
   }
 
