@@ -38,7 +38,6 @@ import com.crashtestdummylimited.navydecoderplus.databinding.RfasScreenBinding;
 import com.crashtestdummylimited.navydecoderplus.model.RFASEnlistedCodes;
 import com.crashtestdummylimited.navydecoderplus.model.RFASOfficerCodes;
 import com.crashtestdummylimited.navydecoderplus.model.RFASReferenceData;
-import java.util.Objects;
 
 public class RfasActivity extends AppCompatActivity {
 
@@ -109,8 +108,13 @@ public class RfasActivity extends AppCompatActivity {
     Intent mIntent = getIntent();
     String mRfasType = mIntent.getStringExtra(EXTRA_RFAS_TYPE);
 
+    if (mRfasType == null) {
+      finish();
+      return;
+    }
+
     // Setup all the spinners
-    switch (Objects.requireNonNull(mRfasType)) {
+    switch (mRfasType) {
       case RFAS_TYPE_ENLISTED:
         rfasReferenceData = new RFASEnlistedCodes();
         mBinding.rfasTopLevelDescription.setText(
