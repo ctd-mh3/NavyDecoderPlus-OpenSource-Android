@@ -92,6 +92,9 @@ public class SearchableDecoderActivity extends AppCompatActivity {
         });
 
     mDecodeCategory = getIntent().getStringExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER);
+    if (mDecodeCategory == null) {
+      mDecodeCategory = ALL_CATEGORIES_KEY;
+    }
 
     // Set toolbar title: category label for single-category, "Search All" for global.
     if (getSupportActionBar() != null) {
@@ -185,7 +188,9 @@ public class SearchableDecoderActivity extends AppCompatActivity {
 
           if (ALL_CATEGORIES_KEY.equals(mDecodeCategory)) {
             // Global search: rowids conflict across tables, so read both fields from the cursor.
-            Cursor c = (Cursor) mAdapter.getItem(position);
+            Object item = mAdapter.getItem(position);
+            if (!(item instanceof Cursor)) return;
+            Cursor c = (Cursor) item;
             int catCol = c.getColumnIndex(DecodeDatabase.KEY_CATEGORY_KEY);
             clickedCategory = catCol >= 0 ? c.getString(catCol) : "";
             rowId = c.getLong(c.getColumnIndexOrThrow(BaseColumns._ID));
