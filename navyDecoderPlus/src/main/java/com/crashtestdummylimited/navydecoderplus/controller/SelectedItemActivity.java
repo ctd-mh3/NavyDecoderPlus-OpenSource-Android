@@ -55,6 +55,8 @@ public class SelectedItemActivity extends AppCompatActivity {
   private static final long COOLDOWN_MS = 7L * 24L * 60L * 60L * 1000L; // 7 days
 
   private ReviewManager mReviewManager;
+  private Handler mDebugReviewHandler;
+  private Runnable mDebugReviewRunnable;
 
   // *************************************************************************
   //
@@ -120,7 +122,11 @@ public class SelectedItemActivity extends AppCompatActivity {
       String mSelectionText = mMappingHelper.getSelectionText(mDecodeCategory);
       mBinding.decodeCategoryTextView.setText(mSelectionText);
 
-      mCursor.moveToFirst();
+      if (!mCursor.moveToFirst()) {
+        mCursor.close();
+        finish();
+        return;
+      }
 
       int mCodeIndex = mCursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE);
       int mCodeMeaningIndex = mCursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_MEANING);
@@ -140,17 +146,17 @@ public class SelectedItemActivity extends AppCompatActivity {
     // time. FakeReviewManager completes silently without any visible UI, so it is
     // not useful for manual timing verification.
     if (BuildConfig.DEBUG) {
-      new Handler(Looper.getMainLooper())
-          .postDelayed(
-              () -> {
-                if (isFinishing()) return;
-                new AlertDialog.Builder(this)
-                    .setTitle("[Debug] Review Prompt")
-                    .setMessage("In a production build the Play Store review dialog appears here.")
-                    .setPositiveButton("OK", null)
-                    .show();
-              },
-              500);
+      mDebugReviewHandler = new Handler(Looper.getMainLooper());
+      mDebugReviewRunnable =
+          () -> {
+            if (isFinishing()) return;
+            new AlertDialog.Builder(this)
+                .setTitle("[Debug] Review Prompt")
+                .setMessage("In a production build the Play Store review dialog appears here.")
+                .setPositiveButton("OK", null)
+                .show();
+          };
+      mDebugReviewHandler.postDelayed(mDebugReviewRunnable, 500);
       return;
     }
 
@@ -176,6 +182,14 @@ public class SelectedItemActivity extends AppCompatActivity {
     prefs.edit().putLong(KEY_LAST_PROMPT_MS, now).apply();
 
     promptInAppReview();
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    if (mDebugReviewHandler != null) {
+      mDebugReviewHandler.removeCallbacks(mDebugReviewRunnable);
+    }
   }
 
   private void promptInAppReview() {
