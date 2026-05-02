@@ -288,7 +288,8 @@ public class DecodeDatabase {
     //   26 = App v1.40 database (Added AQD. Updated designators and NOBCs.)
     //   27 = App v1.41 database (Updated MAS and IMS codes.)
     //   28 = App v1.45 database (Updated NOBCs, Officer Billets, Officer Designators, and SSPs)
-    private static final int DB_VERSION = 28;
+    //   29 = App v1.46 database (Updated Enlisted rating codes, AQDs, SSPs, and NECs)
+    private static final int DB_VERSION = 29;
 
     private final Context mContext;
 
