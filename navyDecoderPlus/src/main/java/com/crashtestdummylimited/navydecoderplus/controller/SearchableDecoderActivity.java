@@ -29,7 +29,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -114,6 +113,34 @@ public class SearchableDecoderActivity extends AppCompatActivity {
     mBinding.searchScreenEmptyView.setVisibility(View.VISIBLE);
     mBinding.searchScreenListView.setEmptyView(mBinding.searchScreenEmptyView);
 
+    mBinding.searchScreenListView.setOnItemClickListener(
+        (parent, itemView, position, id) -> {
+          String clickedCategory;
+          long rowId;
+
+          if (ALL_CATEGORIES_KEY.equals(mDecodeCategory)) {
+            // Global search: rowids conflict across tables, so read both fields from the cursor.
+            Object item = mAdapter.getItem(position);
+            if (!(item instanceof Cursor)) return;
+            Cursor c = (Cursor) item;
+            int catCol = c.getColumnIndex(DecodeDatabase.KEY_CATEGORY_KEY);
+            clickedCategory = catCol >= 0 ? c.getString(catCol) : "";
+            rowId = c.getLong(c.getColumnIndexOrThrow(BaseColumns._ID));
+          } else {
+            clickedCategory = mDecodeCategory;
+            rowId = id;
+          }
+
+          Intent mItemIntent = new Intent(getApplicationContext(), SelectedItemActivity.class);
+          Uri itemUri =
+              Uri.withAppendedPath(
+                  Uri.withAppendedPath(DecodeProvider.CONTENT_URI, clickedCategory),
+                  String.valueOf(rowId));
+          mItemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, clickedCategory);
+          mItemIntent.setData(itemUri);
+          startActivity(mItemIntent);
+        });
+
     mBinding.searchView.setOnQueryTextListener(
         new SearchView.OnQueryTextListener() {
           @Override
@@ -167,47 +194,26 @@ public class SearchableDecoderActivity extends AppCompatActivity {
             ? Uri.withAppendedPath(DecodeProvider.CONTENT_URI, "all")
             : Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mDecodeCategory);
 
-    Cursor mCursor =
+    Cursor newCursor =
         getContentResolver().query(uriWithPath, null, null, new String[] {query}, null);
 
-    if (mCursor == null) {
-      // Provider error: setEmptyView() only auto-fires once an adapter is attached,
-      // so reveal the empty view manually for this edge case.
-      mBinding.searchScreenEmptyView.setVisibility(View.VISIBLE);
-      return;
+    if (mAdapter == null) {
+      // First query: create the adapter and wire it to the ListView.
+      mAdapter = new SearchResultsCursorAdapter(this, newCursor);
+      mBinding.searchScreenListView.setAdapter(mAdapter);
+    } else {
+      // Subsequent queries: swap the cursor so the old one is properly closed before
+      // the new one is installed. Creating a new adapter each call would orphan the
+      // previous cursor (leaving it open) and risk a StaleDataException during layout.
+      mAdapter.changeCursor(newCursor);
     }
 
-    ListView lvItems = mBinding.searchScreenListView;
-    mAdapter = new SearchResultsCursorAdapter(this, mCursor);
-    lvItems.setAdapter(mAdapter);
-
-    lvItems.setOnItemClickListener(
-        (parent, view, position, id) -> {
-          String clickedCategory;
-          long rowId;
-
-          if (ALL_CATEGORIES_KEY.equals(mDecodeCategory)) {
-            // Global search: rowids conflict across tables, so read both fields from the cursor.
-            Object item = mAdapter.getItem(position);
-            if (!(item instanceof Cursor)) return;
-            Cursor c = (Cursor) item;
-            int catCol = c.getColumnIndex(DecodeDatabase.KEY_CATEGORY_KEY);
-            clickedCategory = catCol >= 0 ? c.getString(catCol) : "";
-            rowId = c.getLong(c.getColumnIndexOrThrow(BaseColumns._ID));
-          } else {
-            clickedCategory = mDecodeCategory;
-            rowId = id;
-          }
-
-          Intent mItemIntent = new Intent(getApplicationContext(), SelectedItemActivity.class);
-          Uri itemUri =
-              Uri.withAppendedPath(
-                  Uri.withAppendedPath(DecodeProvider.CONTENT_URI, clickedCategory),
-                  String.valueOf(rowId));
-          mItemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, clickedCategory);
-          mItemIntent.setData(itemUri);
-          startActivity(mItemIntent);
-        });
+    if (newCursor == null) {
+      // setEmptyView auto-fires once the adapter is attached; for the very first call
+      // where the provider returns null the adapter is just being attached, so reveal
+      // the empty view explicitly to avoid a blank screen.
+      mBinding.searchScreenEmptyView.setVisibility(View.VISIBLE);
+    }
   }
 
   @Override
