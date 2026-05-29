@@ -22,8 +22,7 @@
   <!-- Menu / about dialogs -->
   <color name="menuDialogBackgroundColor">#002855</color>
   <color name="menuDialogTextColor">#FFFFFF</color>
-  <color name="changeLogTextColor">#FFFFFF</color>
-  <color name="changeLogBackgroundColor">#002855</color>
+
   <color name="listItemDivider">#BCC8D8</color>
 
 </resources>
