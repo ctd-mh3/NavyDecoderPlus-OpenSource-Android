@@ -32,6 +32,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.crashtestdummylimited.navydecoderplus.controller.Category;
 import com.crashtestdummylimited.navydecoderplus.controller.MappingHelper;
 import com.crashtestdummylimited.navydecoderplus.controller.MenuOptions;
+import com.crashtestdummylimited.navydecoderplus.util.AppUpdateChecker;
 import com.crashtestdummylimited.navydecoderplus.controller.RfasActivity;
 import com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivity;
 
@@ -124,5 +125,11 @@ public class NavyDecoderPlus extends AppCompatActivity {
           startActivity(mIntent);
         });
 
+  }
+
+  @Override
+  protected void onResume() {
+    super.onResume();
+    AppUpdateChecker.checkForUpdate(this);
   }
 }
