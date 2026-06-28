@@ -93,19 +93,15 @@ public class RFASEnlistedCodes implements RFASReferenceData {
     };
     mFourthCharacterCodesHashMap = new HashMap<>(FOURTH_CHAR_CODE_MEANING_DATA.length);
 
-    for (String[] aFIRST_CHAR_CODE_MEANING_DATA : FIRST_CHAR_CODE_MEANING_DATA) {
-      mFirstCharacterCodesHashMap.put(
-          aFIRST_CHAR_CODE_MEANING_DATA[0], aFIRST_CHAR_CODE_MEANING_DATA[1]);
+    for (String[] row : FIRST_CHAR_CODE_MEANING_DATA) {
+      mFirstCharacterCodesHashMap.put(row[0], row[1]);
     }
-    for (String[] aSECOND_AND_THIRD_CHAR_CODE_MEANING_DATA :
-        SECOND_AND_THIRD_CHAR_CODE_MEANING_DATA) {
-      mSecondAndThirdCharacterCodesHashMap.put(
-          aSECOND_AND_THIRD_CHAR_CODE_MEANING_DATA[0], aSECOND_AND_THIRD_CHAR_CODE_MEANING_DATA[1]);
+    for (String[] row : SECOND_AND_THIRD_CHAR_CODE_MEANING_DATA) {
+      mSecondAndThirdCharacterCodesHashMap.put(row[0], row[1]);
     }
 
-    for (String[] aFOURTH_CHAR_CODE_MEANING_DATA : FOURTH_CHAR_CODE_MEANING_DATA) {
-      mFourthCharacterCodesHashMap.put(
-          aFOURTH_CHAR_CODE_MEANING_DATA[0], aFOURTH_CHAR_CODE_MEANING_DATA[1]);
+    for (String[] row : FOURTH_CHAR_CODE_MEANING_DATA) {
+      mFourthCharacterCodesHashMap.put(row[0], row[1]);
     }
   }
 

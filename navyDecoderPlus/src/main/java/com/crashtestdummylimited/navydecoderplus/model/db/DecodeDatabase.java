@@ -62,7 +62,7 @@ public class DecodeDatabase {
   // specific enough that any match set larger than this is too broad to be useful.
   private static final int SEARCH_RESULT_LIMIT = 50;
 
-  private static String mDataBaseFullPathWithFileName;
+  private static String sDatabaseFullPath;
 
   private final DecoderOpenHelper mDatabaseOpenHelper;
 
@@ -85,18 +85,18 @@ public class DecodeDatabase {
    * the need to know real column names and create the alias itself.
    */
   private static HashMap<String, String> buildColumnMap() {
-    HashMap<String, String> mMap = new HashMap<>();
-    mMap.put(KEY_CODE, KEY_CODE);
-    mMap.put(KEY_CODE_MEANING, KEY_CODE_MEANING);
-    mMap.put(KEY_CODE_SOURCE, KEY_CODE_SOURCE);
-    mMap.put(BaseColumns._ID, "rowid AS " + BaseColumns._ID);
-    mMap.put(
+    HashMap<String, String> map = new HashMap<>();
+    map.put(KEY_CODE, KEY_CODE);
+    map.put(KEY_CODE_MEANING, KEY_CODE_MEANING);
+    map.put(KEY_CODE_SOURCE, KEY_CODE_SOURCE);
+    map.put(BaseColumns._ID, "rowid AS " + BaseColumns._ID);
+    map.put(
         SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID,
         "rowid AS " + SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID);
-    mMap.put(
+    map.put(
         SearchManager.SUGGEST_COLUMN_SHORTCUT_ID,
         "rowid AS " + SearchManager.SUGGEST_COLUMN_SHORTCUT_ID);
-    return mMap;
+    return map;
   }
 
   /**
@@ -109,11 +109,11 @@ public class DecodeDatabase {
   public Cursor getItemToDecode(String decodeCategoryKey, String rowId, String[] columns) {
 
     Category category = Category.fromKey(decodeCategoryKey);
-    String mTableToQuery = category != null ? category.ftsTable : null;
-    String mSelection = "rowid = ?";
-    String[] mSelectionArgs = new String[] {rowId};
+    String tableToQuery = category != null ? category.ftsTable : null;
+    String selection = "rowid = ?";
+    String[] selectionArgs = new String[] {rowId};
 
-    return query(mTableToQuery, mSelection, mSelectionArgs, columns);
+    return query(tableToQuery, selection, selectionArgs, columns);
 
     /* This builds a query that looks like:
      *     SELECT <columns> FROM <table> WHERE rowid = <rowId>
@@ -130,7 +130,7 @@ public class DecodeDatabase {
   public Cursor getDecodeMatches(String decodeCategoryKey, String query, String[] columns) {
 
     Category category = Category.fromKey(decodeCategoryKey);
-    String mTableToQuery = category != null ? category.ftsTable : null;
+    String tableToQuery = category != null ? category.ftsTable : null;
 
     // FTS5 treats several characters as query operators (- is NOT, " starts a phrase, etc.).
     // Replace any non-alphanumeric, non-space character with a space so that a search like
@@ -142,10 +142,10 @@ public class DecodeDatabase {
 
     //  Below code will only search the code column and not the entire table
     //  String selection = KEY_CODE + " MATCH ?";
-    String mSelection = mTableToQuery + " MATCH ?";
-    String[] mSelectionArgs = new String[] {sanitizedQuery + "*"};
+    String selection = tableToQuery + " MATCH ?";
+    String[] selectionArgs = new String[] {sanitizedQuery + "*"};
 
-    return query(mTableToQuery, mSelection, mSelectionArgs, columns);
+    return query(tableToQuery, selection, selectionArgs, columns);
   }
 
   /**
@@ -233,26 +233,26 @@ public class DecodeDatabase {
     Log.d(TAG, "query SQL: " + sql);
     Log.d(TAG, "query args: " + java.util.Arrays.toString(selectionArgs));
 
-    Cursor mCursor;
+    Cursor cursor;
     try {
-      mCursor = mDatabaseOpenHelper.getReadableDatabase().rawQuery(sql, selectionArgs);
+      cursor = mDatabaseOpenHelper.getReadableDatabase().rawQuery(sql, selectionArgs);
     } catch (Exception e) {
       Log.e(TAG, "rawQuery failed: " + e.getMessage(), e);
       return null;
     }
 
-    if (mCursor == null) {
+    if (cursor == null) {
       Log.d(TAG, "query: cursor is null");
       return null;
-    } else if (mCursor.getCount() == 0) {
+    } else if (cursor.getCount() == 0) {
       Log.d(TAG, "query: cursor is empty (0 rows)");
-      mCursor.close();
+      cursor.close();
       return null;
     }
 
     Log.d(TAG, "query: returned results");
     // Cursor is returned at position -1 (before first row), as CursorAdapter expects.
-    return mCursor;
+    return cursor;
   }
 
   /** This creates/opens the database. */
@@ -304,9 +304,9 @@ public class DecodeDatabase {
 
       // Do this dynamically w/o hard coded package name.  Allows for this file to be used by
       //    free and paid version of the app.
-      mDataBaseFullPathWithFileName = String.valueOf(this.mContext.getDatabasePath(DB_NAME));
+      sDatabaseFullPath = String.valueOf(this.mContext.getDatabasePath(DB_NAME));
       // 20140101: Using the below code was preventing a database upgrade
-      // mDataBaseFullPathWithFileName = this.mContext.getApplicationInfo().dataDir + "/" +DB_NAME;
+      // sDatabaseFullPath = this.mContext.getApplicationInfo().dataDir + "/" +DB_NAME;
     }
 
     /** Creates a empty database on the system and rewrites it with your own database. */
@@ -320,7 +320,7 @@ public class DecodeDatabase {
       //   "android.database.sqlite.SQLiteException: no such table:" error.
       //   Per:
       // http://www.anddev.org/networking-database-problems-f29/missing-table-in-sqlite-with-specific-version-of-desire-hd-t50364.html
-      SQLiteDatabase db_Read;
+      SQLiteDatabase dbRead;
 
       if (dbExist) {
         Log.d(TAG, "DecoderOpenHelper.createDataBase db exists");
@@ -336,12 +336,12 @@ public class DecodeDatabase {
         //
         // The below code manually determines the active database's version.  And if the
         //   latest installed database version is greater, it directly calls onUpgrade
-        SQLiteDatabase db_Read2 =
+        SQLiteDatabase dbRead2 =
             SQLiteDatabase.openDatabase(
-                mDataBaseFullPathWithFileName, null, SQLiteDatabase.OPEN_READONLY);
-        int versionOfActiveDatabase = db_Read2.getVersion();
+                sDatabaseFullPath, null, SQLiteDatabase.OPEN_READONLY);
+        int versionOfActiveDatabase = dbRead2.getVersion();
         Log.d(TAG, "In createDataBase(), database version is " + versionOfActiveDatabase);
-        db_Read2.close();
+        dbRead2.close();
 
         if (DB_VERSION > versionOfActiveDatabase) {
           Log.d(
@@ -362,7 +362,7 @@ public class DecodeDatabase {
       // DB
       dbExist = checkDataBase();
       //noinspection UnusedAssignment
-      db_Read = null;
+      dbRead = null;
 
       if (!dbExist) {
         Log.d(TAG, "DecoderOpenHelper.createDataBase finally creating database");
@@ -371,8 +371,8 @@ public class DecodeDatabase {
         // of your application so we are going to be able to overwrite that database with our
         // database.
         // Change to attempt to fix "no such table" error
-        db_Read = this.getReadableDatabase();
-        db_Read.close();
+        dbRead = this.getReadableDatabase();
+        dbRead.close();
 
         try {
           copyDataBase();
@@ -394,15 +394,15 @@ public class DecodeDatabase {
       SQLiteDatabase mCheckDB = null;
 
       try {
-        // mDataBaseFullPathWithFileName is already set via getDatabasePath() in the constructor.
+        // sDatabaseFullPath is already set via getDatabasePath() in the constructor.
         mCheckDB =
             SQLiteDatabase.openDatabase(
-                mDataBaseFullPathWithFileName, null, SQLiteDatabase.OPEN_READONLY);
+                sDatabaseFullPath, null, SQLiteDatabase.OPEN_READONLY);
         Log.d(TAG, "In checkDataBase(), database version is " + mCheckDB.getVersion());
 
       } catch (SQLiteException e) {
         Log.d(TAG, "DecoderOpenHelper.checkDataBase database does not exit");
-        // database does't exist yet.
+        // database doesn't exist yet.
       }
 
       if (mCheckDB != null) {
@@ -421,7 +421,7 @@ public class DecodeDatabase {
     private void copyDataBase() throws IOException {
 
       try (InputStream mInput = mContext.getAssets().open(DB_NAME_IN_APK);
-          OutputStream mOutput = Files.newOutputStream(Paths.get(mDataBaseFullPathWithFileName))) {
+          OutputStream mOutput = Files.newOutputStream(Paths.get(sDatabaseFullPath))) {
 
         // transfer bytes from the inputfile to the outputfile
         byte[] mBuffer = new byte[1024];
@@ -436,7 +436,7 @@ public class DecodeDatabase {
       try {
         SQLiteDatabase checkDB =
             SQLiteDatabase.openDatabase(
-                mDataBaseFullPathWithFileName, null, SQLiteDatabase.OPEN_READWRITE);
+                sDatabaseFullPath, null, SQLiteDatabase.OPEN_READWRITE);
 
         // once the db has been copied, set the new version..
         checkDB.setVersion(DB_VERSION);

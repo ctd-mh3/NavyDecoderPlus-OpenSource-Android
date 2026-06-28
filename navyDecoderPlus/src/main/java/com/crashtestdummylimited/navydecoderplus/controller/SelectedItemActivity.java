@@ -88,9 +88,9 @@ public class SelectedItemActivity extends AppCompatActivity {
       mReviewManager = ReviewManagerFactory.create(this);
     }
 
-    com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding mBinding =
+    com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding binding =
         FinalScreenSelectedItemBinding.inflate(getLayoutInflater());
-    View view = mBinding.getRoot();
+    View view = binding.getRoot();
     setContentView(view);
 
     ViewCompat.setOnApplyWindowInsetsListener(
@@ -105,37 +105,37 @@ public class SelectedItemActivity extends AppCompatActivity {
     // defensive only.
     if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
 
-    Uri mUri = getIntent().getData();
-    if (mUri == null) {
+    Uri uri = getIntent().getData();
+    if (uri == null) {
       finish();
       return;
     }
-    Cursor mCursor = getContentResolver().query(mUri, null, null, null, null);
+    Cursor cursor = getContentResolver().query(uri, null, null, null, null);
 
-    if (mCursor == null) {
+    if (cursor == null) {
       finish();
     } else {
-      Intent mIntent = getIntent();
-      String mDecodeCategory = mIntent.getStringExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER);
-      MappingHelper mMappingHelper = MappingHelper.getInstance(getApplicationContext());
+      Intent intent = getIntent();
+      String decodeCategory = intent.getStringExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER);
+      MappingHelper mappingHelper = MappingHelper.getInstance(getApplicationContext());
       // getSelectionText() returns "" via getOrDefault when no match — setText("") is safe.
-      String mSelectionText = mMappingHelper.getSelectionText(mDecodeCategory);
-      mBinding.decodeCategoryTextView.setText(mSelectionText);
+      String selectionText = mappingHelper.getSelectionText(decodeCategory);
+      binding.decodeCategoryTextView.setText(selectionText);
 
-      if (!mCursor.moveToFirst()) {
-        mCursor.close();
+      if (!cursor.moveToFirst()) {
+        cursor.close();
         finish();
         return;
       }
 
-      int mCodeIndex = mCursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE);
-      int mCodeMeaningIndex = mCursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_MEANING);
-      int mCodeSourceIndex = mCursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_SOURCE);
-      mBinding.itemDecodedTextView.setText(mCursor.getString(mCodeIndex));
-      mBinding.decodedDescriptionTextView.setText(mCursor.getString(mCodeMeaningIndex));
-      mBinding.sourceDescriptionTextView.setText(mCursor.getString(mCodeSourceIndex));
+      int codeIndex = cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE);
+      int codeMeaningIndex = cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_MEANING);
+      int codeSourceIndex = cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_SOURCE);
+      binding.itemDecodedTextView.setText(cursor.getString(codeIndex));
+      binding.decodedDescriptionTextView.setText(cursor.getString(codeMeaningIndex));
+      binding.sourceDescriptionTextView.setText(cursor.getString(codeSourceIndex));
 
-      mCursor.close();
+      cursor.close();
 
       tryRequestReviewIfAppropriate();
     }

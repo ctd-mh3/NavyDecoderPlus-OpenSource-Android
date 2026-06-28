@@ -27,6 +27,8 @@ import androidx.core.content.pm.PackageInfoCompat;
 
 public class CommonUtilities {
 
+  private static final String TAG = "CommonUtilities";
+
   /*	public static function String getVersionName(Context context, Class cls)
   	{
   	  try {
@@ -47,7 +49,7 @@ public class CommonUtilities {
       strVersion = packageInfo.versionName;
     } catch (NameNotFoundException e) {
       strVersion = "Unknown";
-      Log.w("Unable to get ver name.", e);
+      Log.w(TAG, "Unable to get ver name.", e);
     }
     return strVersion;
   }

@@ -46,7 +46,7 @@ public class RfasActivity extends AppCompatActivity {
   public static final String RFAS_TYPE_OFFICER = "Officer";
 
   private RfasScreenBinding mBinding;
-  private RFASReferenceData rfasReferenceData;
+  private RFASReferenceData mRfasReferenceData;
 
   // *************************************************************************
   //
@@ -105,52 +105,52 @@ public class RfasActivity extends AppCompatActivity {
     if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
 
     // Grab info from bundle to tell if enlisted or officer RFAS
-    Intent mIntent = getIntent();
-    String mRfasType = mIntent.getStringExtra(EXTRA_RFAS_TYPE);
+    Intent intent = getIntent();
+    String rfasType = intent.getStringExtra(EXTRA_RFAS_TYPE);
 
-    if (mRfasType == null) {
+    if (rfasType == null) {
       finish();
       return;
     }
 
     // Setup all the spinners
-    switch (mRfasType) {
+    switch (rfasType) {
       case RFAS_TYPE_ENLISTED:
-        rfasReferenceData = new RFASEnlistedCodes();
+        mRfasReferenceData = new RFASEnlistedCodes();
         mBinding.rfasTopLevelDescription.setText(
             this.getString(string.rfasEnlistedTopLevelDescription));
         setupSpinnerFromArray(
             mBinding.rfasFirstCharacter,
-            rfasReferenceData.getFirstCharacterKeys(),
+            mRfasReferenceData.getFirstCharacterKeys(),
             new RFASDecoderItemSelectedListener());
         setupSpinnerFromArray(
             mBinding.rfasSecondAndThirdCharacter,
-            rfasReferenceData.getSecondAndThirdCharacterKeys(),
+            mRfasReferenceData.getSecondAndThirdCharacterKeys(),
             new RFASDecoderItemSelectedListener());
         setupSpinnerFromArray(
             mBinding.rfasFourthCharacter,
-            rfasReferenceData.getFourthCharacterKeys(),
+            mRfasReferenceData.getFourthCharacterKeys(),
             new RFASDecoderItemSelectedListener());
         break;
       case RFAS_TYPE_OFFICER:
-        rfasReferenceData = new RFASOfficerCodes();
+        mRfasReferenceData = new RFASOfficerCodes();
         mBinding.rfasTopLevelDescription.setText(
             this.getString(string.rfasOfficerTopLevelDescription));
         setupSpinnerFromArray(
             mBinding.rfasFirstCharacter,
-            rfasReferenceData.getFirstCharacterKeys(),
+            mRfasReferenceData.getFirstCharacterKeys(),
             new RFASDecoderItemSelectedListener());
         setupSpinnerFromArray(
             mBinding.rfasSecondAndThirdCharacter,
-            rfasReferenceData.getSecondAndThirdCharacterKeys(),
+            mRfasReferenceData.getSecondAndThirdCharacterKeys(),
             new RFASDecoderItemSelectedListener());
         setupSpinnerFromArray(
             mBinding.rfasFourthCharacter,
-            rfasReferenceData.getFourthCharacterKeys(),
+            mRfasReferenceData.getFourthCharacterKeys(),
             new RFASDecoderItemSelectedListener());
         break;
       default:
-        throw new IllegalArgumentException("Unknown RFAS type: " + mRfasType);
+        throw new IllegalArgumentException("Unknown RFAS type: " + rfasType);
     }
   }
 
@@ -163,7 +163,7 @@ public class RfasActivity extends AppCompatActivity {
               .rfasFirstCharacter
               .getItemAtPosition(mBinding.rfasFirstCharacter.getSelectedItemPosition())
               .toString();
-      String firstCharacterValue = rfasReferenceData.getFirstCharacterValue(firstCharacterKey);
+      String firstCharacterValue = mRfasReferenceData.getFirstCharacterValue(firstCharacterKey);
 
       String secondAndThirdCharacterKey =
           mBinding
@@ -171,20 +171,20 @@ public class RfasActivity extends AppCompatActivity {
               .getItemAtPosition(mBinding.rfasSecondAndThirdCharacter.getSelectedItemPosition())
               .toString();
       String secondAndThirdCharacterValue =
-          rfasReferenceData.getSecondAndThirdCharacterValue(secondAndThirdCharacterKey);
+          mRfasReferenceData.getSecondAndThirdCharacterValue(secondAndThirdCharacterKey);
 
       String fourthCharacterKey =
           mBinding
               .rfasFourthCharacter
               .getItemAtPosition(mBinding.rfasFourthCharacter.getSelectedItemPosition())
               .toString();
-      String fourthCharacterValue = rfasReferenceData.getFourthCharacterValue(fourthCharacterKey);
+      String fourthCharacterValue = mRfasReferenceData.getFourthCharacterValue(fourthCharacterKey);
 
       String resultString =
           firstCharacterValue + "\n" + secondAndThirdCharacterValue + "\n" + fourthCharacterValue;
       mBinding.rfasDecodeDescription.setText(resultString);
 
-      String sourceInfo = rfasReferenceData.getSourceInfo();
+      String sourceInfo = mRfasReferenceData.getSourceInfo();
       mBinding.rfasSourceDescription.setText(sourceInfo);
     }
 

@@ -81,28 +81,28 @@ public class NavyDecoderPlus extends AppCompatActivity {
     // defensive only.
     if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
 
-    ListView mListView = findViewById(R.id.mainItemToDecodeListView);
+    ListView listView = findViewById(R.id.mainItemToDecodeListView);
 
     Category[] categories = Category.values();
     // Position 0 is the global "Search All" entry; categories follow at positions 1..N.
-    String[] mDecodeOptions = new String[categories.length + 1];
-    mDecodeOptions[0] = getString(R.string.categorySearchAll);
+    String[] decodeOptions = new String[categories.length + 1];
+    decodeOptions[0] = getString(R.string.categorySearchAll);
     for (int i = 0; i < categories.length; i++) {
-      mDecodeOptions[i + 1] = getString(categories[i].labelRes);
+      decodeOptions[i + 1] = getString(categories[i].labelRes);
     }
 
-    mListView.setAdapter(
+    listView.setAdapter(
         new ArrayAdapter<>(
-            this, R.layout.main_screen_selection_list_item, android.R.id.text1, mDecodeOptions));
-    mListView.setOnItemClickListener(
+            this, R.layout.main_screen_selection_list_item, android.R.id.text1, decodeOptions));
+    listView.setOnItemClickListener(
         (parent, view, position, id) -> {
           if (position == 0) {
             // Global search across all categories.
-            Intent mIntent = new Intent(NavyDecoderPlus.this, SearchableDecoderActivity.class);
-            mIntent.putExtra(
+            Intent intent = new Intent(NavyDecoderPlus.this, SearchableDecoderActivity.class);
+            intent.putExtra(
                 MappingHelper.CATEGORY_KEY_IDENTIFIER,
                 SearchableDecoderActivity.ALL_CATEGORIES_KEY);
-            startActivity(mIntent);
+            startActivity(intent);
             return;
           }
 
@@ -114,15 +114,15 @@ public class NavyDecoderPlus extends AppCompatActivity {
                 (category == Category.RFAS_ENLISTED)
                     ? RfasActivity.RFAS_TYPE_ENLISTED
                     : RfasActivity.RFAS_TYPE_OFFICER;
-            Intent mIntent = new Intent(NavyDecoderPlus.this, RfasActivity.class);
-            mIntent.putExtra(RfasActivity.EXTRA_RFAS_TYPE, rfasType);
-            startActivity(mIntent);
+            Intent intent = new Intent(NavyDecoderPlus.this, RfasActivity.class);
+            intent.putExtra(RfasActivity.EXTRA_RFAS_TYPE, rfasType);
+            startActivity(intent);
             return;
           }
 
-          Intent mIntent = new Intent(NavyDecoderPlus.this, SearchableDecoderActivity.class);
-          mIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, category.key);
-          startActivity(mIntent);
+          Intent intent = new Intent(NavyDecoderPlus.this, SearchableDecoderActivity.class);
+          intent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, category.key);
+          startActivity(intent);
         });
 
   }
