@@ -131,14 +131,14 @@ public class SearchableDecoderActivity extends AppCompatActivity {
             rowId = id;
           }
 
-          Intent mItemIntent = new Intent(getApplicationContext(), SelectedItemActivity.class);
+          Intent itemIntent = new Intent(getApplicationContext(), SelectedItemActivity.class);
           Uri itemUri =
               Uri.withAppendedPath(
                   Uri.withAppendedPath(DecodeProvider.CONTENT_URI, clickedCategory),
                   String.valueOf(rowId));
-          mItemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, clickedCategory);
-          mItemIntent.setData(itemUri);
-          startActivity(mItemIntent);
+          itemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, clickedCategory);
+          itemIntent.setData(itemUri);
+          startActivity(itemIntent);
         });
 
     mBinding.searchView.setOnQueryTextListener(

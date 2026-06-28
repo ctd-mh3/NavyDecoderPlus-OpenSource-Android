@@ -59,13 +59,13 @@ public class DecodeProvider extends ContentProvider {
   // Must be outside the per-category range (max ~13 categories × 3 = 39).
   private static final int SEARCH_INFO_ALL = 1000;
   //    private static final int REFRESH_SHORTCUT = 1000;
-  private static UriMatcher mURIMatcher;
+  private static UriMatcher sURIMatcher;
 
-  private static ArrayList<String> mOffsetMatcher;
+  private static ArrayList<String> sOffsetMatcher;
 
   /** Builds up a UriMatcher for search suggestion and shortcut refresh queries. */
   private static UriMatcher buildUriMatcher() {
-    ArrayList<String> mOffsetMatcherTemp = new ArrayList<>();
+    ArrayList<String> offsetMatcherTemp = new ArrayList<>();
 
     UriMatcher matcher = new UriMatcher(UriMatcher.NO_MATCH);
 
@@ -73,30 +73,30 @@ public class DecodeProvider extends ContentProvider {
     // is not accidentally matched as a category path segment.
     matcher.addURI(AUTHORITY, "decodeData/all", SEARCH_INFO_ALL);
 
-    MappingHelper mMappingHelper = MappingHelper.getInstance();
-    if (mMappingHelper != null) {
-      ArrayList<String> mArrayList = mMappingHelper.getAllCategoryIdentifies();
-      Iterator<String> mIterator = mArrayList.iterator();
+    MappingHelper mappingHelper = MappingHelper.getInstance();
+    if (mappingHelper != null) {
+      ArrayList<String> categoryIds = mappingHelper.getAllCategoryIdentifies();
+      Iterator<String> iterator = categoryIds.iterator();
 
       int i = 0;
-      while (mIterator.hasNext()) {
-        String mCategoryIdentifier = mIterator.next();
-        mOffsetMatcherTemp.add(i, mCategoryIdentifier);
+      while (iterator.hasNext()) {
+        String categoryIdentifier = iterator.next();
+        offsetMatcherTemp.add(i, categoryIdentifier);
         // to get decoded values...
         matcher.addURI(
-            AUTHORITY, "decodeData/" + mCategoryIdentifier, SEARCH_INFO + NUMBER_OF_BASE_TYPES * i);
+            AUTHORITY, "decodeData/" + categoryIdentifier, SEARCH_INFO + NUMBER_OF_BASE_TYPES * i);
         matcher.addURI(
             AUTHORITY,
-            "decodeData/" + mCategoryIdentifier + "/#",
+            "decodeData/" + categoryIdentifier + "/#",
             GET_DECODED_INFO + NUMBER_OF_BASE_TYPES * i);
         // to get suggestions...
         matcher.addURI(
             AUTHORITY,
-            mCategoryIdentifier + "/" + SearchManager.SUGGEST_URI_PATH_QUERY,
+            categoryIdentifier + "/" + SearchManager.SUGGEST_URI_PATH_QUERY,
             SEARCH_SUGGEST + NUMBER_OF_BASE_TYPES * i);
         matcher.addURI(
             AUTHORITY,
-            mCategoryIdentifier + "/" + SearchManager.SUGGEST_URI_PATH_QUERY + "/*",
+            categoryIdentifier + "/" + SearchManager.SUGGEST_URI_PATH_QUERY + "/*",
             SEARCH_SUGGEST + NUMBER_OF_BASE_TYPES * i);
         i++;
       }
@@ -110,7 +110,7 @@ public class DecodeProvider extends ContentProvider {
        matcher.addURI(AUTHORITY, SearchManager.SUGGEST_URI_PATH_SHORTCUT, REFRESH_SHORTCUT);
        matcher.addURI(AUTHORITY, SearchManager.SUGGEST_URI_PATH_SHORTCUT + "/*", REFRESH_SHORTCUT);
     */
-    mOffsetMatcher = mOffsetMatcherTemp;
+    sOffsetMatcher = offsetMatcherTemp;
     return matcher;
   }
 
@@ -118,7 +118,7 @@ public class DecodeProvider extends ContentProvider {
   public boolean onCreate() {
     mDecodeDatabase = new DecodeDatabase(getContext());
     MappingHelper.getInstance(getContext());
-    mURIMatcher = buildUriMatcher();
+    sURIMatcher = buildUriMatcher();
     return true;
   }
 
@@ -136,44 +136,44 @@ public class DecodeProvider extends ContentProvider {
       String[] selectionArgs,
       String sortOrder) {
 
-    int mtemp = mURIMatcher.match(uri);
+    int matchCode = sURIMatcher.match(uri);
 
     // Match should always find a match, if not stop processing and return null for the cursor
-    if (mtemp == -1) {
+    if (matchCode == -1) {
       return null;
     }
 
     // Handle global search before the per-category offset arithmetic.
-    if (mtemp == SEARCH_INFO_ALL) {
+    if (matchCode == SEARCH_INFO_ALL) {
       if (selectionArgs == null) {
         throw new IllegalArgumentException("selectionArgs must be provided for the Uri: " + uri);
       }
       return mDecodeDatabase.getAllDecodeMatches(selectionArgs[0].toLowerCase());
     }
 
-    int mtemp2 = mtemp / NUMBER_OF_BASE_TYPES;
-    int mtemp3 = mtemp - mtemp2 * NUMBER_OF_BASE_TYPES;
+    int categoryIndex = matchCode / NUMBER_OF_BASE_TYPES;
+    int matchType = matchCode - categoryIndex * NUMBER_OF_BASE_TYPES;
 
-    if (mOffsetMatcher.isEmpty()) {
+    if (sOffsetMatcher.isEmpty()) {
       return null;
     }
 
-    String mCategoryIdentifier = mOffsetMatcher.get(mtemp2);
+    String categoryIdentifier = sOffsetMatcher.get(categoryIndex);
 
     // Use the UriMatcher to see what kind of query we have and format the db query accordingly
-    switch (mtemp3) {
+    switch (matchType) {
       case SEARCH_SUGGEST:
         if (selectionArgs == null) {
           throw new IllegalArgumentException("selectionArgs must be provided for the Uri: " + uri);
         }
-        return getSuggestions(mCategoryIdentifier, selectionArgs[0]);
+        return getSuggestions(categoryIdentifier, selectionArgs[0]);
       case SEARCH_INFO:
         if (selectionArgs == null) {
           throw new IllegalArgumentException("selectionArgs must be provided for the Uri: " + uri);
         }
-        return search(mCategoryIdentifier, selectionArgs[0]);
+        return search(categoryIdentifier, selectionArgs[0]);
       case GET_DECODED_INFO:
-        return getDecodedInformation(mCategoryIdentifier, uri);
+        return getDecodedInformation(categoryIdentifier, uri);
       default:
         throw new IllegalArgumentException("Unknown Uri: " + uri);
     }
@@ -241,11 +241,11 @@ public class DecodeProvider extends ContentProvider {
   @Override
   public String getType(@NonNull Uri uri) {
 
-    int mtemp = mURIMatcher.match(uri);
-    int mtemp2 = mtemp / NUMBER_OF_BASE_TYPES;
-    int mtemp3 = mtemp - mtemp2 * NUMBER_OF_BASE_TYPES;
+    int matchCode = sURIMatcher.match(uri);
+    int categoryIndex = matchCode / NUMBER_OF_BASE_TYPES;
+    int matchType = matchCode - categoryIndex * NUMBER_OF_BASE_TYPES;
 
-    switch (mtemp3) {
+    switch (matchType) {
       case SEARCH_INFO:
         return WORDS_MIME_TYPE;
       case GET_DECODED_INFO:
