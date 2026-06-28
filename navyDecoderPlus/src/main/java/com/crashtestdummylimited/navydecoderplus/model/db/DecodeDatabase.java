@@ -182,7 +182,6 @@ public class DecodeDatabase {
 
     String sqlStr = sql.toString();
     String[] argsArray = args.toArray(new String[0]);
-    Log.d(TAG, "getAllDecodeMatches SQL: " + sqlStr);
 
     Cursor cursor;
     try {
@@ -230,9 +229,6 @@ public class DecodeDatabase {
             + " LIMIT "
             + SEARCH_RESULT_LIMIT;
 
-    Log.d(TAG, "query SQL: " + sql);
-    Log.d(TAG, "query args: " + java.util.Arrays.toString(selectionArgs));
-
     Cursor cursor;
     try {
       cursor = mDatabaseOpenHelper.getReadableDatabase().rawQuery(sql, selectionArgs);
@@ -242,15 +238,12 @@ public class DecodeDatabase {
     }
 
     if (cursor == null) {
-      Log.d(TAG, "query: cursor is null");
       return null;
     } else if (cursor.getCount() == 0) {
-      Log.d(TAG, "query: cursor is empty (0 rows)");
       cursor.close();
       return null;
     }
 
-    Log.d(TAG, "query: returned results");
     // Cursor is returned at position -1 (before first row), as CursorAdapter expects.
     return cursor;
   }
@@ -298,8 +291,6 @@ public class DecodeDatabase {
     DecoderOpenHelper(final Context context) {
       super(context, DB_NAME, null, DB_VERSION);
 
-      Log.d(TAG, "DecoderOpenHelper.DataBaseHelper constructor");
-
       mContext = context;
 
       // Do this dynamically w/o hard coded package name.  Allows for this file to be used by
@@ -312,8 +303,6 @@ public class DecodeDatabase {
     /** Creates a empty database on the system and rewrites it with your own database. */
     void createDataBase() {
 
-      Log.d(TAG, "DecoderOpenHelper.createDataBase");
-
       boolean dbExist = checkDataBase();
 
       // Added this to attempt to resolve
@@ -323,7 +312,6 @@ public class DecodeDatabase {
       SQLiteDatabase dbRead;
 
       if (dbExist) {
-        Log.d(TAG, "DecoderOpenHelper.createDataBase db exists");
         // Need to have the system call onUpgrade if the database in this apk is newer than
         //   the one in the DB_PATH directory.  onUpgrade should be called by the system
         //   if needed by a call to getWritableDatabase().
@@ -365,8 +353,6 @@ public class DecodeDatabase {
       dbRead = null;
 
       if (!dbExist) {
-        Log.d(TAG, "DecoderOpenHelper.createDataBase finally creating database");
-
         // By calling this method an empty database will be created into the default system path
         // of your application so we are going to be able to overwrite that database with our
         // database.
@@ -398,15 +384,12 @@ public class DecodeDatabase {
         mCheckDB =
             SQLiteDatabase.openDatabase(
                 sDatabaseFullPath, null, SQLiteDatabase.OPEN_READONLY);
-        Log.d(TAG, "In checkDataBase(), database version is " + mCheckDB.getVersion());
 
       } catch (SQLiteException e) {
-        Log.d(TAG, "DecoderOpenHelper.checkDataBase database does not exit");
         // database doesn't exist yet.
       }
 
       if (mCheckDB != null) {
-        Log.d(TAG, "DecoderOpenHelper.checkDataBase closing database");
         mCheckDB.close();
       }
 
@@ -475,22 +458,8 @@ public class DecodeDatabase {
     (This doesn't handle table downgrade, if you rename a column, you don't get the existing data transfered as the column names do not match).
      */
     public void onUpgrade(SQLiteDatabase db, final int oldVersion, final int newVersion) {
-
-      Log.v(TAG, "Attempting to Upgrade database.");
-
       if (newVersion > oldVersion) {
-        Log.v(
-            TAG,
-            "Upgrading database from version "
-                + oldVersion
-                + " to "
-                + newVersion
-                + ", which will destroy all old data");
-        if (mContext.deleteDatabase(DB_NAME)) {
-          Log.v(TAG, "Deleted old database");
-        } else {
-          Log.v(TAG, "Unable to deleted old database!");
-        }
+        mContext.deleteDatabase(DB_NAME);
       }
     }
   }
