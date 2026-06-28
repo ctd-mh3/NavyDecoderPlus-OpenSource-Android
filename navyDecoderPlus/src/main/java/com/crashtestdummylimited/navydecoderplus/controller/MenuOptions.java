@@ -21,12 +21,16 @@ package com.crashtestdummylimited.navydecoderplus.controller;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import com.crashtestdummylimited.navydecoderplus.R;
 import com.crashtestdummylimited.navydecoderplus.util.CommonUtilities;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.play.core.review.ReviewInfo;
+import com.google.android.play.core.review.ReviewManager;
+import com.google.android.play.core.review.ReviewManagerFactory;
 
 public class MenuOptions {
 
@@ -77,6 +81,30 @@ public class MenuOptions {
           .setMessage(message)
           .setPositiveButton(R.string.ok, null)
           .show();
+    } else if (itemId == R.id.optionsMenuRateApp) {
+      ReviewManager reviewManager = ReviewManagerFactory.create(activity);
+      reviewManager
+          .requestReviewFlow()
+          .addOnCompleteListener(
+              task -> {
+                if (task.isSuccessful()) {
+                  ReviewInfo reviewInfo = task.getResult();
+                  reviewManager.launchReviewFlow(activity, reviewInfo);
+                } else {
+                  openPlayStorePage(activity);
+                }
+              });
+    } else if (itemId == R.id.optionsMenuShare) {
+      String packageName = activity.getPackageName();
+      String shareText =
+          activity.getString(R.string.shareText)
+              + "\nhttps://play.google.com/store/apps/details?id="
+              + packageName;
+      Intent shareIntent = new Intent(Intent.ACTION_SEND);
+      shareIntent.setType("text/plain");
+      shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+      activity.startActivity(
+          Intent.createChooser(shareIntent, activity.getString(R.string.shareChooserTitle)));
     } else if (itemId == R.id.optionsMenuEmailAuthor) {
       Intent emailIntent = new Intent(Intent.ACTION_SEND);
       emailIntent.setType("message/rfc822");
@@ -105,9 +133,26 @@ public class MenuOptions {
             .setPositiveButton(R.string.ok, null)
             .show();
       }
+    } else if (itemId == R.id.optionsMenuPrivacyPolicy) {
+      activity.startActivity(
+          new Intent(
+              Intent.ACTION_VIEW, Uri.parse("https://crashtestdummylimited.com/page1.html")));
     }
   }
   // *************************************************************************
   //  End Menu Support Code
   // *************************************************************************
+
+  private static void openPlayStorePage(Activity activity) {
+    String packageName = activity.getPackageName();
+    try {
+      activity.startActivity(
+          new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
+    } catch (ActivityNotFoundException e) {
+      activity.startActivity(
+          new Intent(
+              Intent.ACTION_VIEW,
+              Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+    }
+  }
 }
