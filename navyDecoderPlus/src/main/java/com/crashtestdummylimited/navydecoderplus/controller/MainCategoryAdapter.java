@@ -31,7 +31,7 @@ import java.util.List;
 public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapter.ViewHolder> {
 
   public interface OnCategoryClickListener {
-    void onCategoryClick(int position);
+    void onCategoryClick(@SuppressWarnings("unused") int position);
   }
 
   private final List<String> mLabels;
@@ -63,7 +63,7 @@ public class MainCategoryAdapter extends RecyclerView.Adapter<MainCategoryAdapte
     return mLabels.size();
   }
 
-  static class ViewHolder extends RecyclerView.ViewHolder {
+  public static class ViewHolder extends RecyclerView.ViewHolder {
     final TextView textView;
 
     ViewHolder(@NonNull View itemView) {

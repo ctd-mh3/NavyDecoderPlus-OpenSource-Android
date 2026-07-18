@@ -32,8 +32,6 @@ public class AppUpdateChecker {
   private static final String KEY_LAST_CHECK_MS = "last_update_check_ms";
   private static final long COOLDOWN_MS = 24L * 60L * 60L * 1000L;
 
-  public static final int REQUEST_CODE = 900;
-
   public static void checkForUpdate(AppCompatActivity activity) {
     SharedPreferences prefs = activity.getSharedPreferences(PREFS, AppCompatActivity.MODE_PRIVATE);
     long now = System.currentTimeMillis();

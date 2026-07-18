@@ -45,7 +45,7 @@ public final class MappingHelper {
   }
 
   // No-arg overload for callers (e.g. DecodeProvider) that don't have a Context at call time.
-  // The singleton must already be initialised via getInstance(Context) before this is called.
+  // The singleton must already be initialized via getInstance(Context) before this is called.
   public static MappingHelper getInstance() {
     return mInstance;
   }

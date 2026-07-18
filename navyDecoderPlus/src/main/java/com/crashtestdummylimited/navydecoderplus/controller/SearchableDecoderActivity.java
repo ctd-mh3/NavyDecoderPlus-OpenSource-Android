@@ -18,7 +18,6 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -30,12 +29,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.crashtestdummylimited.navydecoderplus.R;
 import com.crashtestdummylimited.navydecoderplus.databinding.SearchScreenBinding;
@@ -144,7 +143,8 @@ public class SearchableDecoderActivity extends AppCompatActivity {
     mBinding.searchEditText.setOnEditorActionListener(
         (v, actionId, event) -> {
           if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-            showResults(mBinding.searchEditText.getText().toString().trim());
+            Editable text = mBinding.searchEditText.getText();
+            showResults(text != null ? text.toString().trim() : "");
             return true;
           }
           return false;
@@ -153,13 +153,9 @@ public class SearchableDecoderActivity extends AppCompatActivity {
     // Focus the field and show the soft keyboard immediately.
     mBinding.searchEditText.requestFocus();
     mBinding.searchEditText.post(
-        () -> {
-          InputMethodManager imm =
-              (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-          if (imm != null) {
-            imm.showSoftInput(mBinding.searchEditText, InputMethodManager.SHOW_IMPLICIT);
-          }
-        });
+        () ->
+            new WindowInsetsControllerCompat(getWindow(), mBinding.searchEditText)
+                .show(WindowInsetsCompat.Type.ime()));
   }
 
   /**

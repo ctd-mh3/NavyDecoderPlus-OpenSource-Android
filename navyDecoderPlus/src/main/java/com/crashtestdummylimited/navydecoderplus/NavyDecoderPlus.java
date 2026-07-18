@@ -42,8 +42,6 @@ import java.util.List;
 
 public class NavyDecoderPlus extends AppCompatActivity {
 
-  private static final String TAG = NavyDecoderPlus.class.getSimpleName();
-
   // *************************************************************************
   //
   //  Overwritten to support menu

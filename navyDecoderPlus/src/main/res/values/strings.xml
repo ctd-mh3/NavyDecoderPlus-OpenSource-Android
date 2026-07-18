@@ -7,8 +7,6 @@
   <!-- Menu Information -->
   <string name="about">About</string>
   <string name="emailAuthor">Email Author</string>
-  <string name="menuAbout">About</string>
-  <string name="menuEmailAuthor">Email Author</string>
   <string name="openSource">Open Source</string>
   <string name="rateApp">Rate App</string>
   <string name="share">Share</string>
@@ -23,7 +21,7 @@
   <string name="aboutTitle">About Navy Decoder Plus</string>
   <string name="aboutApplicationPurpose">Application for decoding various US Navy information.</string>
   <string name="aboutDeveloper">Developed by Crash Test Dummy (support@crashtestdummylimited.com).</string>
-  <string name="aboutComments">If you like this App, please leave a comment in the Google Play store.  If there are issues, please email me.  Pass me suggestions to make the app better.  Thanks!</string>
+  <string name="aboutComments">If you like this App, please leave a comment in the Google Play Store.  If there are issues, please email me.  Pass me suggestions to make the app better.  Thanks!</string>
   <string name="aboutDisclaimer">This application is not officially endorsed or sponsored by the US Navy or Department of Defense.</string>
   <string name="aboutVersion">Version: </string>
   <string name="ok">OK</string>
@@ -91,5 +89,4 @@
   <string name="no_results">No results found for \"%s\"</string>
 
   <!-- The description that will show up in the search settings for this source.  -->
-  <string name="settings_description">Definitions of words</string>
 </resources>

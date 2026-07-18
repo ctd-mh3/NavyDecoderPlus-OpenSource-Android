@@ -111,12 +111,6 @@ public class RFASEnlistedCodes implements RFASReferenceData {
   }
 
   @Override
-  public String getCode() {
-
-    return "Reserve Functional Area and Sex Code";
-  }
-
-  @Override
   public String[] getFirstCharacterKeys() {
 
     String[] keys = mFirstCharacterCodesHashMap.keySet().toArray(new String[0]);
