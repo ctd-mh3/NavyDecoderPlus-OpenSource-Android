@@ -35,11 +35,11 @@ import java.util.Objects;
 class SearchResultsAdapter extends ListAdapter<SearchResultItem, SearchResultsAdapter.ViewHolder> {
 
   interface OnResultClickListener {
-    void onResultClick(SearchResultItem item);
+    void onResultClick(@SuppressWarnings("unused") SearchResultItem item);
   }
 
   private static final DiffUtil.ItemCallback<SearchResultItem> DIFF_CALLBACK =
-      new DiffUtil.ItemCallback<SearchResultItem>() {
+      new DiffUtil.ItemCallback<>() {
         @Override
         public boolean areItemsTheSame(
             @NonNull SearchResultItem oldItem, @NonNull SearchResultItem newItem) {

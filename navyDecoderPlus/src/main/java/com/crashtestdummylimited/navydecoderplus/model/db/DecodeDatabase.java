@@ -26,6 +26,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
+import androidx.annotation.NonNull;
 import com.crashtestdummylimited.navydecoderplus.controller.Category;
 import java.io.IOException;
 import java.io.InputStream;
@@ -162,6 +163,30 @@ public class DecodeDatabase {
     String searchTerm = sanitizedQuery + "*";
 
     StringBuilder sql = new StringBuilder();
+    ArrayList<String> args = getStrings(sql, searchTerm);
+    sql.append(" LIMIT ").append(SEARCH_RESULT_LIMIT);
+
+    String sqlStr = sql.toString();
+    String[] argsArray = args.toArray(new String[0]);
+
+    Cursor cursor;
+    try {
+      cursor = mDatabaseOpenHelper.getReadableDatabase().rawQuery(sqlStr, argsArray);
+    } catch (Exception e) {
+      Log.e(TAG, "getAllDecodeMatches failed: " + e.getMessage(), e);
+      return null;
+    }
+
+    if (cursor.getCount() == 0) {
+      cursor.close();
+      return null;
+    }
+    // Cursor is returned at position -1 (before first row), as CursorAdapter expects.
+    return cursor;
+  }
+
+  @NonNull
+  private static ArrayList<String> getStrings(StringBuilder sql, String searchTerm) {
     ArrayList<String> args = new ArrayList<>();
     boolean first = true;
 
@@ -178,25 +203,7 @@ public class DecodeDatabase {
       args.add(searchTerm);
       first = false;
     }
-    sql.append(" LIMIT ").append(SEARCH_RESULT_LIMIT);
-
-    String sqlStr = sql.toString();
-    String[] argsArray = args.toArray(new String[0]);
-
-    Cursor cursor;
-    try {
-      cursor = mDatabaseOpenHelper.getReadableDatabase().rawQuery(sqlStr, argsArray);
-    } catch (Exception e) {
-      Log.e(TAG, "getAllDecodeMatches failed: " + e.getMessage(), e);
-      return null;
-    }
-
-    if (cursor == null || cursor.getCount() == 0) {
-      if (cursor != null) cursor.close();
-      return null;
-    }
-    // Cursor is returned at position -1 (before first row), as CursorAdapter expects.
-    return cursor;
+    return args;
   }
 
   /**
@@ -211,7 +218,7 @@ public class DecodeDatabase {
       String tableToQuery, String selection, String[] selectionArgs, String[] columns) {
     // SQLiteQueryBuilder wraps the WHERE clause in parentheses — "WHERE (table MATCH ?)" —
     // which breaks FTS5 on the SQLite versions bundled with Android 8-9 (< SQLite 3.28).
-    // Use rawQuery() directly so the MATCH expression is unparenthesised.
+    // Use rawQuery() directly so the MATCH expression is unparenthesized.
     StringBuilder selectClause = new StringBuilder();
     for (int i = 0; i < columns.length; i++) {
       if (i > 0) selectClause.append(", ");
@@ -237,9 +244,7 @@ public class DecodeDatabase {
       return null;
     }
 
-    if (cursor == null) {
-      return null;
-    } else if (cursor.getCount() == 0) {
+    if (cursor.getCount() == 0) {
       cursor.close();
       return null;
     }
@@ -300,7 +305,7 @@ public class DecodeDatabase {
       // sDatabaseFullPath = this.mContext.getApplicationInfo().dataDir + "/" +DB_NAME;
     }
 
-    /** Creates a empty database on the system and rewrites it with your own database. */
+    /** Creates an empty database on the system and rewrites it with your own database. */
     void createDataBase() {
 
       boolean dbExist = checkDataBase();
@@ -345,7 +350,7 @@ public class DecodeDatabase {
         }
       }
 
-      // Check to see if database still exists since on an upgrade the above code might deleted the
+      // Check to see if database still exists since on an upgrade the above code might delete the
       // DB
       dbExist = checkDataBase();
       //noinspection UnusedAssignment
@@ -418,7 +423,7 @@ public class DecodeDatabase {
         SQLiteDatabase checkDB =
             SQLiteDatabase.openDatabase(sDatabaseFullPath, null, SQLiteDatabase.OPEN_READWRITE);
 
-        // once the db has been copied, set the new version..
+        // once the db has been copied, set the new version
         checkDB.setVersion(DB_VERSION);
         checkDB.close();
       } catch (SQLiteException e) {
@@ -436,14 +441,14 @@ public class DecodeDatabase {
       * http://stackoverflow.com/questions/3505900/sqliteopenhelper-onupgrade-confusion-android
       *
       *
-    Ok, before you run into bigger problems you should know that SQLite is limited on the ALTER TABLE command, it allows add and rename only no remove/drop which is done with recreation of the table.
+    Ok, before you run into bigger problems you should know that SQLite is limited on the ALTER TABLE command, it allows "add" and "rename" only no remove/drop which is done with recreation of the table.
 
     You should always have the new table creation query at hand, and use that for upgrade and transfer any existing data. Note: that the onUpgrade methods runs one for your sqlite helper object and you need to handle all the tables in it.
 
     So what is recommended onUpgrade:
 
         beginTransaction
-        run a table creation with if not exists (we are doing an upgrade, so the table might not exists yet, it will fail alter and drop)
+        run a table creation with if not exists (we are doing an upgrade, so the table might not exist yet, it will fail alter and drop)
         put in a list the existing columns List<String> columns = DBUtils.GetColumns(db, TableName);
         backup table (ALTER table " + TableName + " RENAME TO 'temp_" + TableName)
         create new table (the newest table creation schema)

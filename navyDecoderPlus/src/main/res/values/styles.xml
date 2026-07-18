@@ -114,6 +114,6 @@
     <item name="colorPrimary">@color/menuDialogTextColor</item>
   </style>
 
-  <!-- Not using a theme with Actionbar and xml places a title looking TextView -->
+  <!-- Not using a theme with Actionbar and XML places a title looking TextView -->
 
 </resources>

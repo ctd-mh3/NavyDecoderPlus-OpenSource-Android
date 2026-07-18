@@ -2,7 +2,7 @@
 
 Navy Decoder Plus for Android was developed to provide easy access to some United States Navy administrative information/codes.  The primary target audience is Navy Reservists looking at unit RUADs, other manning documents, or reviewing billets on CMS-ID/RFMT.
 
-Navy Decoder Plus's sister application, Navy Decoder for Android, does not including searching searching.
+Navy Decoder Plus's sister application, Navy Decoder for Android, does not including searching.
 
 With the movement of both of these applications to open source in 2024, it is up to the community to determine if both Navy Decoder and Navy Decoder Plus are both needed or if only Navy Decoder Plus should be maintained.
 

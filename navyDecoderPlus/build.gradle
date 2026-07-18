@@ -4,7 +4,7 @@ apply plugin: 'com.diffplug.spotless'
 
 android {
 
-    compileSdk = 36
+    compileSdk = 37
 
     // https://developer.android.com/studio/build/shrink-code#keep-code
     // 20210130: Currently I do not build Android App Bundles, so the below is not used
@@ -20,7 +20,7 @@ android {
     defaultConfig {
         applicationId = "com.crashtestdummylimited.navydecoderplus"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         versionCode = 50
         versionName = "1.46"
     }
@@ -83,7 +83,7 @@ dependencies {
     implementation 'com.google.android.play:review:2.0.2'
     implementation 'com.google.android.play:app-update:2.1.0'
     implementation 'androidx.appcompat:appcompat:1.7.1'
-    implementation 'com.google.android.material:material:1.13.0'
+    implementation 'com.google.android.material:material:1.14.0'
     implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     //compile 'com.android.support:support-v4:25'

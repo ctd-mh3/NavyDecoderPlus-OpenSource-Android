@@ -8,4 +8,4 @@ There are two general areas to contribute to this project.
 
 ## Application code or other technical support
 * If you are a technical type and want to provide application updates, please do.
-* If you are good with graphics, the project can certainly use some more professional looking Google Play store images and other improvements.
+* If you are good with graphics, the project can certainly use some more professional looking Google Play Store images and other improvements.

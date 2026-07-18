@@ -23,9 +23,6 @@ public interface RFASReferenceData {
   @SuppressWarnings("SameReturnValue")
   String getSourceInfo();
 
-  @SuppressWarnings("SameReturnValue")
-  String getCode();
-
   String[] getFirstCharacterKeys();
 
   String getFirstCharacterValue(String key);
