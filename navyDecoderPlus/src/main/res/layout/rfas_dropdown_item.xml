@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Row layout for the RFAS exposed-dropdown menus (RfasActivity). Copied locally rather than
+referencing com.google.android.material.R.layout.m3_auto_complete_simple_item directly, since
+lint (PrivateResource) flags that resource as private/internal to the Material library and
+liable to disappear without notice.
+-->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:paddingLeft="16dp"
+  android:paddingTop="13dp"
+  android:paddingRight="16dp"
+  android:paddingBottom="13dp"
+  android:ellipsize="end"
+  android:maxLines="1"
+  android:textAppearance="?attr/textAppearanceBodyLarge"/>

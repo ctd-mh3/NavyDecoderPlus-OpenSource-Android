@@ -24,22 +24,27 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.BaseColumns;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import com.crashtestdummylimited.navydecoderplus.R;
 import com.crashtestdummylimited.navydecoderplus.databinding.SearchScreenBinding;
 import com.crashtestdummylimited.navydecoderplus.model.db.DecodeDatabase;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-/** Displays search results for a specific decode category using an embedded SearchView. */
+/** Displays search results for a specific decode category using an M3 outlined search field. */
 public class SearchableDecoderActivity extends AppCompatActivity {
 
   /**
@@ -52,7 +57,7 @@ public class SearchableDecoderActivity extends AppCompatActivity {
 
   private String mDecodeCategory = "";
 
-  private SearchResultsCursorAdapter mAdapter;
+  private SearchResultsAdapter mAdapter;
 
   @Override
   public boolean onCreateOptionsMenu(Menu menu) {
@@ -111,72 +116,48 @@ public class SearchableDecoderActivity extends AppCompatActivity {
     // Show prompt text until the user starts typing.
     mBinding.searchScreenEmptyView.setText(R.string.search_prompt);
     mBinding.searchScreenEmptyView.setVisibility(View.VISIBLE);
-    mBinding.searchScreenListView.setEmptyView(mBinding.searchScreenEmptyView);
 
-    mBinding.searchScreenListView.setOnItemClickListener(
-        (parent, itemView, position, id) -> {
-          String clickedCategory;
-          long rowId;
+    mBinding.searchScreenListView.setLayoutManager(new LinearLayoutManager(this));
+    mAdapter = new SearchResultsAdapter(this::onResultClicked);
+    mBinding.searchScreenListView.setAdapter(mAdapter);
 
-          if (ALL_CATEGORIES_KEY.equals(mDecodeCategory)) {
-            // Global search: rowids conflict across tables, so read both fields from the cursor.
-            Object item = mAdapter.getItem(position);
-            if (!(item instanceof Cursor)) return;
-            Cursor c = (Cursor) item;
-            int catCol = c.getColumnIndex(DecodeDatabase.KEY_CATEGORY_KEY);
-            clickedCategory = catCol >= 0 ? c.getString(catCol) : "";
-            rowId = c.getLong(c.getColumnIndexOrThrow(BaseColumns._ID));
-          } else {
-            clickedCategory = mDecodeCategory;
-            rowId = id;
-          }
-
-          Intent itemIntent = new Intent(getApplicationContext(), SelectedItemActivity.class);
-          Uri itemUri =
-              Uri.withAppendedPath(
-                  Uri.withAppendedPath(DecodeProvider.CONTENT_URI, clickedCategory),
-                  String.valueOf(rowId));
-          itemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, clickedCategory);
-          itemIntent.setData(itemUri);
-          startActivity(itemIntent);
-        });
-
-    mBinding.searchView.setOnQueryTextListener(
-        new SearchView.OnQueryTextListener() {
+    mBinding.searchEditText.addTextChangedListener(
+        new TextWatcher() {
           @Override
-          public boolean onQueryTextSubmit(String query) {
-            showResults(query);
-            return true;
-          }
+          public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
           @Override
-          public boolean onQueryTextChange(String newText) {
-            if (newText.trim().isEmpty()) {
-              if (mAdapter != null) {
-                mAdapter.changeCursor(null);
-              }
+          public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+          @Override
+          public void afterTextChanged(Editable s) {
+            String newText = s.toString().trim();
+            if (newText.isEmpty()) {
+              mAdapter.submitList(Collections.emptyList());
               mBinding.searchScreenEmptyView.setText(R.string.search_prompt);
+              mBinding.searchScreenEmptyView.setVisibility(View.VISIBLE);
             } else {
-              showResults(newText.trim());
+              showResults(newText);
             }
-            return true;
           }
         });
+    mBinding.searchEditText.setOnEditorActionListener(
+        (v, actionId, event) -> {
+          if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            showResults(mBinding.searchEditText.getText().toString().trim());
+            return true;
+          }
+          return false;
+        });
 
-    // Focus the SearchView's inner EditText and show the soft keyboard immediately.
-    // setIconified(false) routes focus to the inner EditText; post() defers until after layout.
-    mBinding.searchView.setIconified(false);
-    mBinding.searchView.post(
+    // Focus the field and show the soft keyboard immediately.
+    mBinding.searchEditText.requestFocus();
+    mBinding.searchEditText.post(
         () -> {
-          EditText searchEditText =
-              mBinding.searchView.findViewById(androidx.appcompat.R.id.search_src_text);
-          if (searchEditText != null) {
-            searchEditText.requestFocus();
-            InputMethodManager imm =
-                (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            if (imm != null) {
-              imm.showSoftInput(searchEditText, InputMethodManager.SHOW_IMPLICIT);
-            }
+          InputMethodManager imm =
+              (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+          if (imm != null) {
+            imm.showSoftInput(mBinding.searchEditText, InputMethodManager.SHOW_IMPLICIT);
           }
         });
   }
@@ -194,33 +175,49 @@ public class SearchableDecoderActivity extends AppCompatActivity {
             ? Uri.withAppendedPath(DecodeProvider.CONTENT_URI, "all")
             : Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mDecodeCategory);
 
-    Cursor newCursor =
-        getContentResolver().query(uriWithPath, null, null, new String[] {query}, null);
+    List<SearchResultItem> items = new ArrayList<>();
+    // The cursor is read into a plain list and closed immediately rather than kept open across
+    // query swaps, avoiding the StaleDataException risk a live, swapped-out Cursor used to carry.
+    try (Cursor cursor =
+        getContentResolver().query(uriWithPath, null, null, new String[] {query}, null)) {
+      if (cursor != null) {
+        int idIndex = cursor.getColumnIndexOrThrow(BaseColumns._ID);
+        int codeIndex = cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE);
+        int meaningIndex = cursor.getColumnIndexOrThrow(DecodeDatabase.KEY_CODE_MEANING);
+        // category_key column is only present in global (all-categories) search results.
+        int categoryColIndex = cursor.getColumnIndex(DecodeDatabase.KEY_CATEGORY_KEY);
+        MappingHelper mappingHelper = MappingHelper.getInstance();
 
-    if (mAdapter == null) {
-      // First query: create the adapter and wire it to the ListView.
-      mAdapter = new SearchResultsCursorAdapter(this, newCursor);
-      mBinding.searchScreenListView.setAdapter(mAdapter);
-    } else {
-      // Subsequent queries: swap the cursor so the old one is properly closed before
-      // the new one is installed. Creating a new adapter each call would orphan the
-      // previous cursor (leaving it open) and risk a StaleDataException during layout.
-      mAdapter.changeCursor(newCursor);
+        while (cursor.moveToNext()) {
+          String categoryKey =
+              categoryColIndex >= 0 ? cursor.getString(categoryColIndex) : mDecodeCategory;
+          String categoryLabel =
+              categoryColIndex >= 0 && mappingHelper != null
+                  ? mappingHelper.getSelectionText(categoryKey)
+                  : "";
+          items.add(
+              new SearchResultItem(
+                  cursor.getLong(idIndex),
+                  categoryKey,
+                  cursor.getString(codeIndex),
+                  cursor.getString(meaningIndex),
+                  categoryLabel));
+        }
+      }
     }
 
-    if (newCursor == null) {
-      // setEmptyView auto-fires once the adapter is attached; for the very first call
-      // where the provider returns null the adapter is just being attached, so reveal
-      // the empty view explicitly to avoid a blank screen.
-      mBinding.searchScreenEmptyView.setVisibility(View.VISIBLE);
-    }
+    mAdapter.submitList(items);
+    mBinding.searchScreenEmptyView.setVisibility(items.isEmpty() ? View.VISIBLE : View.GONE);
   }
 
-  @Override
-  protected void onDestroy() {
-    super.onDestroy();
-    if (mAdapter != null) {
-      mAdapter.changeCursor(null);
-    }
+  private void onResultClicked(SearchResultItem item) {
+    Intent itemIntent = new Intent(getApplicationContext(), SelectedItemActivity.class);
+    Uri itemUri =
+        Uri.withAppendedPath(
+            Uri.withAppendedPath(DecodeProvider.CONTENT_URI, item.categoryKey),
+            String.valueOf(item.id));
+    itemIntent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, item.categoryKey);
+    itemIntent.setData(itemUri);
+    startActivity(itemIntent);
   }
 }

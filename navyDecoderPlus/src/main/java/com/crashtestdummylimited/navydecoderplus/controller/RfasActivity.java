@@ -23,10 +23,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -38,6 +35,7 @@ import com.crashtestdummylimited.navydecoderplus.databinding.RfasScreenBinding;
 import com.crashtestdummylimited.navydecoderplus.model.RFASEnlistedCodes;
 import com.crashtestdummylimited.navydecoderplus.model.RFASOfficerCodes;
 import com.crashtestdummylimited.navydecoderplus.model.RFASReferenceData;
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 public class RfasActivity extends AppCompatActivity {
 
@@ -62,6 +60,10 @@ public class RfasActivity extends AppCompatActivity {
 
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      finish();
+      return true;
+    }
     MenuOptions.onOptionsItemSelected(this, item);
     return true;
   }
@@ -70,17 +72,16 @@ public class RfasActivity extends AppCompatActivity {
   //  End Menu Support Code
   // *************************************************************************
 
-  private void setupSpinnerFromArray(
-      Spinner spinner, String[] stringArray, OnItemSelectedListener listener) {
-
-    ArrayAdapter<CharSequence> adapter =
-        new ArrayAdapter<>(this, R.layout.spinner_item, stringArray);
-
-    adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-
-    spinner.setAdapter(adapter);
-
-    spinner.setOnItemSelectedListener(listener);
+  /**
+   * Populates an exposed-dropdown field with the given options, pre-selects the first one (an
+   * {@link MaterialAutoCompleteTextView} has no auto-select-position-0 behavior the way {@code
+   * Spinner} did), and re-runs the decode whenever the user picks a different option.
+   */
+  private void setupDropdownFromArray(MaterialAutoCompleteTextView dropdown, String[] options) {
+    ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.rfas_dropdown_item, options);
+    dropdown.setAdapter(adapter);
+    dropdown.setText(options[0], false);
+    dropdown.setOnItemClickListener((parent, view, position, id) -> updateDecodedResult());
   }
 
   /** Called when the activity is first created. */
@@ -102,7 +103,10 @@ public class RfasActivity extends AppCompatActivity {
 
     // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is
     // defensive only.
-    if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setTitle(R.string.app_name);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
     // Grab info from bundle to tell if enlisted or officer RFAS
     Intent intent = getIntent();
@@ -113,83 +117,48 @@ public class RfasActivity extends AppCompatActivity {
       return;
     }
 
-    // Setup all the spinners
+    // Setup all the dropdowns
     switch (rfasType) {
       case RFAS_TYPE_ENLISTED:
         mRfasReferenceData = new RFASEnlistedCodes();
         mBinding.rfasTopLevelDescription.setText(
             this.getString(string.rfasEnlistedTopLevelDescription));
-        setupSpinnerFromArray(
-            mBinding.rfasFirstCharacter,
-            mRfasReferenceData.getFirstCharacterKeys(),
-            new RFASDecoderItemSelectedListener());
-        setupSpinnerFromArray(
-            mBinding.rfasSecondAndThirdCharacter,
-            mRfasReferenceData.getSecondAndThirdCharacterKeys(),
-            new RFASDecoderItemSelectedListener());
-        setupSpinnerFromArray(
-            mBinding.rfasFourthCharacter,
-            mRfasReferenceData.getFourthCharacterKeys(),
-            new RFASDecoderItemSelectedListener());
         break;
       case RFAS_TYPE_OFFICER:
         mRfasReferenceData = new RFASOfficerCodes();
         mBinding.rfasTopLevelDescription.setText(
             this.getString(string.rfasOfficerTopLevelDescription));
-        setupSpinnerFromArray(
-            mBinding.rfasFirstCharacter,
-            mRfasReferenceData.getFirstCharacterKeys(),
-            new RFASDecoderItemSelectedListener());
-        setupSpinnerFromArray(
-            mBinding.rfasSecondAndThirdCharacter,
-            mRfasReferenceData.getSecondAndThirdCharacterKeys(),
-            new RFASDecoderItemSelectedListener());
-        setupSpinnerFromArray(
-            mBinding.rfasFourthCharacter,
-            mRfasReferenceData.getFourthCharacterKeys(),
-            new RFASDecoderItemSelectedListener());
         break;
       default:
         throw new IllegalArgumentException("Unknown RFAS type: " + rfasType);
     }
+
+    setupDropdownFromArray(mBinding.rfasFirstCharacter, mRfasReferenceData.getFirstCharacterKeys());
+    setupDropdownFromArray(
+        mBinding.rfasSecondAndThirdCharacter, mRfasReferenceData.getSecondAndThirdCharacterKeys());
+    setupDropdownFromArray(
+        mBinding.rfasFourthCharacter, mRfasReferenceData.getFourthCharacterKeys());
+
+    // Show the decode for the default (first) selections, mirroring the auto-fired initial
+    // selection Spinner used to give for free.
+    updateDecodedResult();
   }
 
-  private class RFASDecoderItemSelectedListener implements OnItemSelectedListener {
+  private void updateDecodedResult() {
+    String firstCharacterKey = mBinding.rfasFirstCharacter.getText().toString();
+    String firstCharacterValue = mRfasReferenceData.getFirstCharacterValue(firstCharacterKey);
 
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+    String secondAndThirdCharacterKey = mBinding.rfasSecondAndThirdCharacter.getText().toString();
+    String secondAndThirdCharacterValue =
+        mRfasReferenceData.getSecondAndThirdCharacterValue(secondAndThirdCharacterKey);
 
-      String firstCharacterKey =
-          mBinding
-              .rfasFirstCharacter
-              .getItemAtPosition(mBinding.rfasFirstCharacter.getSelectedItemPosition())
-              .toString();
-      String firstCharacterValue = mRfasReferenceData.getFirstCharacterValue(firstCharacterKey);
+    String fourthCharacterKey = mBinding.rfasFourthCharacter.getText().toString();
+    String fourthCharacterValue = mRfasReferenceData.getFourthCharacterValue(fourthCharacterKey);
 
-      String secondAndThirdCharacterKey =
-          mBinding
-              .rfasSecondAndThirdCharacter
-              .getItemAtPosition(mBinding.rfasSecondAndThirdCharacter.getSelectedItemPosition())
-              .toString();
-      String secondAndThirdCharacterValue =
-          mRfasReferenceData.getSecondAndThirdCharacterValue(secondAndThirdCharacterKey);
+    String resultString =
+        firstCharacterValue + "\n" + secondAndThirdCharacterValue + "\n" + fourthCharacterValue;
+    mBinding.rfasDecodeDescription.setText(resultString);
 
-      String fourthCharacterKey =
-          mBinding
-              .rfasFourthCharacter
-              .getItemAtPosition(mBinding.rfasFourthCharacter.getSelectedItemPosition())
-              .toString();
-      String fourthCharacterValue = mRfasReferenceData.getFourthCharacterValue(fourthCharacterKey);
-
-      String resultString =
-          firstCharacterValue + "\n" + secondAndThirdCharacterValue + "\n" + fourthCharacterValue;
-      mBinding.rfasDecodeDescription.setText(resultString);
-
-      String sourceInfo = mRfasReferenceData.getSourceInfo();
-      mBinding.rfasSourceDescription.setText(sourceInfo);
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
-      // Do nothing.
-    }
+    mBinding.rfasSourceDescription.setText(mRfasReferenceData.getSourceInfo());
   }
 }

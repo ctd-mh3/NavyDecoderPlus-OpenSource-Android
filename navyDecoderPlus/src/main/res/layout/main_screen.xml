@@ -17,6 +17,7 @@
     android:paddingTop="10dp"
     android:paddingBottom="4dp"
     android:text="@string/openSourceDataNotice"
+    android:textAppearance="?attr/textAppearanceBodyMedium"
     android:textColor="@color/mainDecodeDescription_TextColor"
     android:textSize="@dimen/selectCategoryInstruction_textSize"
     android:textStyle="bold|italic"
@@ -30,17 +31,15 @@
     android:paddingTop="10dp"
     android:paddingBottom="6dp"
     android:text="@string/selectCategoryInstruction"
+    android:textAppearance="?attr/textAppearanceBodyMedium"
     android:textColor="@color/mainDecodeDescription_TextColor"
     android:textSize="@dimen/selectCategoryInstruction_textSize"
     android:textStyle="italic"/>
 
-  <ListView
+  <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/mainItemToDecodeListView"
     android:layout_width="match_parent"
     android:layout_height="0dp"
-    android:layout_weight="1"
-    android:divider="@color/listItemDivider"
-    android:dividerHeight="1dp"
-    android:drawSelectorOnTop="false"/>
+    android:layout_weight="1"/>
 
 </LinearLayout>

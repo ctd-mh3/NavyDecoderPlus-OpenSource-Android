@@ -325,8 +325,7 @@ public class DecodeDatabase {
         // The below code manually determines the active database's version.  And if the
         //   latest installed database version is greater, it directly calls onUpgrade
         SQLiteDatabase dbRead2 =
-            SQLiteDatabase.openDatabase(
-                sDatabaseFullPath, null, SQLiteDatabase.OPEN_READONLY);
+            SQLiteDatabase.openDatabase(sDatabaseFullPath, null, SQLiteDatabase.OPEN_READONLY);
         int versionOfActiveDatabase = dbRead2.getVersion();
         Log.d(TAG, "In createDataBase(), database version is " + versionOfActiveDatabase);
         dbRead2.close();
@@ -382,8 +381,7 @@ public class DecodeDatabase {
       try {
         // sDatabaseFullPath is already set via getDatabasePath() in the constructor.
         mCheckDB =
-            SQLiteDatabase.openDatabase(
-                sDatabaseFullPath, null, SQLiteDatabase.OPEN_READONLY);
+            SQLiteDatabase.openDatabase(sDatabaseFullPath, null, SQLiteDatabase.OPEN_READONLY);
 
       } catch (SQLiteException e) {
         // database doesn't exist yet.
@@ -418,8 +416,7 @@ public class DecodeDatabase {
       // The below code is attempting to force the system to record the db version number
       try {
         SQLiteDatabase checkDB =
-            SQLiteDatabase.openDatabase(
-                sDatabaseFullPath, null, SQLiteDatabase.OPEN_READWRITE);
+            SQLiteDatabase.openDatabase(sDatabaseFullPath, null, SQLiteDatabase.OPEN_READWRITE);
 
         // once the db has been copied, set the new version..
         checkDB.setVersion(DB_VERSION);

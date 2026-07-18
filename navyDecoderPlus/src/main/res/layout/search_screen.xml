@@ -3,18 +3,30 @@
 <!-- Layout for screen to allow user to search (SearchableDecoderActivity).
  -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   android:orientation="vertical">
 
-  <androidx.appcompat.widget.SearchView
-    android:id="@+id/searchView"
+  <com.google.android.material.textfield.TextInputLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:iconifiedByDefault="false"
-    android:queryHint="@string/search_hint" />
+    android:layout_margin="16dp"
+    android:hint="@string/search_hint"
+    app:startIconDrawable="@drawable/ic_search"
+    app:endIconMode="clear_text"
+    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-  <ListView
+    <com.google.android.material.textfield.TextInputEditText
+      android:id="@+id/searchEditText"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:inputType="text"
+      android:imeOptions="actionSearch"
+      android:maxLines="1" />
+  </com.google.android.material.textfield.TextInputLayout>
+
+  <androidx.recyclerview.widget.RecyclerView
     android:id="@+id/searchScreenListView"
     android:layout_width="match_parent"
     android:layout_height="0dp"

@@ -22,19 +22,23 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.crashtestdummylimited.navydecoderplus.controller.Category;
+import com.crashtestdummylimited.navydecoderplus.controller.MainCategoryAdapter;
 import com.crashtestdummylimited.navydecoderplus.controller.MappingHelper;
 import com.crashtestdummylimited.navydecoderplus.controller.MenuOptions;
-import com.crashtestdummylimited.navydecoderplus.util.AppUpdateChecker;
 import com.crashtestdummylimited.navydecoderplus.controller.RfasActivity;
 import com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivity;
+import com.crashtestdummylimited.navydecoderplus.util.AppUpdateChecker;
+import com.google.android.material.divider.MaterialDividerItemDecoration;
+import java.util.ArrayList;
+import java.util.List;
 
 public class NavyDecoderPlus extends AppCompatActivity {
 
@@ -81,50 +85,52 @@ public class NavyDecoderPlus extends AppCompatActivity {
     // defensive only.
     if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
 
-    ListView listView = findViewById(R.id.mainItemToDecodeListView);
+    RecyclerView recyclerView = findViewById(R.id.mainItemToDecodeListView);
+    recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     Category[] categories = Category.values();
     // Position 0 is the global "Search All" entry; categories follow at positions 1..N.
-    String[] decodeOptions = new String[categories.length + 1];
-    decodeOptions[0] = getString(R.string.categorySearchAll);
-    for (int i = 0; i < categories.length; i++) {
-      decodeOptions[i + 1] = getString(categories[i].labelRes);
+    List<String> decodeOptions = new ArrayList<>(categories.length + 1);
+    decodeOptions.add(getString(R.string.categorySearchAll));
+    for (Category category : categories) {
+      decodeOptions.add(getString(category.labelRes));
     }
 
-    listView.setAdapter(
-        new ArrayAdapter<>(
-            this, R.layout.main_screen_selection_list_item, android.R.id.text1, decodeOptions));
-    listView.setOnItemClickListener(
-        (parent, view, position, id) -> {
-          if (position == 0) {
-            // Global search across all categories.
-            Intent intent = new Intent(NavyDecoderPlus.this, SearchableDecoderActivity.class);
-            intent.putExtra(
-                MappingHelper.CATEGORY_KEY_IDENTIFIER,
-                SearchableDecoderActivity.ALL_CATEGORIES_KEY);
-            startActivity(intent);
-            return;
-          }
+    recyclerView.setAdapter(new MainCategoryAdapter(decodeOptions, this::onCategorySelected));
 
-          Category category = Category.values()[position - 1];
+    MaterialDividerItemDecoration divider =
+        new MaterialDividerItemDecoration(this, LinearLayoutManager.VERTICAL);
+    divider.setDividerColorResource(this, R.color.listItemDivider);
+    recyclerView.addItemDecoration(divider);
+  }
 
-          // RFAS categories use a spinner-based Activity instead of the standard search flow.
-          if (category == Category.RFAS_ENLISTED || category == Category.RFAS_OFFICER) {
-            String rfasType =
-                (category == Category.RFAS_ENLISTED)
-                    ? RfasActivity.RFAS_TYPE_ENLISTED
-                    : RfasActivity.RFAS_TYPE_OFFICER;
-            Intent intent = new Intent(NavyDecoderPlus.this, RfasActivity.class);
-            intent.putExtra(RfasActivity.EXTRA_RFAS_TYPE, rfasType);
-            startActivity(intent);
-            return;
-          }
+  private void onCategorySelected(int position) {
+    if (position == 0) {
+      // Global search across all categories.
+      Intent intent = new Intent(NavyDecoderPlus.this, SearchableDecoderActivity.class);
+      intent.putExtra(
+          MappingHelper.CATEGORY_KEY_IDENTIFIER, SearchableDecoderActivity.ALL_CATEGORIES_KEY);
+      startActivity(intent);
+      return;
+    }
 
-          Intent intent = new Intent(NavyDecoderPlus.this, SearchableDecoderActivity.class);
-          intent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, category.key);
-          startActivity(intent);
-        });
+    Category category = Category.values()[position - 1];
 
+    // RFAS categories use a spinner-based Activity instead of the standard search flow.
+    if (category == Category.RFAS_ENLISTED || category == Category.RFAS_OFFICER) {
+      String rfasType =
+          (category == Category.RFAS_ENLISTED)
+              ? RfasActivity.RFAS_TYPE_ENLISTED
+              : RfasActivity.RFAS_TYPE_OFFICER;
+      Intent intent = new Intent(NavyDecoderPlus.this, RfasActivity.class);
+      intent.putExtra(RfasActivity.EXTRA_RFAS_TYPE, rfasType);
+      startActivity(intent);
+      return;
+    }
+
+    Intent intent = new Intent(NavyDecoderPlus.this, SearchableDecoderActivity.class);
+    intent.putExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER, category.key);
+    startActivity(intent);
   }
 
   @Override
