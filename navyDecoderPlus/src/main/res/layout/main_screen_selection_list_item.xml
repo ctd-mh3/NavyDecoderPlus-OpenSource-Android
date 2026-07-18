@@ -17,6 +17,7 @@
     android:layout_centerVertical="true"
     android:layout_toStartOf="@+id/chevron"
     android:gravity="start"
+    android:textAppearance="?attr/textAppearanceBodyLarge"
     android:textColor="@color/resultDescription_TextColor"
     android:textSize="@dimen/mainScreenItemsToSelect_textSize" />
 

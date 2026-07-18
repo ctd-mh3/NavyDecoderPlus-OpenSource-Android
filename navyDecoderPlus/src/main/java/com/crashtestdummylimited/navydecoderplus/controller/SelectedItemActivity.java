@@ -72,6 +72,10 @@ public class SelectedItemActivity extends AppCompatActivity {
 
   @Override
   public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    if (item.getItemId() == android.R.id.home) {
+      finish();
+      return true;
+    }
     MenuOptions.onOptionsItemSelected(this, item);
     return true;
   }
@@ -103,7 +107,10 @@ public class SelectedItemActivity extends AppCompatActivity {
 
     // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is
     // defensive only.
-    if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
+    if (getSupportActionBar() != null) {
+      getSupportActionBar().setTitle(R.string.app_name);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
     Uri uri = getIntent().getData();
     if (uri == null) {

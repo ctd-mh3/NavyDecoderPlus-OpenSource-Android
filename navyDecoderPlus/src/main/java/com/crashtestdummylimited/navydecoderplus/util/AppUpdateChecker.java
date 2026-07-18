@@ -28,36 +28,34 @@ import com.google.android.play.core.install.model.UpdateAvailability;
 
 public class AppUpdateChecker {
 
-    private static final String PREFS = "app_update_prefs";
-    private static final String KEY_LAST_CHECK_MS = "last_update_check_ms";
-    private static final long COOLDOWN_MS = 24L * 60L * 60L * 1000L;
+  private static final String PREFS = "app_update_prefs";
+  private static final String KEY_LAST_CHECK_MS = "last_update_check_ms";
+  private static final long COOLDOWN_MS = 24L * 60L * 60L * 1000L;
 
-    public static final int REQUEST_CODE = 900;
+  public static final int REQUEST_CODE = 900;
 
-    public static void checkForUpdate(AppCompatActivity activity) {
-        SharedPreferences prefs = activity.getSharedPreferences(PREFS, AppCompatActivity.MODE_PRIVATE);
-        long now = System.currentTimeMillis();
-        long lastCheck = prefs.getLong(KEY_LAST_CHECK_MS, 0L);
+  public static void checkForUpdate(AppCompatActivity activity) {
+    SharedPreferences prefs = activity.getSharedPreferences(PREFS, AppCompatActivity.MODE_PRIVATE);
+    long now = System.currentTimeMillis();
+    long lastCheck = prefs.getLong(KEY_LAST_CHECK_MS, 0L);
 
-        if (now - lastCheck < COOLDOWN_MS) {
-            return;
-        }
-
-        // Record now so a failed/offline check also respects the cooldown.
-        prefs.edit().putLong(KEY_LAST_CHECK_MS, now).apply();
-
-        AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(activity);
-        appUpdateManager
-            .getAppUpdateInfo()
-            .addOnSuccessListener(
-                info -> {
-                    if (info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
-                            && info.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
-                        appUpdateManager.startUpdateFlow(
-                            info,
-                            activity,
-                            AppUpdateOptions.newBuilder(AppUpdateType.FLEXIBLE).build());
-                    }
-                });
+    if (now - lastCheck < COOLDOWN_MS) {
+      return;
     }
+
+    // Record now so a failed/offline check also respects the cooldown.
+    prefs.edit().putLong(KEY_LAST_CHECK_MS, now).apply();
+
+    AppUpdateManager appUpdateManager = AppUpdateManagerFactory.create(activity);
+    appUpdateManager
+        .getAppUpdateInfo()
+        .addOnSuccessListener(
+            info -> {
+              if (info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                  && info.isUpdateTypeAllowed(AppUpdateType.FLEXIBLE)) {
+                appUpdateManager.startUpdateFlow(
+                    info, activity, AppUpdateOptions.newBuilder(AppUpdateType.FLEXIBLE).build());
+              }
+            });
+  }
 }

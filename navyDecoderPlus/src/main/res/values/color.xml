@@ -3,26 +3,56 @@
 
   <!-- Light mode colors. -->
 
-  <color name="appBackground">#EEF3F9</color>
-  <color name="mainDescription_Background">#ADC6E0</color>
-  <color name="searchScreenTextView_Background">#C4DAF2</color>
-  <color name="mainDecodeDescription_TextColor">#1B2E45</color>
-  <color name="searchScreenTextView_TextColor">#002855</color>
-
-  <color name="resultDescription_Background">#E0EAF5</color>
-  <color name="resultDescription_TextColor">#0A1929</color>
-
-  <!-- App branding color for the app bar -->
+  <!--
+  M3 tonal roles, generated from the Navy brand seed #002855 (Pantone 289) via a
+  CIELAB Lch tonal ramp. colorPrimary/colorOnPrimary are pinned to the exact brand
+  hex rather than the generated tone (M3's tone-40 primary would drift the brand
+  blue); every other role is generated so surfaces/containers/outlines follow a
+  real M3 tonal system instead of hand-picked hex values.
+  -->
   <color name="colorPrimary">#002855</color>
+  <color name="colorOnPrimary">#FFFFFF</color>
+  <color name="colorPrimaryContainer">#DBE1FF</color>
+  <color name="colorOnPrimaryContainer">#001B3F</color>
 
-  <color name="colorWhite">#FFFFFF</color>
+  <color name="colorSecondary">#5A5E6E</color>
+  <color name="colorOnSecondary">#FFFFFF</color>
+  <color name="colorSecondaryContainer">#DEE2F5</color>
+  <color name="colorOnSecondaryContainer">#171B29</color>
 
-  <!-- Changelog dialog -->
+  <color name="colorTertiary">#735666</color>
+  <color name="colorOnTertiary">#FFFFFF</color>
+  <color name="colorTertiaryContainer">#FCD9EC</color>
+  <color name="colorOnTertiaryContainer">#2C1322</color>
+
+  <color name="colorSurface">#F8F9FD</color>
+  <color name="colorOnSurface">#1B1B1E</color>
+  <color name="colorSurfaceVariant">#E0E2EC</color>
+  <color name="colorOnSurfaceVariant">#45464E</color>
+  <color name="colorOutline">#75777F</color>
+  <color name="colorOutlineVariant">#C4C6D0</color>
+
+  <color name="colorSurfaceContainerLowest">#FFFFFF</color>
+  <color name="colorSurfaceContainerLow">#F3F3F7</color>
+  <color name="colorSurfaceContainer">#EDEEF1</color>
+  <color name="colorSurfaceContainerHigh">#E7E8EC</color>
+  <color name="colorSurfaceContainerHighest">#E2E2E6</color>
+
+
+  <!--
+  Legacy screen-specific color names, kept so existing style/layout references
+  don't need to change, aliased onto the M3 roles above.
+  -->
+  <color name="mainDescription_Background">@color/colorSecondaryContainer</color>
+  <color name="searchScreenTextView_Background">@color/colorSurfaceContainerHigh</color>
+  <color name="searchScreenTextView_TextColor">@color/colorOnSurfaceVariant</color>
+  <color name="mainDecodeDescription_TextColor">@color/colorOnSurfaceVariant</color>
+  <color name="resultDescription_Background">@color/colorSurfaceContainer</color>
+  <color name="resultDescription_TextColor">@color/colorOnSurface</color>
+  <color name="listItemDivider">@color/colorOutlineVariant</color>
 
   <!-- Menu / about dialogs -->
   <color name="menuDialogBackgroundColor">#002855</color>
   <color name="menuDialogTextColor">#FFFFFF</color>
-
-  <color name="listItemDivider">#BCC8D8</color>
 
 </resources>

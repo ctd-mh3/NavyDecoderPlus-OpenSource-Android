@@ -17,28 +17,53 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:layout_marginTop="@dimen/rfasDecodeSpinner_paddingAboveSpinners"
+      android:baselineAligned="false"
       android:orientation="horizontal">
 
-      <Spinner
-        android:id="@+id/rfasFirstCharacter"
-        style="@style/RFASDecodeSpinner"
+      <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:prompt="@string/rfasFirstCharacterPrompt" />
+        android:layout_margin="@dimen/rfasDecodeSpinner_layoutMargin"
+        android:hint="@string/rfasFirstCharacterPrompt"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
-      <Spinner
-        android:id="@+id/rfasSecondAndThirdCharacter"
-        style="@style/RFASDecodeSpinner"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:prompt="@string/rfasSecondAndThirdCharactersPrompt" />
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+          android:id="@+id/rfasFirstCharacter"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="none" />
+      </com.google.android.material.textfield.TextInputLayout>
 
-      <Spinner
-        android:id="@+id/rfasFourthCharacter"
-        style="@style/RFASDecodeSpinner"
+      <com.google.android.material.textfield.TextInputLayout
         android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:prompt="@string/rfasFourthCharactersPrompt" />
+        android:layout_margin="@dimen/rfasDecodeSpinner_layoutMargin"
+        android:hint="@string/rfasSecondAndThirdCharactersPrompt"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+          android:id="@+id/rfasSecondAndThirdCharacter"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="none" />
+      </com.google.android.material.textfield.TextInputLayout>
+
+      <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_margin="@dimen/rfasDecodeSpinner_layoutMargin"
+        android:hint="@string/rfasFourthCharactersPrompt"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+          android:id="@+id/rfasFourthCharacter"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:inputType="none" />
+      </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
 
     <TextView

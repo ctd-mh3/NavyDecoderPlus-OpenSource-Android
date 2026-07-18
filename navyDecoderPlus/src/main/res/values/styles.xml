@@ -12,15 +12,48 @@
     <item name="android:typeface">normal</item>
     <item name="android:textStyle">normal</item>
     <item name="android:textSize">@dimen/applicationTheme_textSize</item>
+
     <item name="colorPrimary">@color/colorPrimary</item>
-    <item name="colorOnPrimary">@color/colorWhite</item>
-    <item name="colorSecondary">@color/colorWhite</item>
+    <item name="colorOnPrimary">@color/colorOnPrimary</item>
+    <item name="colorPrimaryContainer">@color/colorPrimaryContainer</item>
+    <item name="colorOnPrimaryContainer">@color/colorOnPrimaryContainer</item>
+
+    <item name="colorSecondary">@color/colorSecondary</item>
+    <item name="colorOnSecondary">@color/colorOnSecondary</item>
+    <item name="colorSecondaryContainer">@color/colorSecondaryContainer</item>
+    <item name="colorOnSecondaryContainer">@color/colorOnSecondaryContainer</item>
+
+    <item name="colorTertiary">@color/colorTertiary</item>
+    <item name="colorOnTertiary">@color/colorOnTertiary</item>
+    <item name="colorTertiaryContainer">@color/colorTertiaryContainer</item>
+    <item name="colorOnTertiaryContainer">@color/colorOnTertiaryContainer</item>
+
+    <item name="colorSurface">@color/colorSurface</item>
+    <item name="colorOnSurface">@color/colorOnSurface</item>
+    <item name="colorSurfaceVariant">@color/colorSurfaceVariant</item>
+    <item name="colorOnSurfaceVariant">@color/colorOnSurfaceVariant</item>
+    <item name="colorOutline">@color/colorOutline</item>
+    <item name="colorOutlineVariant">@color/colorOutlineVariant</item>
+
+    <item name="colorSurfaceContainerLowest">@color/colorSurfaceContainerLowest</item>
+    <item name="colorSurfaceContainerLow">@color/colorSurfaceContainerLow</item>
+    <item name="colorSurfaceContainer">@color/colorSurfaceContainer</item>
+    <item name="colorSurfaceContainerHigh">@color/colorSurfaceContainerHigh</item>
+    <item name="colorSurfaceContainerHighest">@color/colorSurfaceContainerHighest</item>
+
     <item name="android:windowTranslucentNavigation">false</item>
     <item name="android:navigationBarColor">@android:color/transparent</item>
   </style>
 
 
-  <style name="MainDescription">
+  <!--
+  Text styles below use a Material3 TextAppearance as their parent so they inherit
+  the M3 type scale's letter-spacing/line-height/weight, while android:textSize is
+  still overridden from dimens.xml (and the values-sw*dp variants) so the app's
+  existing tablet-responsive scale is preserved — the M3 attrs alone are fixed-size.
+  -->
+
+  <style name="MainDescription" parent="TextAppearance.Material3.TitleLarge">
     <item name="android:background">@color/mainDescription_Background</item>
     <item name="android:textSize">@dimen/mainDescription_textSize</item>
     <item name="android:paddingTop">@dimen/mainDescription_paddingTop</item>
@@ -38,13 +71,13 @@
   </style>
 
 
-  <style name="SearchScreenTextView">
+  <style name="SearchScreenTextView" parent="TextAppearance.Material3.BodyMedium">
     <item name="android:background">@color/searchScreenTextView_Background</item>
     <item name="android:textSize">@dimen/searchScreenTextView_textSize</item>
     <item name="android:textColor">@color/searchScreenTextView_TextColor</item>
   </style>
 
-  <style name="MainDecodeDescription">
+  <style name="MainDecodeDescription" parent="TextAppearance.Material3.TitleSmall">
     <item name="android:paddingTop">@dimen/mainDecodeDescription_paddingTop</item>
     <item name="android:textColor">@color/mainDecodeDescription_TextColor</item>
     <item name="android:textSize">@dimen/mainDecodeDescription_textSize</item>
@@ -55,25 +88,8 @@
     <item name="android:layout_height">wrap_content</item>
   </style>
 
-  <style name="RFASDecodeSpinner">
-    <item name="android:textSize">@dimen/rfasDecodeSpinner_textSize</item>
-    <item name="android:layout_margin">@dimen/rfasDecodeSpinner_layoutMargin</item>
-    <item name="android:gravity">start</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">wrap_content</item>
-  </style>
 
-  <style name="RFASDecodeSpinnerItem">
-    <item name="android:textSize">@dimen/rfasDecodeSpinner_textSize</item>
-    <item name="android:layout_margin">@dimen/rfasDecodeSpinner_layoutMargin</item>
-    <item name="android:gravity">start</item>
-    <item name="android:layout_width">wrap_content</item>
-    <item name="android:layout_height">wrap_content</item>
-    <item name="android:padding">@dimen/rfasDecodeSpinner_padding</item>
-  </style>
-
-
-  <style name="ResultDescription">
+  <style name="ResultDescription" parent="TextAppearance.Material3.BodyLarge">
     <item name="android:background">@color/resultDescription_Background</item>
     <item name="android:textColor">@color/resultDescription_TextColor</item>
     <item name="android:paddingStart">@dimen/resultDescription_paddingLeft</item>
