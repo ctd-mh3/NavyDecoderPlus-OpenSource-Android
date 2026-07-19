@@ -75,7 +75,7 @@ public class RfasActivity extends AppCompatActivity {
   /**
    * Populates an exposed-dropdown field with the given options, pre-selects the first one (an
    * {@link MaterialAutoCompleteTextView} has no auto-select-position-0 behavior the way {@code
-   * Spinner} did), and re-runs the decode whenever the user picks a different option.
+   * Spinner} did), and re-runs the decoder whenever the user picks a different option.
    */
   private void setupDropdownFromArray(MaterialAutoCompleteTextView dropdown, String[] options) {
     ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.rfas_dropdown_item, options);

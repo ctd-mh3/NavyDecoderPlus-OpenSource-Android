@@ -87,7 +87,7 @@ public class NavyDecoderPlus extends AppCompatActivity {
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     Category[] categories = Category.values();
-    // Position 0 is the global "Search All" entry; categories follow at positions 1..N.
+    // Position 0 is the global "Search All" entry; categories follow at positions 1 to N.
     List<String> decodeOptions = new ArrayList<>(categories.length + 1);
     decodeOptions.add(getString(R.string.categorySearchAll));
     for (Category category : categories) {

@@ -40,7 +40,7 @@
 
 
   <!--
-  Legacy screen-specific color names, kept so existing style/layout references
+  Legacy screen-specific color names, kept so existing style/layout identifiers
   don't need to change, aliased onto the M3 roles above.
   -->
   <color name="mainDescription_Background">@color/colorSecondaryContainer</color>

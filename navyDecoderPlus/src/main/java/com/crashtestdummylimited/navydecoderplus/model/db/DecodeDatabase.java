@@ -443,7 +443,7 @@ public class DecodeDatabase {
       *
     Ok, before you run into bigger problems you should know that SQLite is limited on the ALTER TABLE command, it allows "add" and "rename" only no remove/drop which is done with recreation of the table.
 
-    You should always have the new table creation query at hand, and use that for upgrade and transfer any existing data. Note: that the onUpgrade methods runs one for your sqlite helper object and you need to handle all the tables in it.
+    You should always have the new table creation query at hand, and use that for upgrade and transfer any existing data. Note: that the onUpgrade methods runs one for your sqlite helper object, and you need to handle all the tables in it.
 
     So what is recommended onUpgrade:
 
