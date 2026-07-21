@@ -113,10 +113,11 @@ public class MenuOptions {
           new String[] {activity.getString(R.string.authorEmailAddress)}); // recipients
       emailIntent.putExtra(
           Intent.EXTRA_SUBJECT,
-          activity.getString(R.string.authorEmailSubject)
-              + "("
+          "Android-"
+              + activity.getString(R.string.authorEmailSubject)
+              + "(v"
               + CommonUtilities.getAppVersionName(activity)
-              + ")");
+              + ") Comment");
 
       // Always use string resources for UI text.
       String title = activity.getResources().getString(R.string.chooserTitle);
