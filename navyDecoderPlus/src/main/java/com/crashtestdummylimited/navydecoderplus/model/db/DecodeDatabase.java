@@ -133,9 +133,9 @@ public class DecodeDatabase {
     Category category = Category.fromKey(decodeCategoryKey);
     String tableToQuery = category != null ? category.ftsTable : null;
 
-    // FTS5 treats several characters as query operators (- is NOT, " starts a phrase, etc.).
+    // FTS3 treats several characters as query operators (- is NOT, " starts a phrase, etc.).
     // Replace any non-alphanumeric, non-space character with a space so that a search like
-    // "E-6" becomes "e 6*" — FTS5 implicit AND — rather than "e NOT 6*".
+    // "E-6" becomes "e 6*" — FTS3 implicit AND — rather than "e NOT 6*".
     String sanitizedQuery = query.replaceAll("[^a-zA-Z0-9 ]", " ").trim().replaceAll("\\s+", " ");
     if (sanitizedQuery.isEmpty()) {
       return null;
@@ -217,7 +217,7 @@ public class DecodeDatabase {
   private Cursor query(
       String tableToQuery, String selection, String[] selectionArgs, String[] columns) {
     // SQLiteQueryBuilder wraps the WHERE clause in parentheses — "WHERE (table MATCH ?)" —
-    // which breaks FTS5 on the SQLite versions bundled with Android 8-9 (< SQLite 3.28).
+    // which breaks FTS3 on the SQLite versions bundled with Android 8-9 (< SQLite 3.28).
     // Use rawQuery() directly so the MATCH expression is unparenthesized.
     StringBuilder selectClause = new StringBuilder();
     for (int i = 0; i < columns.length; i++) {
