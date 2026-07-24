@@ -27,7 +27,7 @@ insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0666
 insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0667","NRC BALTIMORE, MD","RESFOR (30 November 2022)");
 insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0676","NRC NEW CASTLE, DE","RESFOR (30 November 2022)");
 insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0682","NRC ROCHESTER, NY","RESFOR (30 November 2022)");
-insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0686","NRC NORFOLK, VA","RESFOR (30 November 2022)");
+insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0686","NRC NORFOLK, VA / HM-15, VA","RESFOR (30 November 2022)");
 insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0696","NRC QUINCY, MA","RESFOR (30 November 2022)");
 insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2302","SEAL TEAM 18, VA","RESFOR (30 November 2022)");
 insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2502","MERCHANT MARINE, VA","RESFOR (30 November 2022)");
@@ -154,7 +154,6 @@ insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6800
 insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6801","HSM 60, FL","RESFOR (30 November 2022)");
 insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6804","HSC-85. CA","RESFOR (30 November 2022)");
 insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0684","HM-14, VA","RESFOR (30 November 2022)");
-insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("0686","HM-15, VA","RESFOR (30 November 2022)");
 insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("2287","VP-69, WA","RESFOR (30 November 2022)");
 insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6802","VP-62, FL","RESFOR (30 November 2022)");
 insert into FTS_nra_codes (suggest_text_1, suggest_text_2, source) values ("6666","NAF WASHINGTON, DC","RESFOR (30 November 2022)");
