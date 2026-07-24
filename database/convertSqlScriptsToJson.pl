@@ -191,8 +191,9 @@ for my $pair (@pairs) {
     }
 }
 
-# Write JSON using JSON::PP (safe encoding)
-my $json = JSON::PP->new->ascii->pretty->encode(\@rows);
+# Write JSON using JSON::PP (safe encoding). canonical() sorts object keys so re-running this
+# script with unchanged data produces a byte-identical file instead of reshuffled key order.
+my $json = JSON::PP->new->ascii->pretty->canonical->encode(\@rows);
 open my $out, '>:raw', $OUTPUT_FILE or die "open $OUTPUT_FILE: $!";
 print $out encode_utf8($json);
 close $out;
