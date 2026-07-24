@@ -30,8 +30,9 @@ import com.crashtestdummylimited.navydecoderplus.R;
  * both null for those entries.
  *
  * <p>Adding a new category requires: (1) a new constant here, (2) the SQL table + database rebuild,
- * (3) a string resource for the label, and (4) a manifest entry for {@link
- * SearchableDecoderActivity}. Nothing else needs to change in Java.
+ * and (3) a string resource for the label. {@link SearchableDecoderActivity} is registered once in
+ * the manifest and dispatches by category key at runtime, so no manifest change or new Java class
+ * is needed.
  */
 public enum Category {
   AQD_CODES("aqdcodes", R.string.categoryAqdCodes, "FTS_aqd_codes"),
