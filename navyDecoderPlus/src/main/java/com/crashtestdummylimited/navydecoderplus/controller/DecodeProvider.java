@@ -18,7 +18,6 @@
  */
 package com.crashtestdummylimited.navydecoderplus.controller;
 
-import android.app.SearchManager;
 import android.content.ContentProvider;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -30,6 +29,7 @@ import androidx.annotation.NonNull;
 import com.crashtestdummylimited.navydecoderplus.model.db.DecodeDatabase;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Locale;
 
 /** Provides access to the dictionary database. */
 public class DecodeProvider extends ContentProvider {
@@ -52,18 +52,16 @@ public class DecodeProvider extends ContentProvider {
   // UriMatcher stuff
   private static final int SEARCH_INFO = 0;
   private static final int GET_DECODED_INFO = 1;
-  private static final int SEARCH_SUGGEST = 2;
   // Number of items above
-  private static final int NUMBER_OF_BASE_TYPES = 3;
+  private static final int NUMBER_OF_BASE_TYPES = 2;
   // Special matcher code for the cross-category global search URI ("decodeData/all").
-  // Must be outside the per-category range (max ~13 categories × 3 = 39).
+  // Must be outside the per-category range (max ~13 categories × 2 = 26).
   private static final int SEARCH_INFO_ALL = 1000;
-  //    private static final int REFRESH_SHORTCUT = 1000;
   private static UriMatcher sURIMatcher;
 
   private static ArrayList<String> sOffsetMatcher;
 
-  /** Builds up a UriMatcher for search suggestion and shortcut refresh queries. */
+  /** Builds up a UriMatcher for per-category search and single-item lookup queries. */
   private static UriMatcher buildUriMatcher() {
     ArrayList<String> offsetMatcherTemp = new ArrayList<>();
 
@@ -82,34 +80,16 @@ public class DecodeProvider extends ContentProvider {
       while (iterator.hasNext()) {
         String categoryIdentifier = iterator.next();
         offsetMatcherTemp.add(i, categoryIdentifier);
-        // to get decoded values...
         matcher.addURI(
             AUTHORITY, "decodeData/" + categoryIdentifier, SEARCH_INFO + NUMBER_OF_BASE_TYPES * i);
         matcher.addURI(
             AUTHORITY,
             "decodeData/" + categoryIdentifier + "/#",
             GET_DECODED_INFO + NUMBER_OF_BASE_TYPES * i);
-        // to get suggestions...
-        matcher.addURI(
-            AUTHORITY,
-            categoryIdentifier + "/" + SearchManager.SUGGEST_URI_PATH_QUERY,
-            SEARCH_SUGGEST + NUMBER_OF_BASE_TYPES * i);
-        matcher.addURI(
-            AUTHORITY,
-            categoryIdentifier + "/" + SearchManager.SUGGEST_URI_PATH_QUERY + "/*",
-            SEARCH_SUGGEST + NUMBER_OF_BASE_TYPES * i);
         i++;
       }
     }
 
-    /* The following are unused in this implementation, but if we include
-    * {@link SearchManager#SUGGEST_COLUMN_SHORTCUT_ID} as a column in our suggestions table, we
-    * could expect to receive refresh queries when a shortcutted suggestion is displayed in
-    * Quick Search Box, in which case, the following Uris would be provided, and we
-    * would return a cursor with a single item representing the refreshed suggestion data.
-       matcher.addURI(AUTHORITY, SearchManager.SUGGEST_URI_PATH_SHORTCUT, REFRESH_SHORTCUT);
-       matcher.addURI(AUTHORITY, SearchManager.SUGGEST_URI_PATH_SHORTCUT + "/*", REFRESH_SHORTCUT);
-    */
     sOffsetMatcher = offsetMatcherTemp;
     return matcher;
   }
@@ -123,10 +103,9 @@ public class DecodeProvider extends ContentProvider {
   }
 
   /**
-   * Handles all the decoder searches and suggestion queries from the Search Manager. When
-   * requesting a specific item, the uri alone is required. When searching all of the decoder for
-   * matches, the selectionArgs argument must carry the search query as the first element. All other
-   * arguments are ignored.
+   * Handles all the decoder searches. When requesting a specific item, the uri alone is required.
+   * When searching all of the decoder for matches, the selectionArgs argument must carry the search
+   * query as the first element. All other arguments are ignored.
    */
   @Override
   public Cursor query(
@@ -148,7 +127,7 @@ public class DecodeProvider extends ContentProvider {
       if (selectionArgs == null) {
         throw new IllegalArgumentException("selectionArgs must be provided for the Uri: " + uri);
       }
-      return mDecodeDatabase.getAllDecodeMatches(selectionArgs[0].toLowerCase());
+      return mDecodeDatabase.getAllDecodeMatches(selectionArgs[0].toLowerCase(Locale.ROOT));
     }
 
     int categoryIndex = matchCode / NUMBER_OF_BASE_TYPES;
@@ -162,11 +141,6 @@ public class DecodeProvider extends ContentProvider {
 
     // Use the UriMatcher to see what kind of query we have and format the db query accordingly
     switch (matchType) {
-      case SEARCH_SUGGEST:
-        if (selectionArgs == null) {
-          throw new IllegalArgumentException("selectionArgs must be provided for the Uri: " + uri);
-        }
-        return getSuggestions(categoryIdentifier, selectionArgs[0]);
       case SEARCH_INFO:
         if (selectionArgs == null) {
           throw new IllegalArgumentException("selectionArgs must be provided for the Uri: " + uri);
@@ -179,23 +153,8 @@ public class DecodeProvider extends ContentProvider {
     }
   }
 
-  private Cursor getSuggestions(String categoryIdentifier, String query) {
-    query = query.toLowerCase();
-    String[] columns =
-        new String[] {
-          BaseColumns._ID,
-          DecodeDatabase.KEY_CODE,
-          DecodeDatabase.KEY_CODE_MEANING,
-          /* SearchManager.SUGGEST_COLUMN_SHORTCUT_ID,
-          (only if you want to refresh shortcuts) */
-          SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID
-        };
-
-    return mDecodeDatabase.getDecodeMatches(categoryIdentifier, query, columns);
-  }
-
   private Cursor search(String categoryIdentifier, String query) {
-    query = query.toLowerCase();
+    query = query.toLowerCase(Locale.ROOT);
     String[] columns =
         new String[] {BaseColumns._ID, DecodeDatabase.KEY_CODE, DecodeDatabase.KEY_CODE_MEANING};
 
@@ -211,28 +170,6 @@ public class DecodeProvider extends ContentProvider {
 
     return mDecodeDatabase.getItemToDecode(categoryIdentifier, rowId, columns);
   }
-
-  /*
-      private Cursor refreshShortcut(Uri uri) {
-        /* This won't be called with the current implementation, but if we include
-         * {@link SearchManager#SUGGEST_COLUMN_SHORTCUT_ID} as a column in our suggestions table, we
-         * could expect to receive refresh queries when a shortcutted suggestion is displayed in
-         * Quick Search Box. In which case, this method will query the table for the specific
-         * word, using the given item Uri and provide all the columns originally provided with the
-         * suggestion query.
-         *
-
-        String rowId = uri.getLastPathSegment();
-        String[] columns = new String[] {
-            BaseColumns._ID,
-            DecodeDatabase.KEY_CODE,
-            DecodeDatabase.KEY_CODE_MEANING,
-            SearchManager.SUGGEST_COLUMN_SHORTCUT_ID,
-            SearchManager.SUGGEST_COLUMN_INTENT_DATA_ID};
-
-        return mDecodeDatabase.getItemToDecode("Enlisted Rating Codes", rowId, columns);
-      }
-  */
 
   /**
    * This method is required in order to query the supported types. It's also useful in our own
@@ -250,8 +187,6 @@ public class DecodeProvider extends ContentProvider {
         return WORDS_MIME_TYPE;
       case GET_DECODED_INFO:
         return DEFINITION_MIME_TYPE;
-      case SEARCH_SUGGEST:
-        return SearchManager.SUGGEST_MIME_TYPE;
       default:
         throw new IllegalArgumentException("Unknown URL " + uri);
     }
