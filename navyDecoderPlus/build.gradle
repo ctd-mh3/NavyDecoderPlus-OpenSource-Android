@@ -84,7 +84,6 @@ dependencies {
     implementation 'com.google.android.play:app-update:2.1.0'
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'com.google.android.material:material:1.14.0'
-    implementation 'androidx.preference:preference:1.2.1'
     implementation 'androidx.recyclerview:recyclerview:1.4.0'
     //compile 'com.android.support:support-v4:25'
     //compile 'com.github.hotchemi:android-rate:{latest.version}'
