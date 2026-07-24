@@ -140,7 +140,7 @@ insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('CE1-
 insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('CF1-6','Major Shore Command-Grade level*','NAVPERS 15839I VOL I (APR 2026)');
 insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('CG1-6','Deputy Project Manager-Grade level*','NAVPERS 15839I VOL I (APR 2026)');
 insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('CH1-6','Project Manager-Grade level*','NAVPERS 15839I VOL I (APR 2026)');
-insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('CH1-6','Major Project Manager-Grade level*','NAVPERS 15839I VOL I (APR 2026)');
+insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('CI1-6','Major Project Manager-Grade level*','NAVPERS 15839I VOL I (APR 2026)');
 insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('DA0','Light Attack-Pilot/NFO','NAVPERS 15839I VOL I (APR 2026)');
 insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('DA6','Light Attack-Pilot','NAVPERS 15839I VOL I (APR 2026)');
 insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('DA7','Light Attack-Pilot/NFO','NAVPERS 15839I VOL I (APR 2026)');
@@ -715,9 +715,9 @@ insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TE1'
 insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TE2','Engineer Officer, Steam-Second Assistant Engineer','NAVPERS 15839I VOL I (APR 2026)');
 insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TE3','Engineer Officer, Steam-Third Assistant Engineer','NAVPERS 15839I VOL I (APR 2026)');
 insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TFE','Engineer Officer, Motor-Chief Engineer','NAVPERS 15839I VOL I (APR 2026)');
-insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TE1','Engineer Officer, Motor-First Assistant Engineer','NAVPERS 15839I VOL I (APR 2026)');
-insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TE2','Engineer Officer, Motor-Second Assistant Engineer','NAVPERS 15839I VOL I (APR 2026)');
-insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TE3','Engineer Officer, Motor-Third Assistant Engineer','NAVPERS 15839I VOL I (APR 2026)');
+insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TF1','Engineer Officer, Motor-First Assistant Engineer','NAVPERS 15839I VOL I (APR 2026)');
+insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TF2','Engineer Officer, Motor-Second Assistant Engineer','NAVPERS 15839I VOL I (APR 2026)');
+insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TF3','Engineer Officer, Motor-Third Assistant Engineer','NAVPERS 15839I VOL I (APR 2026)');
 insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TGE','Engineer Officer, Gas Turbine-Chief Engineer','NAVPERS 15839I VOL I (APR 2026)');
 insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TG1','Engineer Officer, Gas Turbine-First Assistant Engineer','NAVPERS 15839I VOL I (APR 2026)');
 insert into FTS_aqd_codes (suggest_text_1, suggest_text_2, source) values ('TG2','Engineer Officer, Gas Turbine-Second Assistant Engineer','NAVPERS 15839I VOL I (APR 2026)');
