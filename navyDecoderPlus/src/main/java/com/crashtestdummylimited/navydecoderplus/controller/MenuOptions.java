@@ -34,19 +34,21 @@ import com.google.android.play.core.review.ReviewManagerFactory;
 
 public class MenuOptions {
 
+  private static final String PLAY_STORE_URL_PREFIX =
+      "https://play.google.com/store/apps/details?id=";
+  private static final String PRIVACY_POLICY_URL = "https://crashtestdummylimited.com/page1.html";
+
   // *************************************************************************
   //
   //  Overwritten to support menu
   //
   // *************************************************************************
 
-  //	@Override
   public static void onCreateOptionsMenu(Activity activity, Menu menu) {
     MenuInflater inflater = activity.getMenuInflater();
     inflater.inflate(R.menu.menu, menu);
   }
 
-  //	@Override
   public static void onOptionsItemSelected(Activity activity, MenuItem item) {
     int itemId = item.getItemId(); // For email
     // http://mobile.tutsplus.com/tutorials/android/android-email-intent/
@@ -97,9 +99,7 @@ public class MenuOptions {
     } else if (itemId == R.id.optionsMenuShare) {
       String packageName = activity.getPackageName();
       String shareText =
-          activity.getString(R.string.shareText)
-              + "\nhttps://play.google.com/store/apps/details?id="
-              + packageName;
+          activity.getString(R.string.shareText) + "\n" + PLAY_STORE_URL_PREFIX + packageName;
       Intent shareIntent = new Intent(Intent.ACTION_SEND);
       shareIntent.setType("text/plain");
       shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
@@ -135,9 +135,7 @@ public class MenuOptions {
             .show();
       }
     } else if (itemId == R.id.optionsMenuPrivacyPolicy) {
-      activity.startActivity(
-          new Intent(
-              Intent.ACTION_VIEW, Uri.parse("https://crashtestdummylimited.com/page1.html")));
+      activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(PRIVACY_POLICY_URL)));
     }
   }
 
@@ -152,9 +150,7 @@ public class MenuOptions {
           new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + packageName)));
     } catch (ActivityNotFoundException e) {
       activity.startActivity(
-          new Intent(
-              Intent.ACTION_VIEW,
-              Uri.parse("https://play.google.com/store/apps/details?id=" + packageName)));
+          new Intent(Intent.ACTION_VIEW, Uri.parse(PLAY_STORE_URL_PREFIX + packageName)));
     }
   }
 }

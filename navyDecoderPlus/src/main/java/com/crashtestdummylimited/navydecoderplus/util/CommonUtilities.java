@@ -27,18 +27,6 @@ public class CommonUtilities {
 
   private static final String TAG = "CommonUtilities";
 
-  /*	public static function String getVersionName(Context context, Class cls)
-  	{
-  	  try {
-  	    ComponentName comp = new ComponentName(context, cls);
-  	    PackageInfo pinfo = context.getPackageManager().getPackageInfo(comp.getPackageName(), 0);
-  	    return pinfo.versionName;
-  	  } catch (android.content.pm.PackageManager.NameNotFoundException e) {
-  	    return null;
-  	  }
-  	}
-  */
-
   public static String getAppVersionName(Activity activity) {
     PackageInfo packageInfo;
     String strVersion;

@@ -54,9 +54,11 @@ public class DecodeProvider extends ContentProvider {
   private static final int GET_DECODED_INFO = 1;
   // Number of items above
   private static final int NUMBER_OF_BASE_TYPES = 2;
-  // Special matcher code for the cross-category global search URI ("decodeData/all").
-  // Must be outside the per-category range (max ~13 categories × 2 = 26).
-  private static final int SEARCH_INFO_ALL = 1000;
+  // Special matcher code for the cross-category global search URI ("decodeData/all"). Derived
+  // from Category.values().length rather than a bare literal so it can never collide with the
+  // per-category range assigned in buildUriMatcher() (which covers at most Category.values()
+  // categories, each using NUMBER_OF_BASE_TYPES matcher codes), even as categories are added.
+  private static final int SEARCH_INFO_ALL = Category.values().length * NUMBER_OF_BASE_TYPES;
   private static UriMatcher sURIMatcher;
 
   private static ArrayList<String> sOffsetMatcher;
@@ -73,18 +75,18 @@ public class DecodeProvider extends ContentProvider {
 
     MappingHelper mappingHelper = MappingHelper.getInstance();
     if (mappingHelper != null) {
-      ArrayList<String> categoryIds = mappingHelper.getAllCategoryIdentifies();
+      ArrayList<String> categoryIds = mappingHelper.getAllCategoryIdentifiers();
       Iterator<String> iterator = categoryIds.iterator();
 
       int i = 0;
       while (iterator.hasNext()) {
-        String categoryIdentifier = iterator.next();
-        offsetMatcherTemp.add(i, categoryIdentifier);
+        String categoryKey = iterator.next();
+        offsetMatcherTemp.add(i, categoryKey);
         matcher.addURI(
-            AUTHORITY, "decodeData/" + categoryIdentifier, SEARCH_INFO + NUMBER_OF_BASE_TYPES * i);
+            AUTHORITY, "decodeData/" + categoryKey, SEARCH_INFO + NUMBER_OF_BASE_TYPES * i);
         matcher.addURI(
             AUTHORITY,
-            "decodeData/" + categoryIdentifier + "/#",
+            "decodeData/" + categoryKey + "/#",
             GET_DECODED_INFO + NUMBER_OF_BASE_TYPES * i);
         i++;
       }
@@ -137,7 +139,7 @@ public class DecodeProvider extends ContentProvider {
       return null;
     }
 
-    String categoryIdentifier = sOffsetMatcher.get(categoryIndex);
+    String categoryKey = sOffsetMatcher.get(categoryIndex);
 
     // Use the UriMatcher to see what kind of query we have and format the db query accordingly
     switch (matchType) {
@@ -145,30 +147,30 @@ public class DecodeProvider extends ContentProvider {
         if (selectionArgs == null) {
           throw new IllegalArgumentException("selectionArgs must be provided for the Uri: " + uri);
         }
-        return search(categoryIdentifier, selectionArgs[0]);
+        return search(categoryKey, selectionArgs[0]);
       case GET_DECODED_INFO:
-        return getDecodedInformation(categoryIdentifier, uri);
+        return getDecodedInformation(categoryKey, uri);
       default:
         throw new IllegalArgumentException("Unknown Uri: " + uri);
     }
   }
 
-  private Cursor search(String categoryIdentifier, String query) {
+  private Cursor search(String categoryKey, String query) {
     query = query.toLowerCase(Locale.ROOT);
     String[] columns =
         new String[] {BaseColumns._ID, DecodeDatabase.KEY_CODE, DecodeDatabase.KEY_CODE_MEANING};
 
-    return mDecodeDatabase.getDecodeMatches(categoryIdentifier, query, columns);
+    return mDecodeDatabase.getDecodeMatches(categoryKey, query, columns);
   }
 
-  private Cursor getDecodedInformation(String categoryIdentifier, Uri uri) {
+  private Cursor getDecodedInformation(String categoryKey, Uri uri) {
     String rowId = uri.getLastPathSegment();
     String[] columns =
         new String[] {
           DecodeDatabase.KEY_CODE, DecodeDatabase.KEY_CODE_MEANING, DecodeDatabase.KEY_CODE_SOURCE
         };
 
-    return mDecodeDatabase.getItemToDecode(categoryIdentifier, rowId, columns);
+    return mDecodeDatabase.getItemToDecode(categoryKey, rowId, columns);
   }
 
   /**

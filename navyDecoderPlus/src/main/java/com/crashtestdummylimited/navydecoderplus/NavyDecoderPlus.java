@@ -24,9 +24,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.crashtestdummylimited.navydecoderplus.controller.Category;
@@ -35,6 +32,7 @@ import com.crashtestdummylimited.navydecoderplus.controller.MappingHelper;
 import com.crashtestdummylimited.navydecoderplus.controller.MenuOptions;
 import com.crashtestdummylimited.navydecoderplus.controller.RfasActivity;
 import com.crashtestdummylimited.navydecoderplus.controller.SearchableDecoderActivity;
+import com.crashtestdummylimited.navydecoderplus.util.ActivityUiUtils;
 import com.crashtestdummylimited.navydecoderplus.util.AppUpdateChecker;
 import com.google.android.material.divider.MaterialDividerItemDecoration;
 import java.util.ArrayList;
@@ -71,17 +69,8 @@ public class NavyDecoderPlus extends AppCompatActivity {
 
     setContentView(R.layout.main_screen);
 
-    ViewCompat.setOnApplyWindowInsetsListener(
-        getWindow().getDecorView().findViewById(android.R.id.content),
-        (v, windowInsets) -> {
-          Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-          v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
-          return WindowInsetsCompat.CONSUMED;
-        });
-
-    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is
-    // defensive only.
-    if (getSupportActionBar() != null) getSupportActionBar().setTitle(R.string.app_name);
+    ActivityUiUtils.applyDefaultWindowInsets(this);
+    ActivityUiUtils.setToolbarTitle(this, R.string.app_name, false);
 
     RecyclerView recyclerView = findViewById(R.id.mainItemToDecodeListView);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));

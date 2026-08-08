@@ -31,14 +31,13 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import com.crashtestdummylimited.navydecoderplus.R;
 import com.crashtestdummylimited.navydecoderplus.databinding.SearchScreenBinding;
 import com.crashtestdummylimited.navydecoderplus.model.db.DecodeDatabase;
+import com.crashtestdummylimited.navydecoderplus.util.ActivityUiUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -54,7 +53,7 @@ public class SearchableDecoderActivity extends AppCompatActivity {
 
   private SearchScreenBinding mBinding;
 
-  private String mDecodeCategory = "";
+  private String mCategoryKey = "";
 
   private SearchResultsAdapter mAdapter;
 
@@ -86,25 +85,19 @@ public class SearchableDecoderActivity extends AppCompatActivity {
     View view = mBinding.getRoot();
     setContentView(view);
 
-    ViewCompat.setOnApplyWindowInsetsListener(
-        getWindow().getDecorView().findViewById(android.R.id.content),
-        (v, windowInsets) -> {
-          Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-          v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
-          return WindowInsetsCompat.CONSUMED;
-        });
+    ActivityUiUtils.applyDefaultWindowInsets(this);
 
-    mDecodeCategory = getIntent().getStringExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER);
-    if (mDecodeCategory == null) {
-      mDecodeCategory = ALL_CATEGORIES_KEY;
+    mCategoryKey = getIntent().getStringExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER);
+    if (mCategoryKey == null) {
+      mCategoryKey = ALL_CATEGORIES_KEY;
     }
 
     // Set toolbar title: category label for single-category, "Search All" for global.
     if (getSupportActionBar() != null) {
-      if (ALL_CATEGORIES_KEY.equals(mDecodeCategory)) {
+      if (ALL_CATEGORIES_KEY.equals(mCategoryKey)) {
         getSupportActionBar().setTitle(R.string.categorySearchAll);
       } else {
-        Category category = Category.fromKey(mDecodeCategory);
+        Category category = Category.fromKey(mCategoryKey);
         getSupportActionBar()
             .setTitle(
                 category != null ? getString(category.labelRes) : getString(R.string.app_name));
@@ -167,9 +160,9 @@ public class SearchableDecoderActivity extends AppCompatActivity {
     mBinding.searchScreenEmptyView.setText(getString(R.string.no_results, query));
 
     Uri uriWithPath =
-        ALL_CATEGORIES_KEY.equals(mDecodeCategory)
+        ALL_CATEGORIES_KEY.equals(mCategoryKey)
             ? Uri.withAppendedPath(DecodeProvider.CONTENT_URI, "all")
-            : Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mDecodeCategory);
+            : Uri.withAppendedPath(DecodeProvider.CONTENT_URI, mCategoryKey);
 
     List<SearchResultItem> items = new ArrayList<>();
     // The cursor is read into a plain list and closed immediately rather than kept open across
@@ -186,7 +179,7 @@ public class SearchableDecoderActivity extends AppCompatActivity {
 
         while (cursor.moveToNext()) {
           String categoryKey =
-              categoryColIndex >= 0 ? cursor.getString(categoryColIndex) : mDecodeCategory;
+              categoryColIndex >= 0 ? cursor.getString(categoryColIndex) : mCategoryKey;
           String categoryLabel =
               categoryColIndex >= 0 && mappingHelper != null
                   ? mappingHelper.getSelectionText(categoryKey)
