@@ -26,15 +26,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import com.crashtestdummylimited.navydecoderplus.R;
-import com.crashtestdummylimited.navydecoderplus.R.string;
 import com.crashtestdummylimited.navydecoderplus.databinding.RfasScreenBinding;
 import com.crashtestdummylimited.navydecoderplus.model.RFASEnlistedCodes;
 import com.crashtestdummylimited.navydecoderplus.model.RFASOfficerCodes;
 import com.crashtestdummylimited.navydecoderplus.model.RFASReferenceData;
+import com.crashtestdummylimited.navydecoderplus.util.ActivityUiUtils;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 public class RfasActivity extends AppCompatActivity {
@@ -93,20 +90,8 @@ public class RfasActivity extends AppCompatActivity {
     View view = mBinding.getRoot();
     setContentView(view);
 
-    ViewCompat.setOnApplyWindowInsetsListener(
-        getWindow().getDecorView().findViewById(android.R.id.content),
-        (v, windowInsets) -> {
-          Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-          v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
-          return WindowInsetsCompat.CONSUMED;
-        });
-
-    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is
-    // defensive only.
-    if (getSupportActionBar() != null) {
-      getSupportActionBar().setTitle(R.string.app_name);
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+    ActivityUiUtils.applyDefaultWindowInsets(this);
+    ActivityUiUtils.setToolbarTitle(this, R.string.app_name, true);
 
     // Grab info from bundle to tell if enlisted or officer RFAS
     Intent intent = getIntent();
@@ -122,12 +107,12 @@ public class RfasActivity extends AppCompatActivity {
       case RFAS_TYPE_ENLISTED:
         mRfasReferenceData = new RFASEnlistedCodes();
         mBinding.rfasTopLevelDescription.setText(
-            this.getString(string.rfasEnlistedTopLevelDescription));
+            this.getString(R.string.rfasEnlistedTopLevelDescription));
         break;
       case RFAS_TYPE_OFFICER:
         mRfasReferenceData = new RFASOfficerCodes();
         mBinding.rfasTopLevelDescription.setText(
-            this.getString(string.rfasOfficerTopLevelDescription));
+            this.getString(R.string.rfasOfficerTopLevelDescription));
         break;
       default:
         throw new IllegalArgumentException("Unknown RFAS type: " + rfasType);

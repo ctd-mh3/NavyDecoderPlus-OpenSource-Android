@@ -27,6 +27,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
 import androidx.annotation.NonNull;
+import com.crashtestdummylimited.navydecoderplus.BuildConfig;
 import com.crashtestdummylimited.navydecoderplus.controller.Category;
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,6 +63,9 @@ public class DecodeDatabase {
   // Cap search results to prevent loading an unbounded result set into memory. Navy codes are
   // specific enough that any match set larger than this is too broad to be useful.
   private static final int SEARCH_RESULT_LIMIT = 50;
+
+  // Buffer size for copying the bundled database asset to the app's database directory.
+  private static final int COPY_BUFFER_SIZE = 1024;
 
   private static String sDatabaseFullPath;
 
@@ -256,41 +260,7 @@ public class DecodeDatabase {
   /** This creates/opens the database. */
   private static class DecoderOpenHelper extends SQLiteOpenHelper {
 
-    // Database Versions
-    //
-    //    1 = Original database
-    //    2 = App v1.02 database
-    //    3 = App v1.04 database
-    //    4 = App v1.06 database (New NRA codes)
-    //    5 = App v1.07 database (NAVADMIN 124/13)
-    //    6 = App v1.08 database (Updated for MAS (13NOV2013) and RFAS (24JUL2013) codes)
-    //    7 = App v1.11 database (Many changes)
-    //    8 = App v1.12 database (NAVADMIN 106/16 and 107/16)
-    //    9 = App v1.13 database (Updated one RUIC)
-    //   10 = App v1.17 database
-    //   11 = App v1.19 database (NECs updated)
-    //   12 = App v1.20 database (fixed issues)
-    //   13 = App v1.21 database (Updated RUICs)
-    //   14 = App v1.24 database (Updated RUICs)
-    //   Missed updating for v1.25
-    //   15 = App v1.26 database (Updated NRAs)
-    //   16 = App v1.27 database (Updated RUICs)
-    //   17 = App v1.28 database (Updated NRAs)
-    //   18 = App v1.29 database (Updated ratings)
-    //   19 = App v1.31 database (Updated numerous items)
-    //   20 = App v1.32 database (Corrected NOBCs)
-    //   21 = App v1.33 database (Updates RUICs and enlisted ratings)
-    //   22 = App v1.34 database (Updates RUICs, Added 737X)
-    //   23 = App v1.36 database (Updates RUICs & NRAs, Disestablished of 6810 designator (NAVADMIN
-    // 128/22))
-    //   24 = App v1.37 database (Updates per NAVPERS documents)
-    //   25 = App v1.38 database (Corrected SSP for 1950)
-    //   26 = App v1.40 database (Added AQD. Updated designators and NOBCs.)
-    //   27 = App v1.41 database (Updated MAS and IMS codes.)
-    //   28 = App v1.45 database (Updated NOBCs, Officer Billets, Officer Designators, and SSPs)
-    //   29 = App v1.46 database (Updated Enlisted rating codes, AQDs, SSPs, and NECs)
-    //   30 = Fixed duplicate/mistyped codes (NRA 0686, AQD CH1-6/CI1-6, AQD TE1-3/TF1-3)
-    //        Updated for NAVPERS JUL2026 data changes
+    // Version history: see CHANGELOG.md at the repo root.
     private static final int DB_VERSION = 30;
 
     private final Context mContext;
@@ -303,8 +273,6 @@ public class DecodeDatabase {
       // Do this dynamically w/o hard coded package name.  Allows for this file to be used by
       //    free and paid version of the app.
       sDatabaseFullPath = String.valueOf(this.mContext.getDatabasePath(DB_NAME));
-      // 20140101: Using the below code was preventing a database upgrade
-      // sDatabaseFullPath = this.mContext.getApplicationInfo().dataDir + "/" +DB_NAME;
     }
 
     /** Creates an empty database on the system and rewrites it with your own database. */
@@ -312,40 +280,37 @@ public class DecodeDatabase {
 
       boolean dbExist = checkDataBase();
 
-      // Added this to attempt to resolve
-      //   "android.database.sqlite.SQLiteException: no such table:" error.
-      //   Per:
-      // http://www.anddev.org/networking-database-problems-f29/missing-table-in-sqlite-with-specific-version-of-desire-hd-t50364.html
-      SQLiteDatabase dbRead;
-
       if (dbExist) {
         // Need to have the system call onUpgrade if the database in this apk is newer than
         //   the one in the DB_PATH directory.  onUpgrade should be called by the system
         //   if needed by a call to getWritableDatabase().
-        // SQLiteDatabase db_Write = this.getWritableDatabase();
 
-        // Debugging showed that on an upgrade to the database in the apk, that the above
-        //   call to this.getWritableDatabase() only resulted in a call to onCreate().  No
+        // Debugging showed that on an upgrade to the database in the apk, that calling
+        //   this.getWritableDatabase() only resulted in a call to onCreate().  No
         //   call to onUpgrade was performed.  In addition, a subsequent call to
         //   getVersion() returned the new DB_VERSION value in the latest apk.
         //
         // The below code manually determines the active database's version.  And if the
         //   latest installed database version is greater, it directly calls onUpgrade
-        SQLiteDatabase dbRead2 =
+        SQLiteDatabase installedDb =
             SQLiteDatabase.openDatabase(sDatabaseFullPath, null, SQLiteDatabase.OPEN_READONLY);
-        int versionOfActiveDatabase = dbRead2.getVersion();
-        Log.d(TAG, "In createDataBase(), database version is " + versionOfActiveDatabase);
-        dbRead2.close();
+        int versionOfActiveDatabase = installedDb.getVersion();
+        if (BuildConfig.DEBUG) {
+          Log.d(TAG, "In createDataBase(), database version is " + versionOfActiveDatabase);
+        }
+        installedDb.close();
 
         if (DB_VERSION > versionOfActiveDatabase) {
-          Log.d(
-              TAG,
-              "createDataBase: upgrading from " + versionOfActiveDatabase + " to " + DB_VERSION);
+          if (BuildConfig.DEBUG) {
+            Log.d(
+                TAG,
+                "createDataBase: upgrading from " + versionOfActiveDatabase + " to " + DB_VERSION);
+          }
           // Force call to upgrade the database.
           // onUpgrade does not use the db parameter (it calls mContext.deleteDatabase()),
           // so null is passed rather than a closed handle.
           onUpgrade(null, versionOfActiveDatabase, DB_VERSION);
-        } else {
+        } else if (BuildConfig.DEBUG) {
           Log.d(
               TAG,
               "createDataBase: version " + versionOfActiveDatabase + " is current, no copy needed");
@@ -355,16 +320,17 @@ public class DecodeDatabase {
       // Check to see if database still exists since on an upgrade the above code might delete the
       // DB
       dbExist = checkDataBase();
-      //noinspection UnusedAssignment
-      dbRead = null;
 
       if (!dbExist) {
         // By calling this method an empty database will be created into the default system path
         // of your application so we are going to be able to overwrite that database with our
         // database.
-        // Change to attempt to fix "no such table" error
-        dbRead = this.getReadableDatabase();
-        dbRead.close();
+        // Added this to attempt to resolve
+        //   "android.database.sqlite.SQLiteException: no such table:" error.
+        //   Per:
+        // http://www.anddev.org/networking-database-problems-f29/missing-table-in-sqlite-with-specific-version-of-desire-hd-t50364.html
+        SQLiteDatabase readableDb = this.getReadableDatabase();
+        readableDb.close();
 
         try {
           copyDataBase();
@@ -383,22 +349,22 @@ public class DecodeDatabase {
      */
     private boolean checkDataBase() {
 
-      SQLiteDatabase mCheckDB = null;
+      SQLiteDatabase checkDb = null;
 
       try {
         // sDatabaseFullPath is already set via getDatabasePath() in the constructor.
-        mCheckDB =
+        checkDb =
             SQLiteDatabase.openDatabase(sDatabaseFullPath, null, SQLiteDatabase.OPEN_READONLY);
 
       } catch (SQLiteException e) {
         // database doesn't exist yet.
       }
 
-      if (mCheckDB != null) {
-        mCheckDB.close();
+      if (checkDb != null) {
+        checkDb.close();
       }
 
-      return mCheckDB != null;
+      return checkDb != null;
     }
 
     /**
@@ -412,7 +378,7 @@ public class DecodeDatabase {
           OutputStream mOutput = Files.newOutputStream(Paths.get(sDatabaseFullPath))) {
 
         // transfer bytes from the inputfile to the outputfile
-        byte[] mBuffer = new byte[1024];
+        byte[] mBuffer = new byte[COPY_BUFFER_SIZE];
         int mLength;
         while ((mLength = mInput.read(mBuffer)) > 0) {
           mOutput.write(mBuffer, 0, mLength);
@@ -438,29 +404,10 @@ public class DecodeDatabase {
       // All work is done in createDataBase() which must be called by clients
     }
 
+    // Simple replacement strategy, not a data-preserving migration: the bundled database is a
+    // read-only reference asset with no user data, so on any version bump the old copy is just
+    // deleted and createDataBase() re-copies the current asset on the next launch. See CLAUDE.md.
     @Override
-    /*
-      * http://stackoverflow.com/questions/3505900/sqliteopenhelper-onupgrade-confusion-android
-      *
-      *
-    Ok, before you run into bigger problems you should know that SQLite is limited on the ALTER TABLE command, it allows "add" and "rename" only no remove/drop which is done with recreation of the table.
-
-    You should always have the new table creation query at hand, and use that for upgrade and transfer any existing data. Note: that the onUpgrade methods runs one for your sqlite helper object, and you need to handle all the tables in it.
-
-    So what is recommended onUpgrade:
-
-        beginTransaction
-        run a table creation with if not exists (we are doing an upgrade, so the table might not exist yet, it will fail alter and drop)
-        put in a list the existing columns List<String> columns = DBUtils.GetColumns(db, TableName);
-        backup table (ALTER table " + TableName + " RENAME TO 'temp_" + TableName)
-        create new table (the newest table creation schema)
-        get the intersection with the new columns, this time columns taken from the upgraded table (columns.retainAll(DBUtils.GetColumns(db, TableName));)
-        restore data (String cols = StringUtils.join(columns, ","); db.execSQL(String.format( "INSERT INTO %s (%s) SELECT %s from temp_%s", TableName, cols, cols, TableName)); )
-        remove backup table (DROP table 'temp_" + TableName)
-        setTransactionSuccessful
-
-    (This doesn't handle table downgrade, if you rename a column, you don't get the existing data transfered as the column names do not match).
-     */
     public void onUpgrade(SQLiteDatabase db, final int oldVersion, final int newVersion) {
       if (newVersion > oldVersion) {
         mContext.deleteDatabase(DB_NAME);

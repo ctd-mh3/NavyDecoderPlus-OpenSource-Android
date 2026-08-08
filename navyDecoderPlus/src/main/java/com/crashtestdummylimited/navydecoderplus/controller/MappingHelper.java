@@ -57,7 +57,7 @@ public final class MappingHelper {
   }
 
   /** Returns all searchable category keys (excludes RFAS, which has no key). */
-  public ArrayList<String> getAllCategoryIdentifies() {
+  public ArrayList<String> getAllCategoryIdentifiers() {
     ArrayList<String> keys = new ArrayList<>();
     for (Category c : Category.values()) {
       if (c.key != null) keys.add(c.key);

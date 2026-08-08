@@ -32,13 +32,11 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import com.crashtestdummylimited.navydecoderplus.BuildConfig;
 import com.crashtestdummylimited.navydecoderplus.R;
 import com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding;
 import com.crashtestdummylimited.navydecoderplus.model.db.DecodeDatabase;
+import com.crashtestdummylimited.navydecoderplus.util.ActivityUiUtils;
 import com.google.android.gms.tasks.Task;
 import com.google.android.play.core.review.ReviewInfo;
 import com.google.android.play.core.review.ReviewManager;
@@ -92,25 +90,13 @@ public class SelectedItemActivity extends AppCompatActivity {
       mReviewManager = ReviewManagerFactory.create(this);
     }
 
-    com.crashtestdummylimited.navydecoderplus.databinding.FinalScreenSelectedItemBinding binding =
+    FinalScreenSelectedItemBinding binding =
         FinalScreenSelectedItemBinding.inflate(getLayoutInflater());
     View view = binding.getRoot();
     setContentView(view);
 
-    ViewCompat.setOnApplyWindowInsetsListener(
-        getWindow().getDecorView().findViewById(android.R.id.content),
-        (v, windowInsets) -> {
-          Insets insets = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
-          v.setPadding(insets.left, insets.top, insets.right, insets.bottom);
-          return WindowInsetsCompat.CONSUMED;
-        });
-
-    // AppTheme extends Theme.Material3.DayNight which always provides an ActionBar; null check is
-    // defensive only.
-    if (getSupportActionBar() != null) {
-      getSupportActionBar().setTitle(R.string.app_name);
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
+    ActivityUiUtils.applyDefaultWindowInsets(this);
+    ActivityUiUtils.setToolbarTitle(this, R.string.app_name, true);
 
     Uri uri = getIntent().getData();
     if (uri == null) {
@@ -123,10 +109,10 @@ public class SelectedItemActivity extends AppCompatActivity {
       finish();
     } else {
       Intent intent = getIntent();
-      String decodeCategory = intent.getStringExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER);
+      String categoryKey = intent.getStringExtra(MappingHelper.CATEGORY_KEY_IDENTIFIER);
       MappingHelper mappingHelper = MappingHelper.getInstance(getApplicationContext());
       // getSelectionText() returns "" via getOrDefault when no match — setText("") is safe.
-      String selectionText = mappingHelper.getSelectionText(decodeCategory);
+      String selectionText = mappingHelper.getSelectionText(categoryKey);
       binding.decodeCategoryTextView.setText(selectionText);
 
       if (!cursor.moveToFirst()) {
