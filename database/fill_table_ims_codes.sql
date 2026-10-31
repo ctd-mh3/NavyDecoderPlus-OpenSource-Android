@@ -3,6 +3,7 @@
 .headers on
 .nullvalue NULL
 
+insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("Blank","No action required/pending. Not identified for recall/mobilization.","RESFOR N1C2 (23 JAN 2023)");
 insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RXX","Precedes R##. HQ use only for planning purposes.","RESFOR N1C2 (23 JAN 2023)");
 insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("RYY","Precedes R##. HQ use only for planning purposes.","RESFOR N1C2 (23 JAN 2023)");
 insert into FTS_ims_codes (suggest_text_1, suggest_text_2, source) values ("R##","Identified for recall/mobilization","RESFOR N1C2 (23 JAN 2023)");

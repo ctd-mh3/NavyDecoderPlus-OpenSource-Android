@@ -34,7 +34,7 @@ insert into FTS_mas_codes (suggest_text_1, suggest_text_2, source) values ("ASO"
 insert into FTS_mas_codes (suggest_text_1, suggest_text_2, source) values ("SAD","Approaching Sanctuary (16 years or more of active duty)","RESFOR N1C2 (23 JAN 2023)");
 insert into FTS_mas_codes (suggest_text_1, suggest_text_2, source) values ("DAP","Pending ADSEP, package submitted","RESFOR N1C2 (23 JAN 2023)");
 insert into FTS_mas_codes (suggest_text_1, suggest_text_2, source) values ("TMS","Attending authorized medical or dental school","RESFOR N1C2 (23 JAN 2023)");
-insert into FTS_mas_codes (suggest_text_1, suggest_text_2, source) values ("DCO","CNRFC HQ USE ONLY.  Removed upon completion of DCO Indoctrination Course","RESFOR N1C2 (23 JAN 2023)");
+insert into FTS_mas_codes (suggest_text_1, suggest_text_2, source) values ("DCO","CNRFC HQ USE ONLY. Removed upon completion of DCO Indoctrination Course","RESFOR N1C2 (23 JAN 2023)");
 insert into FTS_mas_codes (suggest_text_1, suggest_text_2, source) values ("TBH","Enlisted/Officer has not completed prescribed community specific training to be considered qualified for mobilization","RESFOR N1C2 (23 JAN 2023)");
 insert into FTS_mas_codes (suggest_text_1, suggest_text_2, source) values ("TSP","SELRES Officer authorized early release for professional sports","RESFOR N1C2 (23 JAN 2023)");
 insert into FTS_mas_codes (suggest_text_1, suggest_text_2, source) values ("PRO","Health Care Professional Officer in 36-month deferment window","RESFOR N1C2 (23 JAN 2023)");

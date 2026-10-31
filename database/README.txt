@@ -7,9 +7,11 @@ General Approach: see http://www.reigndesign.com/blog/using-your-own-sqlite-data
 General Steps to Update the Database Which the App Uses:
 - Update SQL files in this directory when new information is available
   + Typically done manually via text editor
-  + Typically after Navy Decoder (not Plus) app is updated
+  + Typically after Navy Decoder app is updated
 - Run createAndCopyDatabase.sh
 - Ensure DB_VERSION is incremented in DecodeDatabase.java file
+- Update change log for DB_VERSION in CHANGELOG.md
+
 - For iOS version of app 
   + run "perl convertSqlScriptsToJson.pl"
 

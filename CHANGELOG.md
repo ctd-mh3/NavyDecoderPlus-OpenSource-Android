@@ -35,3 +35,4 @@ Database version history for `navyDecoderDatabase.sqlite3` (see `DecodeDatabase.
 | 28 | v1.45 | Updated NOBCs, Officer Billets, Officer Designators, and SSPs |
 | 29 | v1.46 | Updated Enlisted rating codes, AQDs, SSPs, and NECs |
 | 30 | — | Fixed duplicate/mistyped codes (NRA 0686, AQD CH1-6/CI1-6, AQD TE1-3/TF1-3); updated for NAVPERS JUL2026 data changes |
+| 31 | — | Updated AQDs, NECs, NOBCs, Officer Billets, Officer Designators, and SSPs for NAVPERS OCT2026 data changes; added IMS "Blank" entry; fixed spacing in MAS and RUIC text |

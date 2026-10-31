@@ -261,7 +261,7 @@ public class DecodeDatabase {
   private static class DecoderOpenHelper extends SQLiteOpenHelper {
 
     // Version history: see CHANGELOG.md at the repo root.
-    private static final int DB_VERSION = 30;
+    private static final int DB_VERSION = 31;
 
     private final Context mContext;
 

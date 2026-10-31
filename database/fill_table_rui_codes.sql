@@ -315,7 +315,7 @@ insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("8398
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("82825","NR CNFK FWT (NRC FT WORTH TX)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("83705","NR CPF N2N39 FWT (NRC FT WORTH TX)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("89489","NR CSG 5 (NRC FT WORTH TX)","RESFOR (03 JAN 2024)");
-insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("86849","NR EURAFCENT  FES/AIR OPS (NRC FT WORTH TX)","RESFOR (03 JAN 2024)");
+insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("86849","NR EURAFCENT FES/AIR OPS (NRC FT WORTH TX)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("87245","NR EXP MAINT FWT (NRC FT WORTH TX)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("88250","NR FRC FWT (NRC FT WORTH TX)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("89491","NR IPACOM JIOC FWT (NRC FT WORTH TX)","RESFOR (03 JAN 2024)");
@@ -595,7 +595,7 @@ insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("8778
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("55860","S1 SBC D PLT SAN (NRC NORTH ISLAND CA)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("55852","S1 SBC D SAN (NRC NORTH ISLAND CA)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("86340","NR NPASE WEST (NRC NORTH ISLAND CA)","RESFOR (03 JAN 2024)");
-insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("47116","S1 SBC A  PLT SAN (NRC NORTH ISLAND CA)","RESFOR (03 JAN 2024)");
+insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("47116","S1 SBC A PLT SAN (NRC NORTH ISLAND CA)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("82788","NR NMRTC SD NIC-1 (NRC NORTH ISLAND CA)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("89876","NR NMRTC SD NIC-2 (NRC NORTH ISLAND CA)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("89195","NR ADMIN PERS 1994 (NRC NORTH ISLAND CA)","RESFOR (03 JAN 2024)");
@@ -1119,7 +1119,7 @@ insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("8267
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("87788","S8 SBC A NPT (NRC NEWPORT RI)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("47115","S8 SBC A PLT NPT (NRC NEWPORT RI)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("86028","S8 SBC D PLT NPT (NRC NEWPORT RI)","RESFOR (03 JAN 2024)");
-insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("88706","S8 SBC DELTA  NPT (NRC NEWPORT RI)","RESFOR (03 JAN 2024)");
+insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("88706","S8 SBC DELTA NPT (NRC NEWPORT RI)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("85254","MLG TRN SVCO 25 (NRC NEWPORT RI)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("87030","NMCB 27 NPT (NRC NEWPORT RI)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("89662","NR NSW DETACHMENT RHODE IS (NRC NEWPORT RI)","RESFOR (03 JAN 2024)");
@@ -1127,7 +1127,7 @@ insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("8950
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("0114G","NR VTU NPT 0643 (NRC NEWPORT RI)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("55484","NR CNFJ YOKO (NRC GUAM)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("84229","NR CNFK BUSAN (NRC GUAM)","RESFOR (03 JAN 2024)");
-insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("87681","NR CTF75  GUA (NRC GUAM)","RESFOR (03 JAN 2024)");
+insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("87681","NR CTF75 GUA (NRC GUAM)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("88705","NR RSU GUA (NRC GUAM)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("89673","NR NMRTC SD GUA (NRC GUAM)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("85134","NR DCE WEST DET (NRC GUAM)","RESFOR (03 JAN 2024)");
@@ -1395,7 +1395,7 @@ insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("8334
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("0814G","NR VTU TAL 0897 (NRC TALLAHASSEE FL)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("08866","NR 4MD 23M TRK 2 (NRC LAS VEGAS NV)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("83672","NR CFA CHINHAE LVN (NRC LAS VEGAS NV)","RESFOR (03 JAN 2024)");
-insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("86160","NMCB 18  LVN (NRC LAS VEGAS NV)","RESFOR (03 JAN 2024)");
+insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("86160","NMCB 18 LVN (NRC LAS VEGAS NV)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("86259","NR RSU LVN (NRC LAS VEGAS NV)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("83332","NR NMRTC SD LVN (NRC LAS VEGAS NV)","RESFOR (03 JAN 2024)");
 insert into FTS_rui_codes (suggest_text_1, suggest_text_2, source) values ("88505","NR 4TH MARDIV 2/23 F WPLT (NRC LAS VEGAS NV)","RESFOR (03 JAN 2024)");

@@ -38,9 +38,13 @@ Spotless uses Google Java Format (currently `1.35.0`) for `.java` files and enfo
 
 When Navy source data changes, the embedded SQLite database must be rebuilt and copied into the app assets:
 
-1. Edit the relevant SQL files in `database/`
+1. Regenerate the relevant SQL files in `database/` from the Navy Decoder Excel workbooks
 2. `cd database/` then run `./createAndCopyDatabase.sh` (requires `sqlite3` CLI) — **must be run from within the `database/` directory**; this regenerates `navyDecoderDatabase.sqlite3` and copies it to `navyDecoderPlus/src/main/assets/`
 3. Increment `DB_VERSION` in `navyDecoderPlus/src/main/java/com/crashtestdummylimited/navydecoderplus/model/db/DecodeDatabase.java`
+
+database/fill_table_*.sql files are generated from the Navy Decoder Excel workbooks.
+Never edit them directly. Report any discrepancy (with the code, current text and
+the correct text from the source) so the workbook can be corrected and the SQL regenerated.
 
 The RFAS code tables are **not** populated by `createAndCopyDatabase.sh` — those tables use `fill_table_rfas_codes_dummy.sql` as a placeholder because actual RFAS data comes from restricted non-CUI RESFOR files (only accessible to SELRES personnel). See `fill_table_rfas_*.sql` files for the format.
 
