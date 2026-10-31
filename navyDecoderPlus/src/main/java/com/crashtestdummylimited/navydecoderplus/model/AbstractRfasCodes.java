@@ -38,7 +38,7 @@ abstract class AbstractRfasCodes implements RFASReferenceData {
       String[][] firstCharCodeMeaningData,
       String[][] secondAndThirdCharCodeMeaningData,
       String[][] fourthCharCodeMeaningData,
-      String sourceInfo) {
+      @SuppressWarnings("SameParameterValue") String sourceInfo) {
     mSourceInfo = sourceInfo;
 
     mFirstCharacterCodesHashMap = new HashMap<>(firstCharCodeMeaningData.length);
